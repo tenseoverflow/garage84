@@ -2,6 +2,35 @@
 
 Broneerimissüsteem koolile
 
+## Kuidas arendada
+
+1. Klooni see repo:
+
+```bash
+git clone https://gitlab.cs.taltech.ee/henria/ITI0105-2025.git
+cd ITI0105-2025
+```
+
+2. Lae alla [Bun](https://bun.com/) ning paigalda projekt:
+
+```bash
+bun i
+```
+
+3. Käivita server:
+
+```bash
+bun dev
+```
+
+4. Ava brauseris [http://localhost:3000](http://localhost:3000)
+
+## Kuidas ehitada
+
+```bash
+bun build
+```
+
 ## Projektiplaan
 
 Kiire ja mugav koolimaja ruumide broneerimise süsteem õpetajatele. Loome veebilehe, mis võimaldab õpetajatel leida ja broneerida parasjagu vaba klassiruumi vestlusteks, konsultatsioonideks või muudeks kohtumisteks. Veebileht töötab koos olemasoleva Exceli-tüüpi tunniplaani või kalendrifailiga, mis määrab, millised ruumid on millisel ajaploki jooksul vabad/hõivatud. Kasutaja saab skännida QR-koodi, mis asub iga klassiruumi uksel ja õpetajate toas. QR-kood viib veebilehele. Valides vaba toa, saab kinnitada broneeringu. Broneering salvestatakse automaatselt ruumikalendrisse, nii et topeltbroneeringud on välistatud.
@@ -23,3 +52,7 @@ Meie projekt erineb teistest veebilehtedest, sest broneering on mõeldud spetsii
 ## LICENCE
 
 [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.html)
+
+```
+
+```
