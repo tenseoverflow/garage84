@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.15",
@@ -28,5 +29,12 @@
   },
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
+  },
+  "dependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.5"
+  },
+  "lint-staged": {
+    "*.{js,css,html}": ["prettier --write", "eslint --fix"]
   }
 }

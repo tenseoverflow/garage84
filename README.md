@@ -4,6 +4,8 @@ Broneerimissüsteem koolile
 
 ## Kuidas arendada
 
+Sisuliselt peaks olema Windowsis samad käsud. Lae kindlasti alla [Git](https://git-scm.com/) ja [Bun](https://bun.com/).
+
 1. Klooni see repo:
 
 ```bash
@@ -14,7 +16,7 @@ cd ITI0105-2025
 2. Lae alla [Bun](https://bun.com/) ning paigalda projekt:
 
 ```bash
-bun i
+bun i -D
 ```
 
 3. Käivita server:
@@ -52,7 +54,3 @@ Meie projekt erineb teistest veebilehtedest, sest broneering on mõeldud spetsii
 ## LICENCE
 
 [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.html)
-
-```
-
-```
