@@ -8,6 +8,7 @@ import { ViteMinifyPlugin } from "vite-plugin-minify";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  base: process.env.CI ? "/ITI0105-2025/" : "/",
   root: resolve(__dirname, "./src"),
   publicDir: resolve(__dirname, "./public"),
   build: {
