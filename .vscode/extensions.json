@@ -3,6 +3,8 @@
     "bradlc.vscode-tailwindcss",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "ecmel.vscode-html-css"
+    "ecmel.vscode-html-css",
+    "figma.figma-vscode-extension",
+    "GitLab.gitlab-workflow"
   ]
 }
