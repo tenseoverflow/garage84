@@ -1,20 +1,21 @@
+# The Docker image that will be used to build your app
 image: oven/bun:1
-
+# Functions that should be executed before the build script is run
 cache:
   paths:
     - node_modules/
 
-stages:
-  - deploy
-
+before_script:
+  - bun install --frozen-lockfile
 pages:
-  stage: deploy
   script:
-    - bun install --frozen-lockfile
     - bun run build
     - mv dist public
   artifacts:
     paths:
+      # The folder that contains the files to be exposed at the Page URL
       - public
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # This ensures that only pushes to the default branch will trigger
+    # a pages deploy
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
