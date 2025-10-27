@@ -1,40 +1,40 @@
 <!doctype html>
 
-<html lang="en">
+<html lang="et">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <div class="pilt">
-      <img src="/src/assets/MURG.jpg" height="1024" alt="pilt MURGi hoonest." />
-    </div>
-    <div class="title">
-      <h1>Ruumibroneerimine</h1>
-      <br />
-    </div>
-    <div class="info">
-      <h2><p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p></h2>
-    </div>
-    <div class="meil">
-      <p>Meil</p>
-      <input type="email" placeholder="Sinu email" />
-    </div>
-    <div class="parool">
-      <p>Parool</p>
-      <input type="password" placeholder="Sinu parool" />
-    </div>
-    <div class="link">
-      <a href="#">Unustasin parooli</a>
-    </div>
-    <div class="nupp">
-      <br />
-      <button>Logi sisse</button>
-    </div>
-    <div class="registreeru">
-      <p>Pole veel kontot?</p>
-      <button>Registreeru</button>
+    <div class="split">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <div class="vorm">
+          <header>
+            <h1>Ruumibroneerimine</h1>
+            <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
+          </header>
+          <form action="GET">
+            <label for="email">Meil</label>
+            <input id="email" type="email" placeholder="Sinu email" />
+            <label for="password">Parool</label>
+            <input id="password" type="password" placeholder="Sinu parool" />
+            <a class="reset-pass" href="/reset-password.html"
+              >Unustasin parooli</a
+            >
+            <br />
+            <button class="btn btn-primary">Logi sisse</button>
+          </form>
+        </div>
+        <div class="registreeru">
+          <p>Pole veel kontot?</p>
+          <button class="btn btn-primary">Registreeru</button>
+        </div>
+      </main>
     </div>
   </body>
 </html>
