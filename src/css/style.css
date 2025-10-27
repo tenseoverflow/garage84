@@ -12,17 +12,21 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --primary: #0a014f;
-  --secondary: #ffffff;
-  --background: #e5edff;
+  --background: #ffffff;
   --error: #7b0a0a;
   --success: #134e04;
   --complimentary: #595861;
+  --primary: #0a014f;
+  --secondary: #e5edff;
+  --cta: #0a014f;
+  --disabled-bg: #d9d9d9;
+  --disabled-text: #555;
 }
 
 body {
   background-color: var(--background);
 
+  margin: 0;
   font-family: "Inter", system-ui, Helvetica, Arial, sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -30,6 +34,172 @@ body {
   line-height: normal;
   font-size: 16px;
   color: var(--primary);
+}
+
+/* My bookings */
+.my_bookings {
+  padding: 2.5rem 3.75rem;
+}
+
+.my_bookings h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.frame_my_bookings {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary);
+  border: 0.0625rem solid var(--primary);
+  border-radius: 0.625rem;
+  padding: 1rem 1.5rem;
+  width: fit-content;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.05);
+}
+
+.info_my_bookings {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.room_picture img {
+  border-radius: 0.5rem;
+  width: 9.375rem;
+  height: auto;
+  object-fit: cover;
+}
+
+.text_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.text_content p {
+  margin: 0;
+  color: var(--primary);
+}
+
+.text_content p:first-of-type {
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.text_content .button button {
+  background-color: #134e04;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.text_content .button button:hover {
+  background-color: #0f3e03;
+}
+
+/* New booking */
+.new_booking {
+  padding: 2.5rem 3.75rem;
+}
+
+.new_booking h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.floor-select {
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid var(--primary);
+  font-family: "Jost", sans-serif;
+  font-size: 0.875rem;
+  color: var(--primary);
+  background: white;
+  margin-bottom: 1.25rem;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 3rem;
+}
+
+/* Room cards */
+.room-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--secondary);
+  border: 0.0625rem solid var(--primary);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  width: 20rem;
+}
+
+.room-card .thumb {
+  flex: 0 0 6.25rem;
+}
+
+.room-card .thumb img {
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 0.375rem;
+  object-fit: cover;
+}
+
+.room-card .details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 0.5rem;
+}
+
+.room-card .details p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--primary);
+}
+
+.room-card .details p:first-of-type {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.room-card button {
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-family: "Jost", sans-serif;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Available */
+.room-card.available button {
+  background: var(--cta);
+  color: white;
+}
+
+.room-card.available button:hover {
+  background: #050033;
+}
+
+/* Not available */
+.room-card.not-available {
+  background: var(--disabled-bg);
+  border: 0.0625rem solid var(--disabled-text);
+  color: var(--disabled-text);
+}
+
+.room-card.not-available button {
+  background: #888;
+  color: white;
+  cursor: not-allowed;
 }
 
 .btn {
