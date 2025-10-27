@@ -36,6 +36,52 @@ body {
   color: var(--primary);
 }
 
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  background-color: var(--secondary);
+  border-bottom: 0.125rem solid var(--primary);
+}
+
+.navitems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.navbar p {
+  font-size: 1.5rem;
+}
+
+.button-navbar button {
+  background-color: white;
+  color: var(--primary);
+  border: 0.0625rem solid var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 1.25rem;
+  font-family: "Jost", sans-serif;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-navbar button:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
 /* My bookings */
 .my_bookings {
   padding: 2.5rem 3.75rem;
