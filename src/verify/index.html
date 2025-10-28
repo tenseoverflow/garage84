@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kinnita meiliaadress</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="split">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <div class="vorm">
+          <header>
+            <h1>Ruumibroneerimine</h1>
+            <p>Saatsime meilile kinnituskoodi</p>
+          </header>
+          <form action="GET">
+            <label for="email-verify">Kinnituskood</label>
+            <input
+              id="email-verify"
+              required
+              type="text"
+              placeholder="ABC123"
+            />
+            <a class="reset-pass" href="">Saada kinnituskood uuesti</a>
+            <br />
+            <button
+              class="btn btn-primary"
+              onclick="location.href = '/booking';"
+            >
+              Kinnita
+            </button>
+          </form>
+        </div>
+        <div class="registreeru">
+          <p>On olemas konto?</p>
+          <a href="/login" class="btn btn-primary">Logi sisse</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

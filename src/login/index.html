@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruumibroneerimise login</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="split">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <div class="vorm">
+          <header>
+            <h1>Ruumibroneerimine</h1>
+            <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
+          </header>
+          <form action="/booking">
+            <label for="email">Meil</label>
+            <input id="email" required type="email" placeholder="meil@hot.ee" />
+            <label for="password">Parool</label>
+            <input
+              id="password"
+              required
+              type="password"
+              placeholder="Sinu parool"
+            />
+            <a class="reset-pass" href="/reset-password.html"
+              >Unustasin parooli</a
+            >
+            <br />
+            <button
+              onclick="location.href = '/booking';"
+              class="btn btn-primary"
+            >
+              Logi sisse
+            </button>
+          </form>
+        </div>
+        <div class="registreeru">
+          <p>Pole veel kontot?</p>
+          <a href="/signup" class="btn btn-primary">Registreeru</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

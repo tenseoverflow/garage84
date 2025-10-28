@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konto tegemine</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="split">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <div class="vorm">
+          <header>
+            <h1>Ruumibroneerimine</h1>
+            <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
+          </header>
+          <form action="/verify">
+            <label for="name">Nimi</label>
+            <input id="name" required type="text" placeholder="Sinu nimi" />
+            <label for="email">Meil</label>
+            <input id="email" required type="email" placeholder="meil@hot.ee" />
+            <label for="password">Parool</label>
+            <input
+              id="password"
+              required
+              type="password"
+              placeholder="Sinu parool"
+            />
+            <label for="password-again">Parool uuesti</label>
+            <input
+              id="password-again"
+              required
+              type="password"
+              placeholder="Sinu parool uuesti"
+            />
+            <a class="reset-pass" href="/reset-password.html"
+              >Unustasin parooli</a
+            >
+            <br />
+            <button
+              onclick="location.href = '/verify';"
+              class="btn btn-primary"
+            >
+              Loo konto
+            </button>
+          </form>
+        </div>
+        <div class="registreeru">
+          <p>On olemas konto?</p>
+          <a href="/login" class="btn btn-primary">Logi sisse</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

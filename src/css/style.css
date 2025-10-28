@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import "tailwindcss";
+
+/* @import "tailwindcss"; */
+@import "./form.css";
 
 :root {
   /* TODO dark mode */
@@ -69,7 +71,6 @@ body {
   border: 0.0625rem solid var(--primary);
   padding: 0.5rem 1rem;
   border-radius: 1.25rem;
-  font-family: "Jost", sans-serif;
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -218,7 +219,6 @@ body {
   border-radius: 0.375rem;
   padding: 0.375rem 0.75rem;
   font-size: 0.8125rem;
-  font-family: "Jost", sans-serif;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -259,6 +259,7 @@ body {
   font-weight: 500;
   transition: background-color 0.3s ease;
   color: var(--secondary);
+  text-decoration: none;
 
   &:focus {
     outline: 2px solid var(--complimentary);
@@ -327,3 +328,13 @@ body {
   background: var(--primary);
   border-radius: 0.625rem;
 } */
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
