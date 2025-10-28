@@ -21,14 +21,15 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 8.75vh 3.75rem 0 3.75rem;
+  padding: 8.75vh 3.75rem 5vh 3.75rem;
+  gap: 1rem;
 }
 
 .vorm {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3.125rem;
+  gap: 3.125vh;
   background-color: var(--background-light);
   flex-shrink: 0;
 }
@@ -65,7 +66,6 @@ input {
 }
 
 .registreeru {
-  padding: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,10 +76,6 @@ input {
 @media screen and (max-width: 768px) {
   main {
     padding: 5vh 3vw;
-  }
-
-  .registreeru {
-    padding: 2.5rem 0 0 0;
   }
 
   .split {
