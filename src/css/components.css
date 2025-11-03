@@ -67,4 +67,40 @@
     align-self: stretch;
     list-style-type: none;
   }
+
+  .booked {
+    text-decoration: underline;
+  }
+}
+
+.change-booking form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  align-items: flex-start;
+  align-self: stretch;
+
+  #summary {
+    margin: 0;
+  }
+
+  #booking-time {
+    padding: 0 1rem;
+  }
+}
+
+.change-booking-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .change-booking {
+    display: none;
+  }
+
+  .change-booking-mobile {
+    display: inline-flex;
+    margin: 1rem 0;
+    align-self: center;
+  }
 }

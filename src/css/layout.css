@@ -58,6 +58,12 @@ footer {
   }
 
   .split {
-    grid-template-columns: 1fr;
+    display: block;
+    height: auto;
+    width: auto;
+  }
+
+  .pilt {
+    height: 18.75rem;
   }
 }

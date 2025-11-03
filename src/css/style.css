@@ -273,7 +273,8 @@ body {
   align-items: center;
   padding: 0.5rem 1rem;
   gap: 0.625rem;
-  height: 1.75rem;
+  /* height: 1.75rem; */
+  font-size: 0.875rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -338,4 +339,12 @@ h1 {
 h2 {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+input {
+  border-radius: 0.625rem;
+  border: none;
+  background: var(--secondary); /* or background? */
+  height: 1.875rem;
+  padding-left: 1rem;
 }

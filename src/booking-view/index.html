@@ -77,7 +77,7 @@
           <div class="cal-grid">
             <ul class="cal-times">
               <li>8:30-9:40</li>
-              <li>9:50-11:00</li>
+              <li class="booked">9:50-11:00</li>
               <li>11:00-11:30</li>
               <li>11:30-12:40</li>
               <li>12:40-13:30</li>
@@ -86,7 +86,7 @@
             </ul>
             <ul class="cal-desc">
               <li>Vaba</li>
-              <li>Koosolek</li>
+              <li class="booked">Koosolek</li>
               <li>Lõuna</li>
               <li>Ajalugu G3 Pallas</li>
               <li>Matemaatika G2 Marss</li>
@@ -96,13 +96,52 @@
           </div>
         </div>
         <!-- change bookling -->
-        <div class="change-booking"></div>
+        <div class="change-booking">
+          <h2>Muuda broneeringut</h2>
+          <form action="">
+            <label for="booking-title">Pealkiri</label>
+            <input
+              type="text"
+              id="booking-title"
+              name="booking-title"
+              value="Koosolek"
+            />
+
+            <label for="booking-date">Kuupäev</label>
+            <input
+              type="date"
+              id="booking-date"
+              name="booking-date"
+              value="Juuni 2024"
+            />
+
+            <label for="booking-time">Kellaaeg</label>
+            <input
+              type="time"
+              id="booking-time"
+              name="booking-time"
+              value="9:50-11:00"
+            />
+
+            <p id="summary">
+              Kellast 14:00 kuni 15:00 teisipäeval 01. jaanuaril 1970.
+            </p>
+            <footer>
+              <button id="cancel-booking" class="btn btn-error">
+                Tühista broneering
+              </button>
+              <button class="btn btn-primary">Muuda broneeringut</button>
+            </footer>
+          </form>
+        </div>
+        <div class="change-booking-mobile">
+          <a href="/change-booking/" class="btn btn-small btn-primary"
+            >Muuda broneeringut</a
+          >
+        </div>
         <!-- Decision -->
-        <footer>
-          <a href="">Muuda ruumi</a>
-          <a href="" class="btn btn-success">Lisa broneering</a>
-        </footer>
       </main>
     </div>
+    <script type="module" src="/js/change-booking.js"></script>
   </body>
 </html>
