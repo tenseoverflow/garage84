@@ -349,7 +349,7 @@ input {
   padding-left: 1rem;
 }
 
-/* QR Scanner */
+/* QR */
 .qr-scanner {
   position: relative;
   width: 100%;
@@ -369,13 +369,13 @@ input {
 
 .qr-result {
   position: absolute;
-  top: 20px;
+  bottom: 6rem;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: var(--secondary);
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: var(--primary) solid;
   text-align: center;
   max-width: 90%;
   z-index: 10;
