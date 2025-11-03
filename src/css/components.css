@@ -88,19 +88,3 @@
     padding: 0 1rem;
   }
 }
-
-.change-booking-mobile {
-  display: none;
-}
-
-@media screen and (max-width: 768px) {
-  .change-booking {
-    display: none;
-  }
-
-  .change-booking-mobile {
-    display: inline-flex;
-    margin: 1rem 0;
-    align-self: center;
-  }
-}
