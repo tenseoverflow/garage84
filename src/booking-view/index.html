@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Broneeringu vaade</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- Navbar-->
+    <nav class="navbar">
+      <div class="navitems">
+        <div class="nav-left">
+          <div class="button-navbar">
+            <button>Kodu</button>
+          </div>
+          <p>Ruumibroneerimine</p>
+        </div>
+        <div class="nav-right">
+          <div class="button-navbar">
+            <button>Loo uus ruum</button>
+          </div>
+          <div class="button-navbar">
+            <button>Settings</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="split split-nav">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <header>
+          <h1>Room #23</h1>
+          <p>Korrus 3</p>
+        </header>
+        <!-- Kalendri komponent -->
+        <div class="calendar">
+          <div class="calendar-header">
+            <button class="cal-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <h2>Juuni 2024</h2>
+            <button class="cal-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="cal-grid">
+            <ul class="cal-times">
+              <li>8:30-9:40</li>
+              <li class="booked">9:50-11:00</li>
+              <li>11:00-11:30</li>
+              <li>11:30-12:40</li>
+              <li>12:40-13:30</li>
+              <li>13:30-14:40</li>
+              <li>14:50-16:00</li>
+            </ul>
+            <ul class="cal-desc">
+              <li>Vaba</li>
+              <li class="booked">Koosolek</li>
+              <li>Lõuna</li>
+              <li>Ajalugu G3 Pallas</li>
+              <li>Matemaatika G2 Marss</li>
+              <li>Keemia G1 Ceres</li>
+              <li>Vaba</li>
+            </ul>
+          </div>
+        </div>
+        <!-- change bookling -->
+        <div class="change-booking">
+          <h2>Muuda broneeringut</h2>
+          <form action="">
+            <label for="booking-title">Pealkiri</label>
+            <input
+              type="text"
+              id="booking-title"
+              name="booking-title"
+              value="Koosolek"
+            />
+
+            <label for="booking-date">Kuupäev</label>
+            <input
+              type="date"
+              id="booking-date"
+              name="booking-date"
+              value="Juuni 2024"
+            />
+
+            <label for="booking-time">Kellaaeg</label>
+            <input
+              type="time"
+              id="booking-time"
+              name="booking-time"
+              value="9:50-11:00"
+            />
+
+            <p id="summary">
+              Kellast 14:00 kuni 15:00 teisipäeval 01. jaanuaril 1970.
+            </p>
+            <footer>
+              <button id="cancel-booking" class="btn btn-error">
+                Tühista broneering
+              </button>
+              <button class="btn btn-primary">Muuda broneeringut</button>
+            </footer>
+          </form>
+        </div>
+        <!-- <div class="change-booking-mobile">
+          <a href="/change-booking/" class="btn btn-small btn-primary"
+            >Muuda broneeringut</a
+          >
+        </div> -->
+        <!-- Decision -->
+      </main>
+    </div>
+    <script type="module" src="/js/change-booking.js"></script>
+  </body>
+</html>

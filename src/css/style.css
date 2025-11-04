@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 /* @import "tailwindcss"; */
-@import "./form.css";
+@import "./components.css";
+@import "./layout.css";
 
 :root {
   /* TODO dark mode */
@@ -272,7 +273,8 @@ body {
   align-items: center;
   padding: 0.5rem 1rem;
   gap: 0.625rem;
-  height: 1.75rem;
+  /* height: 1.75rem; */
+  font-size: 0.875rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -392,4 +394,57 @@ h2 {
   justify-content: center;
   gap: 1rem;
   margin-bottom: 4rem;
+}
+
+input {
+  border-radius: 0.625rem;
+  border: none;
+  background: var(--secondary); /* or background? */
+  height: 1.875rem;
+  padding-left: 1rem;
+}
+
+/* QR */
+.qr-scanner {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  overflow: hidden;
+}
+
+#camera-stream {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.qr-result {
+  position: absolute;
+  bottom: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--secondary);
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  border: var(--primary) solid;
+  text-align: center;
+  max-width: 90%;
+  z-index: 10;
+}
+
+.qr-detected {
+  color: var(--primary);
+}
+
+.qr-detected p {
+  margin: 0.25rem 0;
+}
+
+.qr-detected strong {
+  color: var(--success);
+  font-size: 1.1rem;
 }
