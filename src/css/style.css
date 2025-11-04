@@ -449,7 +449,6 @@ input {
   font-size: 1.1rem;
 }
 
-<<<<<<< HEAD
 /* --- Kasutaja seadistused  --- */
 
 .settings-container {
@@ -596,7 +595,7 @@ input {
     gap: 1rem;
   }
 }
-=======
+
 .homepage {
   padding: 8.75vh 3.75rem 5vh 3.75rem;
   text-align: center;
@@ -610,4 +609,3 @@ input {
     width: 100%;
   }
 }
->>>>>>> main
