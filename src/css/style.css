@@ -19,7 +19,6 @@
   --complimentary: #595861;
   --primary: #0a014f;
   --secondary: #e5edff;
-  --cta: #0a014f;
   --disabled-bg: #d9d9d9;
   --disabled-text: #555;
 }
@@ -43,6 +42,7 @@ body {
   align-items: center;
   position: relative;
   width: 100%;
+  height: 6rem;
   background-color: var(--secondary);
   border-bottom: 0.125rem solid var(--primary);
 }
@@ -51,7 +51,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1.5rem;
+  padding: 0.3rem 1.5rem;
   width: 100%;
 }
 
@@ -59,15 +59,16 @@ body {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .navbar p {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 400;
 }
 
 .button-navbar button {
-  background-color: white;
+  background-color: var(--background);
   color: var(--primary);
   border: 0.0625rem solid var(--primary);
   padding: 0.5rem 1rem;
@@ -79,7 +80,7 @@ body {
 
 .button-navbar button:hover {
   background-color: var(--primary);
-  color: white;
+  color: var(--background);
 }
 
 /* My bookings */
@@ -133,8 +134,8 @@ body {
 }
 
 .text_content .button button {
-  background-color: #134e04;
-  color: white;
+  background-color: var(--success);
+  color: var(--background);
   border: none;
   border-radius: 0.375rem;
   font-size: 0.9375rem;
@@ -160,10 +161,9 @@ body {
   padding: 0.375rem 0.625rem;
   border-radius: 0.375rem;
   border: 0.0625rem solid var(--primary);
-  font-family: "Jost", sans-serif;
   font-size: 0.875rem;
   color: var(--primary);
-  background: white;
+  background: var(--background);
   margin-bottom: 1.25rem;
 }
 
@@ -226,8 +226,8 @@ body {
 
 /* Available */
 .room-card.available button {
-  background: var(--cta);
-  color: white;
+  background: var(--primary);
+  color: var(--background);
 }
 
 .room-card.available button:hover {
@@ -243,7 +243,7 @@ body {
 
 .room-card.not-available button {
   background: #888;
-  color: white;
+  color: var(--background);
   cursor: not-allowed;
 }
 
@@ -341,12 +341,112 @@ h2 {
   font-weight: 600;
 }
 
+/* Confirmation message */
+.confirmation-message {
+  margin-top: 5rem;
+  display: flex;
+  width: auto;
+  height: auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 25rem;
+}
+
+.confirmation-message h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Room details form */
+.room-details form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.room-details .btn {
+  align-self: flex-start;
+}
+
+.room-details label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.room-details input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid var(--secondary);
+  border-radius: 0.375rem;
+  background-color: var(--secondary);
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.room-details input::placeholder {
+  color: var(--complimentary);
+}
+
+/* Delete and Save buttons */
+.delete-save-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
 input {
   border-radius: 0.625rem;
   border: none;
   background: var(--secondary); /* or background? */
   height: 1.875rem;
   padding-left: 1rem;
+}
+
+/* QR */
+.qr-scanner {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  overflow: hidden;
+}
+
+#camera-stream {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.qr-result {
+  position: absolute;
+  bottom: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--secondary);
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  border: var(--primary) solid;
+  text-align: center;
+  max-width: 90%;
+  z-index: 10;
+}
+
+.qr-detected {
+  color: var(--primary);
+}
+
+.qr-detected p {
+  margin: 0.25rem 0;
+}
+
+.qr-detected strong {
+  color: var(--success);
+  font-size: 1.1rem;
 }
 
 .homepage {
