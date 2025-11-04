@@ -88,3 +88,112 @@
     padding: 0 1rem;
   }
 }
+
+/* Feature component */
+.feature-pane {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  padding: 2.75rem 1.5rem;
+  /* translucent base for glass effect */
+  background: rgba(255, 255, 255, 0.56);
+  /* -webkit-backdrop-filter: blur(12px) saturate(120%); */
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 0.0625rem solid var(--primary);
+  /* layered, soft shadow to gently lift the card */
+  box-shadow:
+    0 10px 30px rgba(10, 1, 79, 0.06),
+    0 2px 8px rgba(10, 1, 79, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  color: var(--primary);
+
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #031036;
+  }
+
+  &::before,
+  .feature-pane__bg {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    top: -28%;
+    left: -28%;
+    width: 156%;
+    height: 156%;
+    background:
+      radial-gradient(
+        35% 28% at 12% 22%,
+        rgba(124, 77, 255, 0.24),
+        transparent 80%
+      ),
+      radial-gradient(
+        30% 24% at 86% 34%,
+        rgba(0, 188, 212, 0.22),
+        transparent 80%
+      ),
+      linear-gradient(
+        120deg,
+        rgba(124, 77, 255, 0.19),
+        rgba(0, 188, 212, 0.17),
+        rgba(255, 193, 7, 0.16)
+      );
+    filter: blur(40px) saturate(125%);
+    transform: translate3d(0, 0, 0) scale(1.025);
+    will-change: transform;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+    animation: feature-gradient-move 18s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02)
+    );
+    pointer-events: none;
+    /* Variant: explicit element background (used in HTML example) */
+    /* colored rim glow: subtle colored halo to make the gradient pop a touch more */
+    /* keep existing overlay, add subtle glow via box-shadow on pseudo-element */
+    box-shadow:
+      0 8px 28px rgba(124, 77, 255, 0.035),
+      0 4px 18px rgba(0, 188, 212, 0.03);
+    border-radius: inherit;
+  }
+}
+
+@keyframes feature-gradient-move {
+  0% {
+    transform: translateX(-6%) translateY(0);
+  }
+  50% {
+    transform: translateX(6%) translateY(3%);
+  }
+  100% {
+    transform: translateX(-6%) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-pane::before {
+    animation: none;
+  }
+}
+
+@keyframes feature-pulse {
+  0%,
+  100% {
+    filter: blur(36px) saturate(100%);
+    transform: translate3d(-1%, 0, 0) scale(1.02);
+  }
+  50% {
+    filter: blur(34px) saturate(105%);
+    transform: translate3d(1%, 2%, 0) scale(1.03);
+  }
+}

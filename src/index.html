@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <nav class="navbar">
+    <!-- Võib-olla pole isegi seda vaja kodulehele -->
+    <!-- <nav class="navbar">
       <div class="navitems">
         <div class="nav-left">
           <div class="button-navbar">
@@ -25,7 +26,7 @@
           </div>
         </div>
       </div>
-    </nav>
+    </nav> -->
     <div class="split split-nav">
       <aside class="pilt">
         <img class="image" src="/assets/MURG.jpg" alt="MURG maja vaade" />
@@ -36,10 +37,34 @@
           <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
           <img src="/assets/murg.png" alt="MURG logo" />
         </header>
+        <!-- TODO lingid siia -->
+        <div class="features">
+          <img
+            src="/assets/Ruumibroneerimine.png"
+            alt="Ruumibroneerimise kuvatõmmis"
+            width="100%"
+            height="auto"
+          />
+          <section class="feature-pane" aria-labelledby="feature-title">
+            <div class="feature-pane__bg" aria-hidden="true"></div>
+            <h2 id="feature-title">Lihtne broneerimine</h2>
+            <p>
+              Leia vaba ruum, skaneeri QR-kood, vali aeg ja kinnita broneering
+              mõne klikiga.
+            </p>
+          </section>
+          <section class="feature-pane" aria-labelledby="feature-title">
+            <div class="feature-pane__bg" aria-hidden="true"></div>
+            <h2 id="feature-title">Hõlpsasti hallatav</h2>
+            <p>
+              Muuda oma broneeringut lihtsalt ja mugavalt, ilma et peaksid
+              uuesti alustama.
+            </p>
+          </section>
+        </div>
         <footer>
-          <a class="btn btn-primary" href="/login/" aria-label="Logi sisse">
-            Logi sisse
-          </a>
+          <!-- TODO kontakt leht jm info siia -->
+          <a class="btn btn-primary" href="/login/"> Logi sisse </a>
         </footer>
       </main>
     </div>
