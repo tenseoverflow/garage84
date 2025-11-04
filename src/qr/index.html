@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Ruumi broneering</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- Navbar-->
+    <nav class="navbar">
+      <div class="navitems">
+        <div class="nav-left">
+          <div class="button-navbar">
+            <button>Kodu</button>
+          </div>
+          <p>QR Code</p>
+        </div>
+        <div class="nav-right">
+          <div class="button-navbar">
+            <button>Loo uus ruum</button>
+          </div>
+          <div class="button-navbar">
+            <button>Settings</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="qr-scanner">
+      <video id="camera-stream" autoplay muted playsinline></video>
+      <canvas id="qr-canvas" style="display: none"></canvas>
+      <div id="qr-result" class="qr-result"></div>
+    </div>
+  </body>
+  <script type="module" src="/js/qr.js"></script>
+</html>
