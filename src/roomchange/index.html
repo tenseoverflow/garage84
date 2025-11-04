@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muuda tuba</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navitems">
+        <div class="nav-left">
+          <div class="button-navbar">
+            <button>Kodu</button>
+          </div>
+          <p>Muuda tuba</p>
+        </div>
+        <div class="nav-right">
+          <div class="button-navbar">
+            <button>Loo uus ruum</button>
+          </div>
+          <div class="button-navbar">
+            <button>Settings</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="split">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <div class="room-details">
+          <form>
+            <label for="room-name">Toa nimi</label>
+            <input id="room-name" type="text" placeholder="Tuba #23" />
+
+            <label for="room-location">Toa asukoht</label>
+            <input id="room-location" type="text" placeholder="Korrus 3" />
+
+            <label for="room-image">Toa pilt</label>
+            <button type="button" class="btn btn-primary">Lae üles pilt</button>
+
+            <label for="room-schedule">Toa tunniplaan</label>
+            <button type="button" class="btn btn-primary">
+              Lae üles excel
+            </button>
+          </form>
+        </div>
+        <div class="delete-save-buttons">
+          <button class="btn btn-error">Kustuta tuba #23</button>
+          <button class="btn btn-success">Salvesta andmed</button>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
