@@ -1,41 +1,72 @@
 <!doctype html>
 <html lang="et">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="" href="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <title>Garage84</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>Tööruumide reserveerimine</title>
+    <meta
+      name="description"
+      content="Sinu lihtne ruumibroneerimise tarkvara lahendus"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <nav>
-      <!-- TODO Navigation content -->
-    </nav>
-    <main>
-      <h1 class="text-3xl">jee garage84!</h1>
-      <button class="btn-small btn-primary">Small Button</button>
-      <button class="btn btn-success">Success</button>
-      <button class="btn-small btn-primary">
-        2. korrus
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-        >
-          <path
-            d="M4 6L8 10L12 6"
-            stroke="#E5EDFF"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+    <!-- Võib-olla pole isegi seda vaja kodulehele -->
+    <!-- <nav class="navbar">
+      <div class="navitems">
+        <div class="nav-left">
+          <div class="button-navbar">
+            <button>Kodu</button>
+          </div>
+          <p>Ruumibroneerimine</p>
+        </div>
+        <div class="nav-right">
+          <div class="button-navbar">
+            <button>Logi sisse</button>
+          </div>
+        </div>
+      </div>
+    </nav> -->
+    <div class="split split-nav">
+      <aside class="pilt">
+        <img class="image" src="/assets/MURG.jpg" alt="MURG maja vaade" />
+      </aside>
+      <main class="homepage">
+        <header>
+          <h1>Tööruumide reserveerimine</h1>
+          <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
+          <img src="/assets/murg.png" alt="MURG logo" />
+        </header>
+        <!-- TODO lingid siia -->
+        <div class="features">
+          <img
+            src="/assets/Ruumibroneerimine.png"
+            alt="Ruumibroneerimise kuvatõmmis"
+            width="100%"
+            height="auto"
           />
-        </svg>
-      </button>
-    </main>
-    <footer>
-      <!-- TODO võibolla -->
-    </footer>
+          <section class="feature-pane" aria-labelledby="feature-title">
+            <div class="feature-pane__bg" aria-hidden="true"></div>
+            <h2 id="feature-title">Lihtne broneerimine</h2>
+            <p>
+              Leia vaba ruum, skaneeri QR-kood, vali aeg ja kinnita broneering
+              mõne klikiga.
+            </p>
+          </section>
+          <section class="feature-pane" aria-labelledby="feature-title">
+            <div class="feature-pane__bg" aria-hidden="true"></div>
+            <h2 id="feature-title">Hõlpsasti hallatav</h2>
+            <p>
+              Muuda oma broneeringut lihtsalt ja mugavalt, ilma et peaksid
+              uuesti alustama.
+            </p>
+          </section>
+        </div>
+        <footer>
+          <!-- TODO kontakt leht jm info siia -->
+          <a class="btn btn-primary" href="/login/"> Logi sisse </a>
+        </footer>
+      </main>
+    </div>
   </body>
 </html>
