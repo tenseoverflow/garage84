@@ -11,6 +11,11 @@ main {
   flex-shrink: 0;
 }
 
+.vorm header {
+  text-align: center;
+  letter-spacing: 0;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -21,11 +26,6 @@ form {
     width: fit-content;
     align-self: center;
   }
-}
-
-.vorm header {
-  text-align: center;
-  letter-spacing: 0;
 }
 
 .reset-pass {

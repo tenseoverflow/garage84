@@ -1,0 +1,71 @@
+.room-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--secondary);
+  border: 0.0625rem solid var(--primary);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  width: 20rem;
+}
+
+.room-card .thumb {
+  flex: 0 0 6.25rem;
+}
+
+.room-card .thumb img {
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 0.375rem;
+  object-fit: cover;
+}
+
+.room-card .details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 0.5rem;
+}
+
+.room-card .details p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--primary);
+}
+
+.room-card .details p:first-of-type {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.room-card button {
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Card States */
+.room-card.available button {
+  background: var(--primary);
+  color: var(--background);
+}
+
+.room-card.available button:hover {
+  background: #050033;
+}
+
+.room-card.not-available {
+  background: var(--disabled-bg);
+  border: 0.0625rem solid var(--disabled-text);
+  color: var(--disabled-text);
+}
+
+.room-card.not-available button {
+  background: #888;
+  color: var(--background);
+  cursor: not-allowed;
+}

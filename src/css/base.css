@@ -1,0 +1,23 @@
+body {
+  background-color: var(--background);
+
+  margin: 0;
+  font-family: "Inter", system-ui, Helvetica, Arial, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  font-size: 16px;
+  color: var(--primary);
+}
+
+/* Typography */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
