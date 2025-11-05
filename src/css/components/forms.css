@@ -1,9 +1,13 @@
-.change-booking form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  align-items: flex-start;
-  align-self: stretch;
+.change-booking {
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    align-items: flex-start;
+    align-self: stretch;
+    padding: 0;
+    border: 0;
+  }
 
   #summary {
     margin: 0;
