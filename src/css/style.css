@@ -27,7 +27,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   --background: #ffffff;
-  --error: #7b0a0a;
+  --danger: #7b0a0a;
   --success: #134e04;
   --complimentary: #595861;
   --primary: #0a014f;

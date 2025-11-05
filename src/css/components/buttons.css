@@ -13,56 +13,41 @@
   color: var(--secondary);
   text-decoration: none;
 
+  &:hover {
+    filter: brightness(85%);
+  }
+
   &:focus {
     outline: 2px solid var(--complimentary);
   }
 }
 
 .btn-small {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 0.5rem 1rem;
-  gap: 0.625rem;
   font-size: 0.875rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  color: var(--secondary);
-  transition: background-color 0.3s ease;
+}
+
+.btn-large {
+  padding: 0.6rem 1.25rem;
+  font-size: 1rem;
 }
 
 /* Button Variants */
 .btn-primary {
   background-color: var(--primary);
-
-  &:hover {
-    filter: brightness(85%);
-  }
 }
 
 .btn-success {
   background-color: var(--success);
-
-  &:hover {
-    filter: brightness(85%);
-  }
 }
 
-.btn-error {
-  background-color: var(--error);
-
-  &:hover {
-    filter: brightness(85%);
-  }
+.btn-danger {
+  background-color: var(--danger);
 }
 
 .btn-invalid,
 .btn[aria-disabled="true"],
 .btn:disabled {
   background-color: var(--complimentary);
-
-  &:hover {
-    filter: brightness(85%);
-  }
+  cursor: not-allowed;
 }
