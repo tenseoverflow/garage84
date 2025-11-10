@@ -5,27 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
+    <script type="module" src="/js/components/navbar.js"></script>
   </head>
   <body>
-    <!-- Navbar-->
-    <nav class="navbar">
-      <div class="navitems">
-        <div class="nav-left">
-          <div class="button-navbar">
-            <button>Kodu</button>
-          </div>
-          <p>QR Code</p>
-        </div>
-        <div class="nav-right">
-          <div class="button-navbar">
-            <button>Loo uus ruum</button>
-          </div>
-          <div class="button-navbar">
-            <button>Settings</button>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <app-navbar></app-navbar>
     <div class="qr-scanner">
       <video id="camera-stream" autoplay muted playsinline></video>
       <canvas id="qr-canvas" style="display: none"></canvas>
