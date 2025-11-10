@@ -96,15 +96,15 @@
           </div>
         </div>
         <!-- change bookling -->
-        <div class="change-booking">
-          <h2>Muuda broneeringut</h2>
-          <form action="">
+        <form class="change-booking" action="">
+          <fieldset>
             <label for="booking-title">Pealkiri</label>
             <input
               type="text"
               id="booking-title"
               name="booking-title"
               value="Koosolek"
+              required
             />
 
             <label for="booking-date">Kuupäev</label>
@@ -113,6 +113,7 @@
               id="booking-date"
               name="booking-date"
               value="Juuni 2024"
+              required
             />
 
             <label for="booking-time">Kellaaeg</label>
@@ -121,19 +122,24 @@
               id="booking-time"
               name="booking-time"
               value="9:50-11:00"
+              required
             />
+          </fieldset>
 
-            <p id="summary">
-              Kellast 14:00 kuni 15:00 teisipäeval 01. jaanuaril 1970.
-            </p>
-            <footer>
-              <button id="cancel-booking" class="btn btn-error">
-                Tühista broneering
-              </button>
-              <button class="btn btn-primary">Muuda broneeringut</button>
-            </footer>
-          </form>
-        </div>
+          <p id="summary">
+            Kellast 14:00 kuni 15:00 teisipäeval 01. jaanuaril 1970.
+          </p>
+          <footer>
+            <button
+              id="cancel-booking"
+              class="btn btn-danger"
+              onclick="location.href='/bookingconf/'"
+            >
+              Tühista broneering
+            </button>
+            <button class="btn btn-primary">Muuda broneeringut</button>
+          </footer>
+        </form>
         <!-- <div class="change-booking-mobile">
           <a href="/change-booking/" class="btn btn-small btn-primary"
             >Muuda broneeringut</a

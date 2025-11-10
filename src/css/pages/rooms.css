@@ -1,0 +1,57 @@
+.room-details form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.room-details .btn {
+  align-self: flex-start;
+}
+
+.room-details label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.room-details input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid var(--secondary);
+  border-radius: 0.375rem;
+  background-color: var(--secondary);
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.room-details input::placeholder {
+  color: var(--complimentary);
+}
+
+.room-management {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background-color: var(--secondary);
+  border: 0.125rem solid var(--primary);
+  border-radius: 0.625rem;
+  padding: 1.5rem 2rem;
+  width: 60%;
+  min-width: 320px;
+  max-width: 480px;
+}
+
+.room-management h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .room-management {
+    width: 90%;
+  }
+}
