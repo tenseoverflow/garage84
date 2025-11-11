@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Broneeringu vaade</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script type="module" src="/js/components/navbar.js"></script>
+  </head>
+  <body>
+    <app-navbar></app-navbar>
+    <div class="split split-nav">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <header>
+          <h1>Room #23</h1>
+          <p>Korrus 3</p>
+        </header>
+        <form action="">
+          <label for="booking-date">Vali kuupäev</label>
+          <input id="booking-date" type="date" />
+
+          <label for="booking-start-time">Algusaeg</label>
+          <input id="booking-start-time" type="time" />
+
+          <label for="booking-end-time">Lõppaeg</label>
+          <input id="booking-end-time" type="time" />
+          <p>
+            Kellast <strong id="summary-start">-</strong> kuni
+            <strong id="summary-end">-</strong> kuupäeval
+            <strong id="summary-date">-</strong>
+          </p>
+        </form>
+
+        <!-- Decision -->
+        <footer>
+          <a href="/room/new/" class="btn btn-success">Broneeri</a>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      // Live-update the booking summary when inputs change
+      (function () {
+        const dateInput = document.getElementById("booking-date");
+        const startInput = document.getElementById("booking-start-time");
+        const endInput = document.getElementById("booking-end-time");
+
+        const summaryDate = document.getElementById("summary-date");
+        const summaryStart = document.getElementById("summary-start");
+        const summaryEnd = document.getElementById("summary-end");
+
+        function formatDate(iso) {
+          if (!iso) return "-";
+          try {
+            const d = new Date(iso);
+            return d.toLocaleDateString("et-EE", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          } catch (e) {
+            return iso;
+          }
+        }
+
+        function updateSummary() {
+          summaryDate.textContent = formatDate(dateInput.value);
+          summaryStart.textContent = startInput.value || "-";
+          summaryEnd.textContent = endInput.value || "-";
+        }
+
+        // Update on input/change events
+        [dateInput, startInput, endInput].forEach((el) => {
+          if (!el) return;
+          el.addEventListener("input", updateSummary);
+          el.addEventListener("change", updateSummary);
+        });
+
+        // Initialize on load
+        updateSummary();
+      })();
+    </script>
+  </body>
+</html>
