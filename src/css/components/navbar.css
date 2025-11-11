@@ -28,7 +28,7 @@
   font-weight: 400;
 }
 
-.button-navbar button {
+.nav-link {
   background-color: var(--background);
   color: var(--primary);
   border: 0.0625rem solid var(--primary);
@@ -37,9 +37,35 @@
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--primary);
+    color: var(--background);
+  }
 }
 
-.button-navbar button:hover {
+.nav-link-mobile {
   background-color: var(--primary);
-  color: var(--background);
+  color: #fff;
+  padding: 0.8125rem 0.8125rem;
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    display: none;
+  }
+
+  .nav-link-mobile {
+    display: block;
+    cursor: pointer;
+  }
 }
