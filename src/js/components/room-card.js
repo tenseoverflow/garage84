@@ -5,14 +5,14 @@ template.innerHTML = `
     <div class="details text_content">
       <p class="title"></p>
       <p class="desc"></p>
-      <button class="action btn" part="button"></button>
+      <a class="action btn" part="button" href="#" role="button"></a>
     </div>
   </div>
 `;
 
 class RoomCard extends HTMLElement {
   static get observedAttributes() {
-    return ["title", "description", "img", "status", "button-text"];
+    return ["title", "description", "img", "status", "button-url"];
   }
 
   constructor() {
@@ -22,7 +22,7 @@ class RoomCard extends HTMLElement {
     this._imgEl = this.querySelector("img");
     this._titleEl = this.querySelector(".title");
     this._descEl = this.querySelector(".desc");
-    this._button = this.querySelector("button.action");
+    this._button = this.querySelector("a.action");
     this._root = this.querySelector(".room-card");
 
     this._onClick = this._onClick.bind(this);
@@ -45,7 +45,7 @@ class RoomCard extends HTMLElement {
 
   // support setting properties directly on the element instance
   _upgradeProperties() {
-    ["title", "description", "img", "status", "buttonText"].forEach((prop) => {
+    ["title", "description", "img", "status", "buttonUrl"].forEach((prop) => {
       if (Object.prototype.hasOwnProperty.call(this, prop)) {
         const val = this[prop];
         delete this[prop];
@@ -82,11 +82,11 @@ class RoomCard extends HTMLElement {
     this.setAttribute("status", v);
   }
 
-  get buttonText() {
-    return this.getAttribute("button-text") || "";
+  get buttonUrl() {
+    return this.getAttribute("button-url") || "";
   }
-  set buttonText(v) {
-    this.setAttribute("button-text", v);
+  set buttonUrl(v) {
+    this.setAttribute("button-url", v);
   }
 
   _render() {
@@ -131,8 +131,19 @@ class RoomCard extends HTMLElement {
     this._button.textContent = text;
     this._button.className = "action btn " + (variantClass ? variantClass : "");
 
-    if (disabled) this._button.setAttribute("disabled", "");
-    else this._button.removeAttribute("disabled");
+    const url = this.buttonUrl || "#";
+    if (disabled) {
+      // anchor: remove href to prevent navigation and mark as disabled for styling/accessibility
+      this._button.removeAttribute("href");
+      this._button.setAttribute("aria-disabled", "true");
+      this._button.setAttribute("tabindex", "-1");
+      this._button.setAttribute("disabled", "");
+    } else {
+      this._button.setAttribute("href", url);
+      this._button.removeAttribute("aria-disabled");
+      this._button.removeAttribute("tabindex");
+      this._button.removeAttribute("disabled");
+    }
 
     // also toggle wrapper classes to match previous markup selectors
     if (this._root) {
@@ -144,9 +155,15 @@ class RoomCard extends HTMLElement {
     }
   }
 
-  _onClick() {
-    // If button is disabled do nothing
-    if (this._button.hasAttribute("disabled")) return;
+  _onClick(event) {
+    // If button is disabled do nothing and prevent navigation
+    if (this._button.hasAttribute("disabled")) {
+      if (event && typeof event.preventDefault === "function")
+        event.preventDefault();
+      return;
+    }
+
+    // Dispatch the room-action event for listeners. Do not prevent navigation here so the anchor can navigate.
     const payload = { title: this.title, status: this.status };
     this.dispatchEvent(
       new CustomEvent("room-action", {
@@ -155,6 +172,8 @@ class RoomCard extends HTMLElement {
         composed: true,
       })
     );
+
+    // If a consumer wants to intercept navigation, they can listen for 'room-action' and call event.preventDefault() on the click.
   }
 }
 
