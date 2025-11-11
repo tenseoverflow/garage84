@@ -5,78 +5,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
+    <script type="module" src="/js/components/navbar.js"></script>
+    <script type="module" src="/js/components/room-card.js"></script>
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar">
-      <div class="navitems">
-        <div class="nav-left">
-          <div class="button-navbar">
-            <button>Kodu</button>
-          </div>
-          <p>Ruumibroneerimine</p>
-        </div>
-        <div class="nav-right">
-          <div class="button-navbar">
-            <button>Loo uus ruum</button>
-          </div>
-          <div class="button-navbar">
-            <button>Settings</button>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <app-navbar></app-navbar>
     <!-- My bookings -->
     <div class="my_bookings">
+      <a class="mobile-qr-button btn btn-small btn-primary" href="/qr/"
+        >Skaneeri QR kood</a
+      >
       <h1>Minu broneeringud</h1>
-      <div class="frame_my_bookings">
-        <div class="info_my_bookings">
-          <div class="room_picture">
-            <img
-              src="/assets/MURG.jpg"
-              height="100"
-              alt="pilt MURGi hoonest."
-            />
-          </div>
-          <div class="text_content">
-            <p>Room #23</p>
-            <p>A luxurious meeting space for all meeting needs.</p>
-            <button class="btn btn-success">Go to booking</button>
-          </div>
-        </div>
+      <div class="room-grid">
+        <room-card
+          title="Room #23"
+          description="A luxurious meeting space for all meeting needs."
+          img="/assets/MURG.jpg"
+          status="booked"
+        ></room-card>
       </div>
     </div>
     <!-- New booking -->
     <div class="new_booking">
-      <h1>Ruumid broneerimiseks</h1>
-      <select class="floor-select">
-        <option value="1_floor">1. korrus</option>
-        <option value="2_floor">2. korrus</option>
-        <option value="3_floor">3. korrus</option>
-      </select>
+      <div class="booking-header">
+        <h1>Ruumid broneerimiseks</h1>
+        <select class="floor-select">
+          <option value="1_floor">1. korrus</option>
+          <option value="2_floor">2. korrus</option>
+          <option value="3_floor">3. korrus</option>
+        </select>
+      </div>
       <div class="rooms-grid">
         <!-- Example available card -->
-        <div class="room-card available">
-          <div class="thumb">
-            <img src="/assets/MURG.jpg" alt="Room image" />
-          </div>
-          <div class="details">
-            <p>Room #23</p>
-            <p>A luxurious meeting space for all meeting needs.</p>
-            <button>Available times</button>
-          </div>
-        </div>
+        <room-card
+          title="Room #23"
+          description="A luxurious meeting space for all meeting needs."
+          img="/assets/MURG.jpg"
+          status="available"
+        ></room-card>
         <!-- Example not available card -->
-        <div class="room-card not-available">
-          <div class="thumb">
-            <img src="/assets/MURG.jpg" alt="Room image" />
-          </div>
-          <div class="details">
-            <p>Room #23</p>
-            <p>A luxurious meeting space for all meeting needs.</p>
-            <button>Not available</button>
-          </div>
-        </div>
+        <room-card
+          title="Room #23"
+          description="A luxurious meeting space for all meeting needs."
+          img="/assets/MURG.jpg"
+          status="not-available"
+        ></room-card>
       </div>
     </div>
   </body>
