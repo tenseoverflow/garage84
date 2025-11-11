@@ -49,9 +49,28 @@
   font-weight: 600;
 }
 
-/* Responsive */
+/* Form styles for "Loo uus ruum" page */
+.new-room {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.new-room form {
+  max-width: 40rem;
+}
+
+#room-image-label {
+  width: fit-content;
+}
+
 @media (max-width: 768px) {
   .room-management {
     width: 90%;
+  }
+
+  .new-room {
+    margin: 1rem;
+    padding: 1rem;
+    max-width: 90%;
   }
 }
