@@ -17,6 +17,7 @@
         <header>
           <h1>Room #23</h1>
           <p>Korrus 3</p>
+          <a class="link-hollowed" href="/room/change/">Muuda ruumi</a>
         </header>
         <!-- Kalendri komponent -->
         <div class="calendar">
@@ -113,10 +114,11 @@
             Kellast 14:00 kuni 15:00 teisipäeval 01. jaanuaril 1970.
           </p>
           <footer>
+            <!-- TODO: Should alert user after clicking -->
             <button
               id="cancel-booking"
               class="btn btn-danger"
-              onclick="location.href='/bookingconf/'"
+              onclick="location.href='/booking/cancelled/'"
             >
               Tühista broneering
             </button>
