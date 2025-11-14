@@ -1,47 +1,166 @@
+/* AUTH PAGE STYLESHEET */
 main {
-  padding: 8.75vh 3.75rem 5vh 3.75rem;
+  padding: 8vh 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+/* AUTH CARD (SIGNUP + VERIFY) */
 .vorm {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3.125vh;
-  background-color: var(--background-light);
-  flex-shrink: 0;
-}
+  gap: 3rem;
 
-.vorm header {
+  background: linear-gradient(
+    135deg,
+    rgb(234, 240, 255) 0%,
+    rgba(232, 239, 255, 0.88) 40%,
+    rgba(220, 242, 255, 0.78) 70%,
+    rgba(245, 255, 240, 0.82) 100%
+  );
+
+  padding: 3rem 3.5rem;
+  border-radius: 1.5rem;
+
+  border: 0.12rem solid rgba(10, 1, 79, 0.2);
+
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.06);
+
+  width: 100%;
+  max-width: 32rem;
   text-align: center;
-  letter-spacing: 0;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.3s ease;
 }
 
+.vorm:hover {
+  transform: translateY(-0.15rem);
+  box-shadow: 0 0.6rem 1.2rem rgba(0, 0, 0, 0.07);
+}
+
+/* HEADER */
+.vorm header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: var(--primary);
+}
+
+.vorm header p {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 24rem;
+  color: #1b1b5f;
+}
+
+/* FORM LAYOUT */
 form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   width: 100%;
-
-  button {
-    width: fit-content;
-    align-self: center;
-  }
+  gap: 1.2rem;
 }
 
+/* Form labels */
+form label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--primary);
+  text-align: left;
+}
+
+/* INPUTS */
+form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid rgba(10, 1, 79, 0.3);
+  background-color: #ffffff;
+  color: var(--primary);
+  transition: border-color 0.2s;
+}
+
+form input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+/* Buttons inside the form */
+form button.btn-primary {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1.05rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+}
+
+/* Link: "Unustasin parooli" */
 .reset-pass {
-  color: #0033db;
-  text-decoration-line: underline;
-  text-decoration-style: solid;
+  color: var(--primary);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-align: right;
+  width: auto;
+  margin-top: -0.6rem;
 }
 
+/* Bottom section: "On olemas konto?" */
 .registreeru {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.registreeru p {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.registreeru .btn-primary {
+  padding: 0.7rem 1.4rem;
+  font-size: 1rem;
+  border-radius: 0.6rem;
+}
+
+/* VERIFY PAGE BUTTONS */
+.verify-actions {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
+  width: 100%;
+  gap: 1rem;
 }
 
-/* Mobile responsiveness */
+.verify-actions button {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+}
+
+/* Secondary button (Tagasi sisselogimisele) */
+.btn-secondary {
+  margin-top: 1.5rem;
+  background-color: #ffffff;
+  color: var(--primary);
+  padding: 0.8rem 1.2rem;
+  border: 0.1rem solid var(--primary);
+  border-radius: 0.6rem;
+  font-weight: 600;
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
 @media screen and (max-width: 768px) {
   main {
     padding: 5vh 3vw;
