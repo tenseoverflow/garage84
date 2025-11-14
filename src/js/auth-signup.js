@@ -1,4 +1,8 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "./firebase.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,34 +13,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordAgainInput = document.getElementById("password-again");
 
   signupForm.addEventListener("submit", async (e) => {
-    e.preventDefault(); // Prevent default page reload
+    e.preventDefault();
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
     const passwordAgain = passwordAgainInput.value.trim();
 
-    // ✅ Check if passwords match
+    // Password check
     if (password !== passwordAgain) {
-      alert("Paroolid ei ühti!"); // “Passwords do not match!”
+      alert("Paroolid ei ühti!");
       return;
     }
 
     try {
-      // ✅ Create user in Firebase
+      // Create the user
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      // ✅ Set user's display name
-      await updateProfile(userCredential.user, { displayName: name });
+      const user = userCredential.user;
 
-      console.log("✅ Account created:", userCredential.user);
-      alert("Konto loodud edukalt!"); // “Account created successfully!”
+      // Set display name
+      await updateProfile(user, { displayName: name });
 
-      // ✅ Redirect to your verification page
+      // ✅ SEND VERIFICATION EMAIL
+      await sendEmailVerification(user);
+
+      console.log("📨 Verification email sent to:", email);
+
+      alert("Konto loodud! Kontrolli oma meili ja kinnita oma konto.");
+
+      // Redirect to verify page
       window.location.href = "/verify/";
     } catch (error) {
       console.error("❌ Signup error:", error.message);
