@@ -1,6 +1,6 @@
 .split {
   display: grid;
-  grid-template-columns: auto 37.8125rem;
+  grid-template-columns: auto 47.8125rem;
   height: 100vh;
   width: 100vw;
 }
@@ -50,6 +50,21 @@ footer {
     text-underline-offset: auto;
     text-underline-position: from-font;
   }
+}
+
+/* When chrome autofills, keep the colors nice */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+}
+
+/* On focus */
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+  border-color: var(--primary) !important;
 }
 
 @media screen and (max-width: 768px) {
