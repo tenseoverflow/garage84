@@ -6,6 +6,8 @@
     <title>Ruumibroneerimise login</title>
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/auth.css" />
+    <script type="module" src="/js/firebase.js"></script>
+    <script type="module" src="/js/auth-login.js"></script>
   </head>
   <body>
     <div class="split">
@@ -30,12 +32,7 @@
             />
             <a class="reset-pass" href="/reset-password/">Unustasin parooli</a>
             <br />
-            <button
-              onclick="location.href = '/booking/';"
-              class="btn btn-primary"
-            >
-              Logi sisse
-            </button>
+            <button type="submit" class="btn btn-primary">Logi sisse</button>
           </form>
         </div>
         <div class="registreeru">
