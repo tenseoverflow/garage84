@@ -61,6 +61,132 @@
   display: none;
 }
 
+/* ================================
+   USER MENU (NAVBAR PROFILE DROPDOWN)
+   ================================ */
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.user-menu:hover {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 0.5rem;
+}
+
+.user-avatar {
+  width: 2.4rem;
+  height: 2.4rem;
+  background: var(--primary);
+  color: var(--secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--primary);
+  font-family: inherit;
+}
+
+.user-dropdown {
+  display: none;
+  flex-direction: column;
+
+  position: absolute;
+  right: 0;
+  top: 3.3rem;
+
+  background: white;
+  border: 1px solid var(--primary);
+  border-radius: 0.6rem;
+
+  padding: 0.25rem 0;
+  min-width: 13rem;
+  z-index: 100;
+
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.user-dropdown.open {
+  display: flex;
+}
+
+.user-dropdown a,
+.user-dropdown button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  width: 100%;
+  padding: 0.75rem 1rem;
+
+  font-size: 1.05rem;
+  font-weight: 500;
+  font-family: inherit;
+
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* logout img */
+.user-dropdown button svg,
+.user-dropdown a svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke: var(--primary);
+}
+
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+  background: var(--secondary);
+}
+
+.user-dropdown a:focus,
+.user-dropdown button:focus {
+  outline: none;
+}
+
+.logout-icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.user-caret {
+  font-size: 3rem;
+  color: var(--primary);
+  margin-left: 0.25rem;
+  transition: transform 0.1s ease;
+}
+
+.user-dropdown.open ~ .user-caret,
+.user-menu.open .user-caret {
+  transform: rotate(180deg);
+}
+
+/* MOBILE */
+@media (max-width: 788px) {
+  .user-name {
+    display: none;
+  }
+}
+
 @media (max-width: 788px) {
   .nav-link {
     display: none;
