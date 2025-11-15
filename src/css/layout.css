@@ -1,13 +1,10 @@
 /* --- DESKTOP SPLIT LAYOUT --- */
+/* --- DESKTOP SPLIT LAYOUT --- */
 .split {
   display: grid;
-  grid-template-columns: auto 47.8125rem;
-  height: 100vh;
-  /* width: 100vw; */
-}
-
-.split-nav {
-  height: calc(100vh - 6rem);
+  grid-template-columns: minmax(40%, 1fr) 48rem;
+  width: 100vw;
+  min-height: 100vh;
 }
 
 /* LEFT IMAGE (fixed on scroll) */
@@ -15,11 +12,18 @@
   position: sticky;
   top: 0;
   height: 100vh;
+  position: sticky;
+  top: 0;
+  height: 100vh;
   width: 100%;
   overflow: hidden;
-  z-index: -1;
 }
 
+.pilt img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
 .pilt img {
   height: 100%;
   width: 100%;
@@ -28,66 +32,56 @@
 }
 
 /* RIGHT CONTENT (scrolls normally) */
+/* RIGHT CONTENT (scrolls normally) */
 main {
+  padding: 5vh 3rem;
   padding: 5vh 3rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   height: auto;
   overflow-y: visible;
+  gap: 1.5rem;
+  height: auto;
+  overflow-y: visible;
 }
 
+/* FOOTER */
 /* FOOTER */
 footer {
   display: flex;
   padding: 10px 0;
   justify-content: space-between;
   align-items: center;
-  align-self: stretch;
-  gap: 0.5rem;
+}
 
-  a {
-    color: var(--primary);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-decoration-skip-ink: auto;
-    text-decoration-thickness: auto;
-    text-underline-offset: auto;
-    text-underline-position: from-font;
+footer a {
+  color: var(--primary);
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+/* --- TABLET (medium screens) --- */
+@media screen and (max-width: 1200px) {
+  .split {
+    grid-template-columns: minmax(35%, 1fr) 32rem;
   }
 }
 
-/* When chrome autofills, keep the colors nice */
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
-  box-shadow: 0 0 0 1000px #f5fcff inset !important;
-  -webkit-text-fill-color: var(--primary) !important;
-}
-
-/* On focus */
-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
-  box-shadow: 0 0 0 1000px #f5fcff inset !important;
-  -webkit-text-fill-color: var(--primary) !important;
-  border-color: var(--primary) !important;
-}
-
+/* --- MOBILE (single column layout) --- */
 @media screen and (max-width: 768px) {
-  .split-nav main {
-    padding: 0.95rem 1.25rem;
-  }
-
   .split {
     display: block;
-    height: auto;
-    width: auto;
   }
 
   .pilt {
+    position: relative;
+    height: 40vh;
+    min-height: 15rem;
+  }
+
+  main {
+    padding: 2rem 1.5rem;
     position: relative;
     height: 40vh;
     min-height: 15rem;
