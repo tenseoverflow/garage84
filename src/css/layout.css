@@ -1,3 +1,4 @@
+/* --- DESKTOP SPLIT LAYOUT --- */
 .split {
   display: grid;
   grid-template-columns: auto 47.8125rem;
@@ -9,31 +10,33 @@
   height: calc(100vh - 6rem);
 }
 
-/* some pointless adhoc solution for now */
-.split-nav main {
-  padding: 1.25rem 2.5rem;
-  gap: 0.625rem;
-}
-
+/* LEFT IMAGE (fixed on scroll) */
 .pilt {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   width: 100%;
-  height: 100%;
   overflow: hidden;
-
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 }
 
+.pilt img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* RIGHT CONTENT (scrolls normally) */
 main {
+  padding: 5vh 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 1.5rem;
+  height: auto;
+  overflow-y: visible;
 }
 
+/* FOOTER */
 footer {
   display: flex;
   padding: 10px 0;
@@ -41,6 +44,20 @@ footer {
   align-items: center;
   align-self: stretch;
   gap: 0.5rem;
+
+  a {
+    color: var(--primary);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+  }
 }
 
 /* When chrome autofills, keep the colors nice */
@@ -70,6 +87,12 @@ input:-webkit-autofill:focus {
   }
 
   .pilt {
-    height: 18.75rem;
+    position: relative;
+    height: 40vh;
+    min-height: 15rem;
+  }
+
+  main {
+    padding: 2rem 1.5rem;
   }
 }
