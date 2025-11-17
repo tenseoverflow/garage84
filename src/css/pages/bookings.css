@@ -120,4 +120,9 @@
   .new_booking {
     padding: 1rem 1rem;
   }
+
+  .rooms-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
