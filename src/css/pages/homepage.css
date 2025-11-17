@@ -40,3 +40,9 @@
     border: 0.0625rem solid var(--primary);
   }
 }
+
+@media (max-width: 768px) {
+  .homepage {
+    padding: 5vh 2rem 2.5vh 2rem;
+  }
+}
