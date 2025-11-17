@@ -19,7 +19,7 @@ class AppNavbar extends HTMLElement {
           </div>
           <div class="nav-right">
             <div class="button-navbar">
-              <a class="nav-link" href="/booking/new/">Loo uus ruum</a>
+              <a class="nav-link" href="/room/new/">Loo uus ruum</a>
             </div>
             <div class="button-navbar">
               <a class="nav-link" href="/settings/">Settings</a>

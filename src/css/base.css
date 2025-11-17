@@ -11,6 +11,10 @@ body {
   color: var(--primary);
 }
 
+.with-navbar {
+  padding-top: 6rem;
+}
+
 /* Typography */
 h1 {
   font-size: 2rem;
