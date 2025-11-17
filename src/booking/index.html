@@ -56,5 +56,10 @@
         ></room-card>
       </div>
     </div>
+    <script>
+      if (!/Android|iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        document.querySelector(".mobile-qr-button").style.display = "none";
+      }
+    </script>
   </body>
 </html>

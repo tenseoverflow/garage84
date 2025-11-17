@@ -101,18 +101,14 @@
 }
 
 .mobile-qr-button {
-  display: none;
+  display: block;
+  background-color: var(--primary);
+  color: var(--background);
+  font-weight: bold;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
-  .mobile-qr-button {
-    display: block;
-    background-color: var(--primary);
-    color: var(--background);
-    font-weight: bold;
-    text-align: center;
-  }
-
   .my_bookings {
     padding: 1rem 1rem;
   }
