@@ -8,12 +8,14 @@ class AppNavbar extends HTMLElement {
     if (this._initialized) return;
     this._initialized = true;
 
+    const title = this.getAttribute("title") || "Ruumibroneerimine";
+
     this.innerHTML = `
       <nav class="navbar">
         <div class="navitems">
           <div class="nav-left">
             <a class="nav-link" href="/booking/">Kodu</a>
-            <p>Ruumibroneerimine</p>
+            <p>${title}</p>
           </div>
           <div class="nav-right">
             <div class="button-navbar">
