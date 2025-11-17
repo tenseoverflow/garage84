@@ -1,86 +1,99 @@
 <!doctype html>
+
 <html lang="et">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Broneeringu vaade</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loo uus ruum</title>
     <link rel="stylesheet" href="/css/style.css" />
     <script type="module" src="/js/components/navbar.js"></script>
   </head>
-  <body>
-    <app-navbar title="Broneeringu vaade"></app-navbar>
-    <div class="split split-nav">
-      <div class="pilt">
-        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
-      </div>
-      <main>
+  <body class="with-navbar">
+    <app-navbar title="Loo uus ruum"></app-navbar>
+    <main>
+      <div class="vorm new-room">
         <header>
-          <h1>Room #23</h1>
-          <p>Korrus 3</p>
+          <h1>Loo uus ruum</h1>
         </header>
-        <form action="">
-          <label for="booking-date">Vali kuupäev</label>
-          <input id="booking-date" type="date" />
 
-          <label for="booking-start-time">Algusaeg</label>
-          <input id="booking-start-time" type="time" />
+        <form action="/booking/" method="post" enctype="multipart/form-data">
+          <label for="room-name">Toa nimi</label>
+          <input id="room-name" name="name" required type="text" />
 
-          <label for="booking-end-time">Lõppaeg</label>
-          <input id="booking-end-time" type="time" />
-          <p>
-            Kellast <strong id="summary-start">-</strong> kuni
-            <strong id="summary-end">-</strong> kuupäeval
-            <strong id="summary-date">-</strong>
-          </p>
+          <label for="room-location">Toa asukoht</label>
+          <input id="room-location" name="location" required type="text" />
+
+          <label for="room-image">Toa pilt</label>
+          <input
+            id="room-image"
+            name="image"
+            type="file"
+            accept="image/*"
+            style="position: absolute; left: -9999px"
+          />
+          <label
+            for="room-image"
+            class="btn btn-small btn-primary"
+            id="room-image-label"
+            >Lisa pilt</label
+          >
+          <span
+            class="file-name"
+            id="room-image-name"
+            aria-hidden="true"
+            style="
+              margin-left: 0.6rem;
+              color: var(--complimentary);
+              font-size: 0.95rem;
+            "
+          ></span>
+
+          <label for="room-image">Toa excel</label>
+          <input
+            id="room-image"
+            name="image"
+            type="file"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            style="position: absolute; left: -9999px"
+          />
+          <label
+            for="room-image"
+            class="btn btn-small btn-primary"
+            id="room-image-label"
+            >Lisa exceli tabel</label
+          >
+          <span
+            class="file-name"
+            id="room-image-name"
+            aria-hidden="true"
+            style="
+              margin-left: 0.6rem;
+              color: var(--complimentary);
+              font-size: 0.95rem;
+            "
+          ></span>
+
+          <button
+            type="submit"
+            onclick="location.href='/confirmed/'"
+            class="btn btn-success"
+          >
+            Loo ruum
+          </button>
         </form>
-
-        <!-- Decision -->
-        <footer>
-          <a href="/room/new/" class="btn btn-success">Broneeri</a>
-        </footer>
-      </main>
-    </div>
+      </div>
+    </main>
 
     <script>
-      // Live-update the booking summary when inputs change
+      // Update visible filename when a file is chosen
       (function () {
-        const dateInput = document.getElementById("booking-date");
-        const startInput = document.getElementById("booking-start-time");
-        const endInput = document.getElementById("booking-end-time");
-
-        const summaryDate = document.getElementById("summary-date");
-        const summaryStart = document.getElementById("summary-start");
-        const summaryEnd = document.getElementById("summary-end");
-
-        function formatDate(iso) {
-          if (!iso) return "-";
-          try {
-            const d = new Date(iso);
-            return d.toLocaleDateString("et-EE", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
-          } catch (e) {
-            return iso;
-          }
-        }
-
-        function updateSummary() {
-          summaryDate.textContent = formatDate(dateInput.value);
-          summaryStart.textContent = startInput.value || "-";
-          summaryEnd.textContent = endInput.value || "-";
-        }
-
-        // Update on input/change events
-        [dateInput, startInput, endInput].forEach((el) => {
-          if (!el) return;
-          el.addEventListener("input", updateSummary);
-          el.addEventListener("change", updateSummary);
+        var input = document.getElementById("room-image");
+        var nameSpan = document.getElementById("room-image-name");
+        if (!input) return;
+        input.addEventListener("change", function () {
+          var f = input.files && input.files[0];
+          nameSpan.textContent = f ? f.name : "";
         });
-
-        // Initialize on load
-        updateSummary();
       })();
     </script>
   </body>
