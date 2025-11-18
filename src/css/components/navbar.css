@@ -179,7 +179,7 @@
 }
 
 /* MOBILE */
-@media (max-width: 788px) {
+@media (max-width: 988px) {
   .user-name {
     display: none;
   }
