@@ -14,10 +14,10 @@ onAuthStateChanged(auth, (user) => {
 
   // Show current state
   if (user.emailVerified) {
-    statusText.textContent = "✅ Sinu e-posti aadress on kinnitatud!";
+    statusText.textContent = "Sinu e-posti aadress on kinnitatud!";
     window.location.href = "/booking/";
   } else {
-    statusText.textContent = "❌ Sinu e-posti aadress ei ole veel kinnitatud.";
+    statusText.textContent = "Sinu e-posti aadress ei ole veel kinnitatud.";
   }
 
   // Handle resend email
@@ -39,7 +39,7 @@ onAuthStateChanged(auth, (user) => {
       window.location.href = "/booking/";
     } else {
       statusText.textContent =
-        "❌ Meiliaadressi pole veel kinnitatud. Kontrolli uuesti.";
+        "Meiliaadressi pole veel kinnitatud. Kontrolli uuesti.";
     }
   });
 });

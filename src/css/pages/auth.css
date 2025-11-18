@@ -38,11 +38,6 @@ main {
     box-shadow 0.3s ease;
 }
 
-.vorm:hover {
-  transform: translateY(-0.15rem);
-  box-shadow: 0 0.6rem 1.2rem rgba(0, 0, 0, 0.07);
-}
-
 /* HEADER */
 .vorm header h1 {
   font-size: 1.8rem;
@@ -76,7 +71,7 @@ form label {
 
 /* INPUTS */
 form input {
-  width: 100%;
+  width: auto;
   padding: 0.75rem 1rem;
   font-size: 1rem;
   border-radius: 0.6rem;
@@ -84,6 +79,16 @@ form input {
   background-color: #ffffff;
   color: var(--primary);
   transition: border-color 0.2s;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.3s ease;
+
+  &:hover,
+  &:focus {
+    transform: translateY(-0.075rem);
+    box-shadow: 0 0.6rem 1.2rem rgba(0, 0, 0, 0.07);
+  }
 }
 
 form input:focus {
@@ -114,17 +119,17 @@ form button.btn-primary {
 .registreeru {
   margin-top: 2rem;
   text-align: center;
-}
 
-.registreeru p {
-  margin-bottom: 0.5rem;
-  color: var(--primary);
-}
+  & p {
+    margin-bottom: 0.8rem;
+    color: var(--primary);
+  }
 
-.registreeru .btn-primary {
-  padding: 0.7rem 1.4rem;
-  font-size: 1rem;
-  border-radius: 0.6rem;
+  & .btn-primary {
+    padding: 0.7rem 1.4rem;
+    font-size: 1rem;
+    border-radius: 0.6rem;
+  }
 }
 
 /* VERIFY PAGE BUTTONS */
@@ -142,28 +147,9 @@ form button.btn-primary {
   font-size: 1rem;
 }
 
-/* Secondary button (Tagasi sisselogimisele) */
-.btn-secondary {
-  margin-top: 1.5rem;
-  background-color: #ffffff;
-  color: var(--primary);
-  padding: 0.8rem 1.2rem;
-  border: 0.1rem solid var(--primary);
-  border-radius: 0.6rem;
-  font-weight: 600;
-  display: inline-block;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background-color: var(--primary);
-  color: #ffffff;
-}
-
 @media screen and (max-width: 768px) {
   main {
-    padding: 5vh 3vw;
+    padding: 5vh 1.5rem;
   }
 
   .split {
@@ -172,5 +158,16 @@ form button.btn-primary {
 
   .pilt {
     display: none;
+  }
+
+  .vorm {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vorm button,
+  form input {
+    transition: none !important;
   }
 }
