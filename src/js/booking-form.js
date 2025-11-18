@@ -1,4 +1,5 @@
 export function initBookingForm() {
+  const nameInput = document.getElementById("booking-name");
   const dateInput = document.getElementById("booking-date");
   const startInput = document.getElementById("booking-start-time");
   const endDateInput = document.getElementById("booking-end-date");
@@ -105,19 +106,26 @@ export function initBookingForm() {
         endDateInput.value = nextDayStr;
       }
     } else {
+      // Same day booking - set end date to same as start date
       if (endDateInput) {
-        endDateInput.value = "";
+        endDateInput.value = date;
       }
     }
   }
 
   function validateForm() {
+    const name = nameInput?.value?.trim();
     const date = dateInput?.value;
     const startTime = startInput?.value;
     const endDate = endDateInput?.value;
     const endTime = endInput?.value;
 
     let errors = [];
+
+    // Check if name is provided
+    if (!name) {
+      errors.push("Palun sisesta nimi");
+    }
 
     if (date) {
       const selectedDate = new Date(date);
@@ -218,7 +226,7 @@ export function initBookingForm() {
     validateForm();
   }
 
-  [dateInput, startInput, endDateInput, endInput].forEach((el) => {
+  [nameInput, dateInput, startInput, endDateInput, endInput].forEach((el) => {
     if (!el) return;
     el.addEventListener("input", updateSummary);
     el.addEventListener("change", updateSummary);
