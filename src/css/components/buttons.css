@@ -46,9 +46,27 @@
   background-color: var(--danger);
 }
 
+/* Secondary button (Tagasi sisselogimisele) */
+.btn-secondary {
+  background-color: #fff;
+  color: var(--primary);
+  border: 0.1rem solid var(--primary);
+
+  &:hover {
+    background-color: var(--primary);
+    color: #ffffff;
+  }
+}
+
 .btn-invalid,
 .btn[aria-disabled="true"],
 .btn:disabled {
   background-color: var(--complimentary);
   cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none !important;
+  }
 }
