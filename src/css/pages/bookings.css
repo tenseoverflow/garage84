@@ -63,8 +63,8 @@
 
 .rooms-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(22.5rem, 1fr));
+  gap: 2rem;
 }
 
 /* Confirmation Message */
@@ -76,6 +76,7 @@
   flex-direction: column;
   align-items: center;
   gap: 25rem;
+  text-align: center;
 }
 
 .confirmation-message h1 {
@@ -88,7 +89,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 4rem;
+  padding: 10px 0;
 }
 
 .booking-header {
@@ -100,23 +101,24 @@
 }
 
 .mobile-qr-button {
-  display: none;
+  display: block;
+  background-color: var(--primary);
+  color: var(--background);
+  font-weight: bold;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
-  .mobile-qr-button {
-    display: block;
-    background-color: var(--primary);
-    color: var(--background);
-    font-weight: bold;
-    text-align: center;
-  }
-
   .my_bookings {
     padding: 1rem 1rem;
   }
 
   .new_booking {
     padding: 1rem 1rem;
+  }
+
+  .rooms-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }

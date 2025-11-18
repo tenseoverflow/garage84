@@ -1,7 +1,8 @@
 .navbar {
   display: flex;
   align-items: center;
-  position: relative;
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 6rem;
   background-color: var(--secondary);
@@ -14,6 +15,7 @@
   align-items: center;
   padding: 0.3rem 1.5rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-left,

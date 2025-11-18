@@ -11,6 +11,10 @@ body {
   color: var(--primary);
 }
 
+.with-navbar {
+  padding-top: 6rem;
+}
+
 /* Typography */
 h1 {
   font-size: 2rem;
@@ -20,4 +24,18 @@ h1 {
 h2 {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.link-hollowed {
+  color: var(--primary);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 }

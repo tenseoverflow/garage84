@@ -1,9 +1,13 @@
 /* --- DESKTOP SPLIT LAYOUT --- */
 .split {
   display: grid;
-  grid-template-columns: minmax(40%, 1fr) 48rem;
-  width: 100vw;
-  min-height: 100vh;
+  grid-template-columns: auto 47.8125rem;
+  height: 100vh;
+  /* width: 100vw; */
+}
+
+.split-nav {
+  height: calc(100vh - 6rem);
 }
 
 /* LEFT IMAGE (fixed on scroll) */
@@ -13,6 +17,7 @@
   height: 100vh;
   width: 100%;
   overflow: hidden;
+  z-index: -1;
 }
 
 .pilt img {
@@ -38,7 +43,8 @@ footer {
   padding: 10px 0;
   justify-content: space-between;
   align-items: center;
-}
+  align-self: stretch;
+  gap: 0.5rem;
 
 footer a {
   color: var(--primary);
@@ -68,7 +74,21 @@ input:-webkit-autofill:focus {
   }
 }
 
-/* --- MOBILE (single column layout) --- */
+/* When chrome autofills, keep the colors nice */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+}
+
+/* On focus */
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
 @media screen and (max-width: 768px) {
   .split {
     display: block;
