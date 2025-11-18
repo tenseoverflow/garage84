@@ -10,7 +10,6 @@
 @import "./components/room-card.css";
 @import "./components/navbar.css";
 
-@import "./pages/auth.css";
 @import "./pages/bookings.css";
 @import "./pages/homepage.css";
 @import "./pages/qr.css";
