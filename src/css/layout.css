@@ -2,22 +2,16 @@
 .split {
   display: grid;
   grid-template-columns: auto 47.8125rem;
-  min-height: 100vh;
-  /* width: 100vw; */
-}
-
-.split-nav {
-  height: calc(100vh - 6rem);
+  flex: 1;
+  overflow: hidden;
 }
 
 /* LEFT IMAGE (fixed on scroll) */
 .pilt {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: relative;
+  height: 100%;
   width: 100%;
   overflow: hidden;
-  z-index: -1;
 }
 
 .pilt img {
@@ -29,12 +23,13 @@
 
 /* RIGHT CONTENT (scrolls normally) */
 main {
-  padding: 5vh 3rem;
+  padding: 2vh 3rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  height: auto;
-  overflow-y: visible;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
 }
 
 /* FOOTER */
@@ -85,8 +80,20 @@ input:-webkit-autofill:focus {
 
 /* --- MOBILE (small screens) --- */
 @media screen and (max-width: 768px) {
+  body {
+    overflow: auto;
+    height: auto;
+  }
+
+  .with-navbar {
+    overflow: auto;
+    height: auto;
+  }
+
   .split {
     display: block;
+    overflow: visible;
+    flex: none;
   }
 
   .pilt {
@@ -97,5 +104,8 @@ input:-webkit-autofill:focus {
 
   main {
     padding: 2rem 1.5rem;
+    height: auto;
+    overflow-y: visible;
+    min-height: 0;
   }
 }
