@@ -20,11 +20,12 @@
             <h1>Ruumibroneerimine</h1>
             <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
           </header>
-          <form action="/verify">
+          <form>
             <label for="name">Nimi</label>
             <input id="name" required type="text" placeholder="Sinu nimi" />
             <label for="email">Meil</label>
             <input id="email" required type="email" placeholder="meil@hot.ee" />
+            <p id="emailError" class="error"></p>
             <label for="password">Parool</label>
             <input
               id="password"
@@ -32,6 +33,7 @@
               type="password"
               placeholder="Sinu parool"
             />
+            <p id="passwordError" class="error"></p>
             <label for="password-again">Parool uuesti</label>
             <input
               id="password-again"
@@ -39,9 +41,10 @@
               type="password"
               placeholder="Sinu parool uuesti"
             />
+            <p id="passwordAgainError" class="error"></p>
             <a class="reset-pass" href="/reset-password/">Unustasin parooli</a>
             <br />
-            <button type="submit" class="btn btn-primary">Loo konto</button>
+            <button type="submit" class="btn btn-primary" id="signupBtn" disabled>Loo konto</button>
           </form>
         </div>
         <div class="registreeru">

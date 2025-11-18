@@ -11,20 +11,62 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
   const passwordAgainInput = document.getElementById("password-again");
+  const signupBtn = document.getElementById("signupBtn");
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+  const passwordAgainError = document.getElementById("passwordAgainError");
 
-  signupForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  function validateForm() {
+    let valid = true;
 
-    const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
     const passwordAgain = passwordAgainInput.value.trim();
 
-    // Password check
-    if (password !== passwordAgain) {
-      alert("Paroolid ei ühti!");
-      return;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Email validation
+    if (!emailRegex.test(email)) {
+      emailError.textContent = "Palun sisesta kehtiv e-post.";
+      valid = false;
+    } else {
+      emailError.textContent = "";
     }
+
+    // Password length
+    if (password.length < 6) {
+      passwordError.textContent = "Parool peab olema vähemalt 6 tähemärki.";
+      valid = false;
+    } else {
+      passwordError.textContent = "";
+    }
+
+    // Password match
+    if (passwordAgain !== password) {
+      passwordAgainError.textContent = "Paroolid ei ühti.";
+      valid = false;
+    } else {
+      passwordAgainError.textContent = "";
+    }
+
+    // Disable / enable button
+    signupBtn.disabled = !valid;
+  }
+
+  // Reaalajas valideerimine
+  emailInput.addEventListener("input", validateForm);
+  passwordInput.addEventListener("input", validateForm);
+  passwordAgainInput.addEventListener("input", validateForm);
+
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    validateForm();
+    if (signupBtn.disabled) return;
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
     try {
       // Create the user
