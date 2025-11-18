@@ -1,5 +1,4 @@
 /* --- DESKTOP SPLIT LAYOUT --- */
-/* --- DESKTOP SPLIT LAYOUT --- */
 .split {
   display: grid;
   grid-template-columns: auto 47.8125rem;
@@ -16,11 +15,9 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  position: sticky;
-  top: 0;
-  height: 100vh;
   width: 100%;
   overflow: hidden;
+  z-index: -1;
 }
 
 .pilt img {
@@ -28,36 +25,26 @@
   width: 100%;
   object-fit: cover;
   object-position: center;
-  .pilt img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
+}
 
-  /* RIGHT CONTENT (scrolls normally) */
-  /* RIGHT CONTENT (scrolls normally) */
-  main {
-    padding: 5vh 3rem;
-    padding: 5vh 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    height: auto;
-    overflow-y: visible;
-    gap: 1.5rem;
-    height: auto;
-    overflow-y: visible;
-  }
+/* RIGHT CONTENT (scrolls normally) */
+main {
+  padding: 5vh 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: auto;
+  overflow-y: visible;
+}
 
-  /* FOOTER */
-  /* FOOTER */
-  footer {
-    display: flex;
-    padding: 10px 0;
-    justify-content: space-between;
-    align-items: center;
-  }
+/* FOOTER */
+footer {
+  display: flex;
+  padding: 10px 0;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  gap: 0.5rem;
 
   a {
     color: var(--primary);
@@ -103,13 +90,6 @@ input:-webkit-autofill:focus {
   }
 
   .pilt {
-    position: relative;
-    height: 40vh;
-    min-height: 15rem;
-  }
-
-  main {
-    padding: 2rem 1.5rem;
     position: relative;
     height: 40vh;
     min-height: 15rem;
