@@ -46,18 +46,31 @@ footer {
   align-self: stretch;
   gap: 0.5rem;
 
-  a {
-    color: var(--primary);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-decoration-skip-ink: auto;
-    text-decoration-thickness: auto;
-    text-underline-offset: auto;
-    text-underline-position: from-font;
+footer a {
+  color: var(--primary);
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+/* When chrome autofills, keep the colors nice */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+}
+
+/* On focus */
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  box-shadow: 0 0 0 1000px #f5fcff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+/* --- TABLET (medium screens) --- */
+@media screen and (max-width: 1200px) {
+  .split {
+    grid-template-columns: minmax(35%, 1fr) 32rem;
   }
 }
 
@@ -77,14 +90,8 @@ input:-webkit-autofill:focus {
 }
 
 @media screen and (max-width: 768px) {
-  .split-nav main {
-    padding: 0.95rem 1.25rem;
-  }
-
   .split {
     display: block;
-    height: auto;
-    width: auto;
   }
 
   .pilt {
