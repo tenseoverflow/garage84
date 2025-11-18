@@ -7,6 +7,24 @@
   border-radius: 0.5rem;
   width: 100%;
   max-width: 25rem;
+
+  /* Lisame transition efekti transformile ja shadow'le */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; /* Hoveril näitab, et saab klikata */
+}
+
+/* Hover animatsioon */
+.room-card:hover {
+  transform: scale(1.05); /* Suurendab kasti 5% */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Lisab varju */
+}
+
+/* Mobiilseadmete jaoks kergem hover efekt */
+@media (max-width: 768px) {
+  .room-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .room-card img {
