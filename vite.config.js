@@ -8,27 +8,30 @@ import { ViteMinifyPlugin } from "vite-plugin-minify";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Generate input entries for all index.html files
+// Generate input entries for all index.html files recursively
 function getHtmlEntries() {
   const srcDir = resolve(__dirname, "src");
   const entries = {};
+  const excludeDirs = ["assets", "css", "js"];
 
-  // Add root index.html
-  entries["index"] = resolve(srcDir, "index.html");
+  // Recursive function to scan directories
+  function scanDirectory(dir, relativePath = "") {
+    const items = readdirSync(dir, { withFileTypes: true });
 
-  // Scan for subdirectories with index.html
-  const dirs = readdirSync(srcDir, { withFileTypes: true });
-  dirs.forEach((dir) => {
-    if (
-      dir.isDirectory() &&
-      dir.name !== "assets" &&
-      dir.name !== "css" &&
-      dir.name !== "js"
-    ) {
-      entries[`${dir.name}/index`] = resolve(srcDir, dir.name, "index.html");
-    }
-  });
+    items.forEach((item) => {
+      if (item.isDirectory() && !excludeDirs.includes(item.name)) {
+        const newRelativePath = relativePath
+          ? `${relativePath}/${item.name}`
+          : item.name;
+        scanDirectory(resolve(dir, item.name), newRelativePath);
+      } else if (item.isFile() && item.name === "index.html") {
+        const entryName = relativePath ? `${relativePath}/index` : "index";
+        entries[entryName] = resolve(dir, item.name);
+      }
+    });
+  }
 
+  scanDirectory(srcDir);
   return entries;
 }
 
@@ -45,7 +48,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@assets": resolve(__dirname, "./assets"),
       "@js": resolve(__dirname, "./src/js"),
       "@css": resolve(__dirname, "./src/css"),
     },
