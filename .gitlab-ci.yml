@@ -10,7 +10,9 @@ before_script:
 pages:
   script:
     - bun run build
-    - mv dist public
+    - mkdir -p public
+    - cp -r dist/. public/
+    - rm -rf dist
   artifacts:
     paths:
       # The folder that contains the files to be exposed at the Page URL
