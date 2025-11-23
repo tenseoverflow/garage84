@@ -28,25 +28,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // Email validation
     if (!emailRegex.test(email)) {
       emailError.textContent = "Palun sisesta kehtiv e-post.";
+      emailError.classList.add("visible");
       valid = false;
     } else {
       emailError.textContent = "";
+      emailError.classList.remove("visible");
     }
 
     // Password length
     if (password.length < 6) {
       passwordError.textContent = "Parool peab olema vähemalt 6 tähemärki.";
+      passwordError.classList.add("visible");
       valid = false;
     } else {
       passwordError.textContent = "";
+      passwordError.classList.remove("visible");
     }
 
     // Password match
     if (passwordAgain !== password) {
       passwordAgainError.textContent = "Paroolid ei ühti.";
+      passwordAgainError.classList.add("visible");
       valid = false;
     } else {
       passwordAgainError.textContent = "";
+      passwordAgainError.classList.remove("visible");
     }
 
     // Disable / enable button
