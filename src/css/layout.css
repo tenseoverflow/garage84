@@ -4,6 +4,7 @@
   grid-template-columns: auto 47.8125rem;
   flex: 1;
   overflow: hidden;
+  height: 100%;
 }
 
 /* LEFT IMAGE (fixed on scroll) */
@@ -30,6 +31,7 @@ main {
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 0;
+  max-height: 100vh;
 }
 
 /* FOOTER */
@@ -107,5 +109,6 @@ input:-webkit-autofill:focus {
     height: auto;
     overflow-y: visible;
     min-height: 0;
+    max-height: none;
   }
 }
