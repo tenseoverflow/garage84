@@ -107,7 +107,7 @@ async function loadRoomData(roomId) {
 
     const navbar = document.querySelector("app-navbar");
     if (navbar) {
-      navbar.setAttribute("title", roomData.name || "Ruum");
+      navbar.setAttribute("title", `${roomData.name || ""}`);
     }
   } catch (error) {
     console.error("Error loading room:", error);
