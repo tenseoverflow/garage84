@@ -8,9 +8,7 @@ import {
 
 import { auth } from "./firebase.js";
 
-/* ---------------------------
-   FIELD ELEMENT REGISTRY
----------------------------- */
+/* FIELD ELEMENTS */
 const fields = {
   name: {
     display: document.getElementById("name-display"),
@@ -48,9 +46,7 @@ const fields = {
   },
 };
 
-/* ---------------------------
-   LOAD USER INFO
----------------------------- */
+/* LOAD USER INFO */
 onAuthStateChanged(auth, (user) => {
   if (!user) return;
 
@@ -67,9 +63,7 @@ onAuthStateChanged(auth, (user) => {
   fields.email.valueSpan.textContent = email;
 });
 
-/* ---------------------------
-   OPEN EDIT MODE
----------------------------- */
+/* OPEN EDIT MODE */
 document.querySelectorAll(".edit-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const key = btn.dataset.field;
@@ -90,9 +84,7 @@ document.querySelectorAll(".edit-btn").forEach((btn) => {
   });
 });
 
-/* ---------------------------
-   SAVE HANDLERS
----------------------------- */
+/* SAVE HANDLERS */
 Object.entries(fields).forEach(([key, field]) => {
   field.saveBtn.addEventListener("click", async () => {
     try {
@@ -121,9 +113,7 @@ Object.entries(fields).forEach(([key, field]) => {
   });
 });
 
-/* ---------------------------
-   DELETE ACCOUNT
----------------------------- */
+/* DELETE ACCOUNT */
 document
   .getElementById("delete-account")
   .addEventListener("click", async () => {
