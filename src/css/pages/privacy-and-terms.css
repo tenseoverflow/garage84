@@ -1,0 +1,91 @@
+.legal-page {
+  max-width: 850px;
+  margin: 4rem auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.legal-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.legal-page h2 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+}
+
+.legal-page p,
+.legal-page li {
+  color: var(--primary);
+}
+
+.legal-page ul {
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* === CARD-STIIL PRIVAATSUSPOLIITIKA SEKTSIOONIDELE === */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+.card {
+  background: linear-gradient(
+    135deg,
+    rgb(234, 240, 255) 0%,
+    rgba(232, 239, 255, 0.88) 40%,
+    rgba(220, 242, 255, 0.78) 70%,
+    rgba(245, 255, 240, 0.82) 100%
+  );
+  border: 0.12rem solid rgba(10, 1, 79, 0.2);
+  border-radius: 1.5rem;
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.06);
+
+  padding: 2rem 2.5rem;
+  margin: 1.5rem 0;
+
+  width: 100%;
+  max-width: 800px; /* piiratud laius suurel ekraanil */
+  text-align: left;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.card h2 {
+  color: var(--primary);
+  margin-top: 0;
+}
+
+.card p,
+.card ul {
+  color: #1b1b5f;
+  line-height: 1.6;
+}
+
+/* --- Telefoni- ja väiksemad ekraanid --- */
+@media screen and (max-width: 768px) {
+  .card {
+    max-width: 100%; /* täisekraani laius väikestel ekraanidel */
+    padding: 1.5rem 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .container {
+    padding: 2rem 1rem; /* väiksemad sisendid mobiilile */
+  }
+}
