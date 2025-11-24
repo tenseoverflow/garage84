@@ -20,67 +20,104 @@
           <h1>Room #23</h1>
           <p>Korrus 3</p>
         </header>
-        <form action="">
-          <label for="booking-date">Vali kuupäev</label>
+        <form action="" class="new-booking">
+          <label for="booking-name">Nimi</label>
+          <input id="booking-name" type="text" />
+
+          <label for="booking-date">Alguskuupäev</label>
           <input id="booking-date" type="date" />
 
           <label for="booking-start-time">Algusaeg</label>
           <input id="booking-start-time" type="time" />
 
+          <label for="booking-end-date">Lõppkuupäev</label>
+          <input id="booking-end-date" type="date" />
+
           <label for="booking-end-time">Lõppaeg</label>
           <input id="booking-end-time" type="time" />
+
+          <div
+            id="validation-errors"
+            style="color: red; margin-top: 1rem"
+          ></div>
+
           <p>
-            Kellast <strong id="summary-start">-</strong> kuni
-            <strong id="summary-end">-</strong> kuupäeval
-            <strong id="summary-date">-</strong>
+            <span id="summary-text">
+              Kellast <strong id="summary-start">-</strong> kuupäeval
+              <strong id="summary-date">-</strong> kuni
+              <strong id="summary-end">-</strong> kuupäeval
+              <strong id="summary-end-date-section">-</strong>.
+            </span>
           </p>
         </form>
 
+        <!-- Calendar Component -->
+        <div class="calendar">
+          <div class="calendar-header">
+            <button class="cal-button" id="prev-day">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <h2 id="calendar-title">Täna</h2>
+            <button class="cal-button" id="next-day">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="cal-grid">
+            <ul class="cal-times" id="cal-times"></ul>
+            <ul class="cal-desc" id="cal-desc"></ul>
+          </div>
+        </div>
+
         <!-- Decision -->
         <footer style="justify-content: center">
-          <a href="/booking/new/" class="btn btn-success">Broneeri</a>
+          <button id="submit-btn" class="btn btn-success">Broneeri</button>
         </footer>
       </main>
     </div>
 
-    <script>
-      (function () {
-        const dateInput = document.getElementById("booking-date");
-        const startInput = document.getElementById("booking-start-time");
-        const endInput = document.getElementById("booking-end-time");
+    <script type="module">
+      import { initBookingForm } from "/js/booking-form.js";
+      import { initCalendar } from "/js/components/calendar.js";
 
-        const summaryDate = document.getElementById("summary-date");
-        const summaryStart = document.getElementById("summary-start");
-        const summaryEnd = document.getElementById("summary-end");
+      const bookingForm = initBookingForm();
+      initCalendar();
 
-        function formatDate(iso) {
-          if (!iso) return "-";
-          try {
-            const d = new Date(iso);
-            return d.toLocaleDateString("et-EE", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
-          } catch (e) {
-            return iso;
-          }
+      // Handle form submission
+      const form = document.querySelector(".new-booking");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (bookingForm.validate()) {
+          window.location.href = "/booking/confirmed/";
         }
-
-        function updateSummary() {
-          summaryDate.textContent = formatDate(dateInput.value);
-          summaryStart.textContent = startInput.value || "-";
-          summaryEnd.textContent = endInput.value || "-";
-        }
-
-        [dateInput, startInput, endInput].forEach((el) => {
-          if (!el) return;
-          el.addEventListener("input", updateSummary);
-          el.addEventListener("change", updateSummary);
-        });
-
-        updateSummary();
-      })();
+      });
     </script>
   </body>
 </html>

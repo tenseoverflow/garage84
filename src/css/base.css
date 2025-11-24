@@ -9,10 +9,15 @@ body {
   line-height: normal;
   font-size: 16px;
   color: var(--primary);
+  height: 100vh;
+  overflow: hidden;
 }
 
 .with-navbar {
-  padding-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Typography */

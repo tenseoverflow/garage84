@@ -54,10 +54,17 @@
 .new-room {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 0 auto;
+  color: var(--primary);
 }
+
 .new-room form {
-  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 35rem;
 }
 
 #room-image-label {
@@ -69,9 +76,7 @@
     width: 90%;
   }
 
-  .new-room {
-    margin: 1rem;
-    padding: 1rem;
-    max-width: 90%;
+  .new-room form {
+    min-width: 20rem;
   }
 }
