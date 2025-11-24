@@ -1,4 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
+import QRCode from "qrcode";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 
@@ -64,7 +65,40 @@ export function initRoomView() {
     changeLink.href = `/room/change/?id=${roomId}`;
   }
 
+  const downloadQrBtn = document.getElementById("download-qr");
+  if (downloadQrBtn) {
+    downloadQrBtn.addEventListener("click", () => downloadRoomQR(roomId));
+  }
+
   loadRoomData(roomId);
+}
+
+async function downloadRoomQR(roomId) {
+  try {
+    const canvas = document.createElement("canvas");
+    await QRCode.toCanvas(canvas, roomId, {
+      width: 400,
+      margin: 2,
+      color: {
+        dark: "#000000",
+        light: "#FFFFFF",
+      },
+    });
+
+    canvas.toBlob((blob) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `room-${roomId}-qr.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+  } catch (error) {
+    console.error("Error generating QR code:", error);
+    showError("Viga QR koodi genereerimisel");
+  }
 }
 
 async function loadRoomData(roomId) {

@@ -36,7 +36,8 @@
     "firebase": "^12.5.0",
     "husky": "^9.1.7",
     "jsqr": "^1.4.0",
-    "lint-staged": "^16.2.5"
+    "lint-staged": "^16.2.5",
+    "qrcode": "^1.5.4"
   },
   "lint-staged": {
     "*.{js,css,html}": ["prettier --write", "eslint --fix"]
