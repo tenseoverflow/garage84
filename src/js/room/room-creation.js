@@ -1,5 +1,7 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "./firebase.js";
+import { db } from "../firebase.js";
+import { showError } from "../utils/banners.js";
+import { validateRoomData } from "./room.js";
 
 export function initRoomForm() {
   const form = document.querySelector(".new-room form");
@@ -15,13 +17,9 @@ export function initRoomForm() {
     const location = locationInput?.value?.trim();
     const capacity = capacityInput?.value ? parseInt(capacityInput.value) : 0;
 
-    if (!name || !location) {
-      showError("Palun täida kõik nõutud väljad");
-      return;
-    }
-
-    if (capacity <= 0) {
-      showError("Mahutavus peab olema positiivne number");
+    const validationError = validateRoomData({ name, location, capacity });
+    if (validationError) {
+      showError(validationError);
       return;
     }
 
@@ -59,34 +57,6 @@ export function initRoomForm() {
       }
     }
   });
-}
-
-function showError(message) {
-  clearMessages();
-
-  const errorDiv = document.createElement("div");
-  errorDiv.className = "error-message";
-  errorDiv.style.cssText = `
-    background-color: #fee;
-    color: #c33;
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 0.5rem;
-    border: 1px solid #fcc;
-  `;
-  errorDiv.textContent = message;
-
-  const form = document.querySelector(".new-room form");
-  if (form) {
-    form.insertBefore(errorDiv, form.firstChild);
-  }
-}
-
-function clearMessages() {
-  const messages = document.querySelectorAll(
-    ".error-message, .success-message"
-  );
-  messages.forEach((msg) => msg.remove());
 }
 
 if (document.readyState === "loading") {
