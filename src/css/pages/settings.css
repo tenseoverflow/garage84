@@ -1,71 +1,172 @@
-.settings-container {
+.settings-wrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 1.2rem;
-  padding: 2rem 1rem;
-  max-width: 700px;
-  margin: 0 auto;
+  min-height: calc(100vh - 10rem);
+  padding: 1rem;
+}
+
+.settings-box {
+  background: #eef3ff;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 45rem;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 1rem;
+}
+
+/* PROFILE HEADER */
+.profile-header {
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 4rem;
+  height: 4rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.profile-header h2 {
+  margin: 0;
+}
+
+.profile-header p {
+  margin: 0;
+  opacity: 0.7;
+}
+
+/* FIELDS */
+.field-block {
+  text-align: left;
+  margin-bottom: 1.8rem;
+}
+
+.field-block label {
+  font-weight: 600;
   color: var(--primary);
 }
 
-.setting-item form {
-  display: grid;
+/* DISPLAY MODE */
+.field-display {
+  background: #dfe6ff;
+  padding: 0.8rem 1rem;
+  border-radius: 0.6rem;
+  margin-top: 0.4rem;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  grid-template-columns: 1fr auto;
-  box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
-  width: 35rem;
-
-  input {
-    background-color: var(--secondary);
-    border: 0.1rem solid var(--primary);
-    width: 100%;
-    height: 2rem;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  &:focus-within {
-    border-color: var(--accent);
-  }
-
-  button {
-    justify-self: flex-end;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    height: 2.2rem;
-    transition: none;
-
-    &:hover {
-      transform: none;
-    }
-  }
-
-  &:hover {
-    transform: scale(1.01);
-  }
 }
 
-/* Account Actions */
-.account-actions {
+.edit-btn {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* EDIT MODE */
+.field-edit {
+  outline: 0.1rem solid var(--primary);
+  background: #dfe6ff;
+  padding: 0.8rem 1rem;
+  border-radius: 0.6rem;
+  margin-top: 0.4rem;
+
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  max-height: 1.3rem;
+  width: auto;
+}
+
+.field-edit input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+.hidden {
+  display: none;
+}
+
+/* PASSWORD FIELD */
+#password-edit {
+  outline: 0.1rem solid var(--primary);
+  min-height: 10rem;
+  flex-direction: column;
+  gap: 0.7rem;
+  align-items: stretch;
+}
+
+/* DELETE ACCOUNT */
+.delete-btn {
+  margin-top: 2rem;
   width: 100%;
-  margin-top: 1.5rem;
+}
+
+/* When chrome autofills, keep the colors nice */
+.settings-box input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #dfe6ff inset !important;
+  box-shadow: 0 0 0 1000px #dfe6ff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+}
+
+.settings-box input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #dfe6ff inset !important;
+  box-shadow: 0 0 0 1000px #dfe6ff inset !important;
+  -webkit-text-fill-color: var(--primary) !important;
+  border-color: var(--primary) !important;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .setting-item {
-    form {
-      width: 20rem;
-    }
+  .settings-box {
+    padding: 2rem;
+    max-width: 28rem;
   }
 
-  .account-actions {
+  .field-display,
+  .field-edit {
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-box {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .avatar {
+    width: 3.6rem;
+    height: 3.6rem;
+    font-size: 1.5rem;
+  }
+
+  .field-display,
+  .field-edit {
+    padding: 0.7rem 0.8rem;
+  }
+
+  .field-edit {
     flex-direction: column;
-    gap: 1rem;
+    align-items: stretch;
+    max-height: none;
   }
 }

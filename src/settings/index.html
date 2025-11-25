@@ -7,46 +7,78 @@
     <script type="module" src="/js/components/navbar.js"></script>
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
+    <script type="module" src="/js/settings.js"></script>
   </head>
   <body class="with-navbar">
     <app-navbar title="Seaded"></app-navbar>
-
-    <main class="settings-container">
-      <section class="profile-section">
-        <div class="setting-item">
-          <p>Muuda nimi</p>
-          <form action="">
-            <input class="setting-label" />
-            <button class="btn btn-primary btn-small">Muuda</button>
-          </form>
+    <main class="settings-wrapper">
+      <div class="settings-box">
+        <!-- PROFILE HEADER -->
+        <div class="profile-header">
+          <div class="avatar" id="profile-avatar">U</div>
+          <h2 id="profile-name">Kasutaja</h2>
+          <p id="profile-email">email@example.com</p>
         </div>
 
-        <div class="setting-item">
-          <p>Muuda meiliaadress</p>
-          <form action="">
-            <input class="setting-label" />
-            <button class="btn btn-primary btn-small">Muuda</button>
-          </form>
+        <!-- NAME FIELD -->
+        <div class="field-block">
+          <label>Nimi</label>
+          <div class="field-display" id="name-display">
+            <span id="name-value">Kasutaja</span>
+            <img src="/assets/edit.svg" class="edit-btn" data-field="name" />
+          </div>
+          <div class="field-edit hidden" id="name-edit">
+            <input id="name-input" type="text" placeholder="Uus nimi" />
+            <button class="btn btn-primary btn-small" id="save-name">
+              Salvesta
+            </button>
+          </div>
         </div>
 
-        <div class="setting-item">
-          <p>Muuda parool</p>
-          <form action="">
-            <input class="setting-label" />
-            <button class="btn btn-primary btn-small">Muuda</button>
-          </form>
+        <!-- EMAIL FIELD -->
+        <div class="field-block">
+          <label>E-post</label>
+          <div class="field-display" id="email-display">
+            <span id="email-value">email@example.com</span>
+            <img src="/assets/edit.svg" class="edit-btn" data-field="email" />
+          </div>
+          <div class="field-edit hidden" id="email-edit">
+            <input id="email-input" type="email" placeholder="Uus e-post" />
+            <button class="btn btn-primary btn-small" id="save-email">
+              Salvesta
+            </button>
+          </div>
         </div>
 
-        <div class="account-actions">
-          <button class="btn btn-primary">Logi välja</button>
-          <button class="btn btn-danger">Kustuta konto</button>
+        <!-- PASSWORD FIELD -->
+        <div class="field-block">
+          <label>Parool</label>
+          <div class="field-display" id="password-display">
+            <span>********</span>
+            <img
+              src="/assets/edit.svg"
+              class="edit-btn"
+              data-field="password"
+            />
+          </div>
+          <div class="field-edit hidden" id="password-edit">
+            <input id="password-new" type="password" placeholder="Uus parool" />
+            <input
+              id="password-repeat"
+              type="password"
+              placeholder="Korda parooli"
+            />
+            <button class="btn btn-primary btn-small" id="save-password">
+              Salvesta
+            </button>
+          </div>
         </div>
-      </section>
 
-      <section>
-        <h2>Ruumi haldus</h2>
-        <a class="btn btn-success" href="/room/new/">Loo uus ruum</a>
-      </section>
+        <!-- DELETE ACCOUNT -->
+        <button id="delete-account" class="btn btn-danger delete-btn">
+          Kustuta konto
+        </button>
+      </div>
     </main>
   </body>
 </html>
