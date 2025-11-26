@@ -27,6 +27,11 @@
   text-align: center;
   max-width: 90%;
   z-index: 10;
+  display: none;
+}
+
+.qr-result:not(:empty) {
+  display: block;
 }
 
 .qr-detected {
