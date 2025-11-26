@@ -7,6 +7,10 @@ class AppNavbar extends HTMLElement {
     this._initialized = false;
   }
 
+  static get observedAttributes() {
+    return ["title"];
+  }
+
   connectedCallback() {
     if (this._initialized) return;
     this._initialized = true;
@@ -20,7 +24,7 @@ class AppNavbar extends HTMLElement {
           <!-- LEFT SIDE -->
           <div class="nav-left">
             <a class="nav-link" href="/booking/">Kodu</a>
-            <p>${title}</p>
+            <p id="navbar-title">${title}</p>
           </div>
 
           <!-- RIGHT SIDE -->
@@ -62,6 +66,15 @@ class AppNavbar extends HTMLElement {
     `;
 
     this.activateUserLogic();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "title" && this._initialized) {
+      const titleElement = this.querySelector("#navbar-title");
+      if (titleElement) {
+        titleElement.textContent = newValue || "Ruumibroneerimine";
+      }
+    }
   }
 
   activateUserLogic() {

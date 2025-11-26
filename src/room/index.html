@@ -8,17 +8,19 @@
     <script type="module" src="/js/components/navbar.js"></script>
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
+    <script type="module" src="/js/room/room.js"></script>
   </head>
   <body class="with-navbar">
-    <app-navbar title="Broneeringu vaade"></app-navbar>
+    <app-navbar title="Ruum"></app-navbar>
     <div class="split split-nav">
       <div class="pilt">
-        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img id="room-image" src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
       </div>
       <main>
         <header>
-          <h1>Room #23</h1>
-          <p>Korrus 3</p>
+          <h1 id="room-title">Ruum</h1>
+          <p id="room-location">Asukoht</p>
+          <p id="room-capacity">Mahutavus</p>
         </header>
         <!-- Kalendri komponent -->
         <div class="calendar">
@@ -82,7 +84,14 @@
         </div>
         <!-- Decision -->
         <footer>
-          <a href="/room/change/" class="link-hollowed">Muuda ruumi</a>
+          <a href="/room/change/" class="btn btn-primary">Muuda ruumi</a>
+          <button
+            id="download-qr"
+            class="btn btn-secondary"
+            style="cursor: pointer"
+          >
+            Lae alla QR kood
+          </button>
           <a href="/booking/new/" class="btn btn-success">Lisa broneering</a>
         </footer>
       </main>

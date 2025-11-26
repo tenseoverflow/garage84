@@ -44,19 +44,32 @@ function tick() {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const code = jsQR(imageData.data, imageData.width, imageData.height);
     if (code) {
-      if (code.data.startsWith("https://example.com/")) {
-        /* TODO: change URL */
-        window.location.href = code.data;
+      let roomId = code.data.trim();
+
+      if (roomId.startsWith("http")) {
+        try {
+          const url = new URL(roomId);
+          const idParam = url.searchParams.get("id");
+          if (idParam) {
+            roomId = idParam;
+          }
+        } catch (e) {
+          console.error("Invalid URL in QR code:", e);
+        }
       }
-    } else {
-      requestAnimationFrame(tick);
+
+      if (roomId) {
+        window.location.href = `/room/?id=${roomId}`;
+        return;
+      }
     }
+    // Continue scanning
+    requestAnimationFrame(tick);
   } else {
     requestAnimationFrame(tick);
   }
 }
 
-// Wait for DOM to be ready before starting
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", startCamera);
 } else {

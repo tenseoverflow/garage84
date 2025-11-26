@@ -9,6 +9,7 @@
     <script type="module" src="/js/components/navbar.js"></script>
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
+    <script type="module" src="/js/room/room-creation.js"></script>
   </head>
   <body class="with-navbar">
     <app-navbar title="Loo uus ruum"></app-navbar>
@@ -18,12 +19,43 @@
           <h1>Loo uus ruum</h1>
         </header>
 
-        <form action="/booking/" method="post" enctype="multipart/form-data">
-          <label for="room-name">Toa nimi</label>
-          <input id="room-name" name="name" required type="text" />
+        <form enctype="multipart/form-data">
+          <label for="room-name">Toa nimi *</label>
+          <input
+            id="room-name"
+            name="name"
+            required
+            type="text"
+            placeholder="Ruum #23"
+          />
 
-          <label for="room-location">Toa asukoht</label>
-          <input id="room-location" name="location" required type="text" />
+          <label for="room-location">Toa asukoht *</label>
+          <input
+            id="room-location"
+            name="location"
+            required
+            type="text"
+            placeholder="Korrus 3"
+          />
+
+          <label for="room-capacity">Mahutavus *</label>
+          <input
+            id="room-capacity"
+            name="capacity"
+            required
+            type="number"
+            min="1"
+            max="200"
+            step="1"
+            placeholder="20"
+          />
+
+          <!-- <label for="room-description">Kirjeldus</label>
+          <textarea
+            id="room-description"
+            name="description"
+            rows="3"
+          ></textarea> -->
 
           <label for="room-image">Toa pilt</label>
           <input
@@ -50,7 +82,7 @@
             "
           ></span>
 
-          <label for="room-image">Toa excel</label>
+          <!-- <label for="room-image">Toa excel</label>
           <input
             id="room-image"
             name="image"
@@ -73,15 +105,9 @@
               color: var(--complimentary);
               font-size: 0.95rem;
             "
-          ></span>
+          ></span> -->
 
-          <button
-            type="submit"
-            onclick="location.href='/booking/confirmed/'"
-            class="btn btn-success"
-          >
-            Loo ruum
-          </button>
+          <button type="submit" class="btn btn-success">Loo ruum</button>
         </form>
       </div>
     </main>

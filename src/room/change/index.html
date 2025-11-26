@@ -8,36 +8,113 @@
     <script type="module" src="/js/components/navbar.js"></script>
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
+    <script type="module" src="/js/room/room-change.js"></script>
   </head>
   <body class="with-navbar">
     <app-navbar title="Muuda tuba"></app-navbar>
     <div class="split split-nav">
       <div class="pilt">
-        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img
+          id="room-image-preview"
+          src="/assets/MURG.jpg"
+          alt="pilt MURGi hoonest."
+        />
       </div>
       <main>
         <div class="room-details">
           <form>
-            <label for="room-name">Toa nimi</label>
-            <input id="room-name" type="text" placeholder="Tuba #23" />
+            <label for="room-name">Toa nimi *</label>
+            <input id="room-name" type="text" placeholder="Tuba #23" required />
 
-            <label for="room-location">Toa asukoht</label>
-            <input id="room-location" type="text" placeholder="Korrus 3" />
+            <label for="room-location">Toa asukoht *</label>
+            <input
+              id="room-location"
+              type="text"
+              placeholder="Korrus 3"
+              required
+            />
 
-            <label for="room-image">Toa pilt</label>
-            <button type="button" class="btn btn-primary">Lae üles pilt</button>
+            <label for="room-capacity">Mahutavus *</label>
+            <input
+              id="room-capacity"
+              type="number"
+              min="1"
+              placeholder="20"
+              required
+            />
 
-            <label for="room-schedule">Toa tunniplaan</label>
-            <button type="button" class="btn btn-primary">
-              Lae üles excel
-            </button>
+            <label for="room-image-input">Toa pilt</label>
+            <input
+              id="room-image-input"
+              name="image"
+              type="file"
+              accept="image/*"
+              style="position: absolute; left: -9999px"
+            />
+            <label
+              for="room-image-input"
+              class="btn btn-small btn-primary"
+              style="cursor: pointer"
+            >
+              Lisa pilt
+            </label>
+
+            <span
+              class="file-name"
+              id="room-image-name"
+              aria-hidden="true"
+              style="
+                margin-left: 0.6rem;
+                color: var(--complimentary);
+                font-size: 0.95rem;
+              "
+            ></span>
+
+            <!-- <label for="room-schedule">Toa tunniplaan</label>
+            <input
+              id="room-schedule"
+              name="schedule"
+              type="file"
+              accept="image/*"
+              style="position: absolute; left: -9999px"
+            />
+            <label
+              for="room-schedule"
+              class="btn btn-small btn-primary"
+              style="cursor: pointer"
+            >
+              Lisa tunniplaan
+            </label>
+
+            <span
+              class="file-name"
+              id="room-schedule-name"
+              aria-hidden="true"
+              style="
+                margin-left: 0.6rem;
+                color: var(--complimentary);
+                font-size: 0.95rem;
+              "
+            ></span> -->
           </form>
         </div>
         <div class="delete-save-buttons">
-          <button class="btn btn-danger">Kustuta tuba #23</button>
-          <button class="btn btn-success">Salvesta andmed</button>
+          <button type="button" class="btn btn-danger">Kustuta tuba</button>
+          <button type="button" class="btn btn-success">Salvesta andmed</button>
         </div>
       </main>
     </div>
+    <script>
+      // Update visible filename when a file is chosen
+      (function () {
+        var input = document.getElementById("room-image-input");
+        var nameSpan = document.getElementById("room-image-name");
+        if (!input) return;
+        input.addEventListener("change", function () {
+          var f = input.files && input.files[0];
+          nameSpan.textContent = f ? f.name : "";
+        });
+      })();
+    </script>
   </body>
 </html>
