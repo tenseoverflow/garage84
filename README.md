@@ -1,6 +1,13 @@
 # garage84
 
-Broneerimissüsteem koolile
+Broneerimissüsteem koolile, kus saab klassiruume (jm ruume) broneerida ning vaadata nende ajagraafikut. Kavandatud algselt MURG-ile, mis kasutas enne Exceli rägastikku ruumide haldamiseks.
+
+Eesmärk oleks võimalikult lihtne ja kiire broneerimisüsteem (TalTechi laadne) valmis teha.
+
+## Tehnoloogiad
+
+**Frontend:** HTML, CSS ja JavaScript (Vite + Bun).\\
+**Backend:** Firebase (Authentication, Firestore) ja Cloudflare R2 (Image upload).
 
 ## Kuidas arendada
 
@@ -27,11 +34,15 @@ bun dev
 
 4. Ava brauseris [http://localhost:3000](http://localhost:3000)
 
-## Kuidas ehitada
+Lokaalset ega test andmebaasi pole veel seadistatud, kuna `prod` veebileht pole veel üleval. `Wrangler`-iga saab imiteerida Cloudflare R2 vajadusel.
+
+## Kuidas buildida
 
 ```bash
 bun build
 ```
+
+Peaks olema dist kaustas. GitLab Pages liigutab selle automaatselt public kausta, kus on ka assetid.
 
 ## Projektiplaan
 
@@ -50,6 +61,25 @@ Lingid sarnastele veebilehtedele:
 Meie projekt erineb teistest veebilehtedest, sest broneering on mõeldud spetsiifilisele koolile ning selle kooli õpetajatele. Samuti on olemas ruumide ustel QR-koodid, mis viivad veebilehele.
 
 [Link Figma projektile](https://www.figma.com/files/team/1554450668308714767/all-projects?fuid=1554899397867533876)
+
+## Funktsioonid
+
+- Töötav ruumide süsteem koos andmebaasiga (Firebase) ning pildi üleslaadimisega (Cloudflare R2)
+- Autentimine (Firebase)
+- Responsiivne rakendus
+- QR koodide genereerimine ning skaneerimine
+
+## Tulevikuplaanid
+
+- Broneerimissüsteem back-end
+- Stiili täiustamine ja UX parandamine
+- Võib-olla SSO sisselogimine vastavalt koolisüsteemidele
+
+## Autorid
+
+- Henri Johannes Aunin
+- Hanna Kristiina Hiienõmm
+- Marcus Borkmann
 
 ## LICENCE
 
