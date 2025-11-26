@@ -1,0 +1,11 @@
+name = "broken-cell-ff16"
+main = "get-upload-url.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+R2_PUBLIC_URL = "https://r2.booking.hen.ee"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "garage84"
+preview_bucket_name = "garage84"

@@ -14,7 +14,11 @@
     <app-navbar title="Muuda tuba"></app-navbar>
     <div class="split split-nav">
       <div class="pilt">
-        <img id="room-image" src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img
+          id="room-image-preview"
+          src="/assets/MURG.jpg"
+          alt="pilt MURGi hoonest."
+        />
       </div>
       <main>
         <div class="room-details">
@@ -39,16 +43,16 @@
               required
             />
 
-            <label for="room-image">Toa pilt</label>
+            <label for="room-image-input">Toa pilt</label>
             <input
-              id="room-image"
+              id="room-image-input"
               name="image"
               type="file"
               accept="image/*"
               style="position: absolute; left: -9999px"
             />
             <label
-              for="room-image"
+              for="room-image-input"
               class="btn btn-small btn-primary"
               style="cursor: pointer"
             >
@@ -103,7 +107,7 @@
     <script>
       // Update visible filename when a file is chosen
       (function () {
-        var input = document.getElementById("room-image");
+        var input = document.getElementById("room-image-input");
         var nameSpan = document.getElementById("room-image-name");
         if (!input) return;
         input.addEventListener("change", function () {

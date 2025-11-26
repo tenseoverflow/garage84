@@ -1,6 +1,7 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
+import { uploadImageToR2 } from "../utils/r2-upload.js";
 import { validateRoomData } from "./room.js";
 
 export function initRoomForm() {
@@ -31,9 +32,17 @@ export function initRoomForm() {
 
       let imageUrl = "";
       if (imageInput?.files && imageInput.files[0]) {
-        imageUrl = "https://hen.ee/favicon.ico";
-        console.log("Image file selected:", imageInput.files[0].name);
-        // TODO: Implement Firebase Storage upload
+        try {
+          imageUrl = await uploadImageToR2(imageInput.files[0]);
+        } catch (uploadError) {
+          console.error("Image upload error:", uploadError);
+          showError("Viga pildi üleslaadmisel: " + uploadError.message);
+
+          if (submitBtn) {
+            submitBtn.disabled = false;
+          }
+          return;
+        }
       }
 
       const roomData = {

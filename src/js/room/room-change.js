@@ -1,6 +1,7 @@
 import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
+import { uploadImageToR2 } from "../utils/r2-upload.js";
 import { fetchRoom, getRoomIdFromUrl, validateRoomData } from "./room.js";
 
 export function initRoomChange() {
@@ -37,7 +38,7 @@ async function loadRoomData(roomId) {
     const locationInput = document.getElementById("room-location");
     const capacityInput = document.getElementById("room-capacity");
     const descriptionInput = document.getElementById("room-description");
-    const roomImageElem = document.getElementById("room-image");
+    const roomImageElem = document.getElementById("room-image-preview");
     const deleteBtn = document.querySelector(".btn-danger");
 
     if (nameInput) nameInput.value = "Laadimine...";
@@ -83,7 +84,7 @@ async function saveRoomData(roomId) {
     const nameInput = document.getElementById("room-name");
     const locationInput = document.getElementById("room-location");
     const capacityInput = document.getElementById("room-capacity");
-    const imageInput = document.getElementById("room-image");
+    const imageInput = document.getElementById("room-image-input");
     const saveBtn = document.querySelector(".btn-success");
 
     const name = nameInput?.value?.trim();
@@ -108,8 +109,46 @@ async function saveRoomData(roomId) {
     };
 
     if (imageInput?.files && imageInput.files[0]) {
-      // TODO: Implement Firebase Storage upload
-      console.log("Image file selected:", imageInput.files[0].name);
+      try {
+        const { data: oldRoomData } = await fetchRoom(roomId);
+        const oldImageUrl = oldRoomData.imageUrl;
+
+        const newImageUrl = await uploadImageToR2(imageInput.files[0]);
+        updateData.imageUrl = newImageUrl;
+
+        if (oldImageUrl && oldImageUrl.startsWith("http")) {
+          try {
+            const urlParts = oldImageUrl.split("/");
+            const filename = `rooms/${urlParts[urlParts.length - 1]}`;
+
+            console.log("Deleting old image:", filename);
+
+            const deleteResponse = await fetch(
+              `https://broken-cell-ff16.tense.workers.dev/?filename=${encodeURIComponent(filename)}`,
+              { method: "DELETE" }
+            );
+
+            if (deleteResponse.ok) {
+              console.log("Old image deleted successfully");
+            } else {
+              console.warn(
+                "Could not delete old image:",
+                await deleteResponse.text()
+              );
+            }
+          } catch (deleteError) {
+            console.warn("Could not delete old image:", deleteError);
+          }
+        }
+      } catch (uploadError) {
+        console.error("Image upload error:", uploadError);
+        showError("Viga pildi üleslaadmisel: " + uploadError.message);
+
+        if (saveBtn) {
+          saveBtn.disabled = false;
+        }
+        return;
+      }
     }
 
     const roomRef = doc(db, "rooms", roomId);
