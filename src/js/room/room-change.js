@@ -2,7 +2,8 @@ import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 import { uploadImageToR2 } from "../utils/r2-upload.js";
-import { fetchRoom, getRoomIdFromUrl, validateRoomData } from "./room.js";
+import { validateRoomData } from "./room-validation.js";
+import { fetchRoom, getRoomIdFromUrl } from "./room.js";
 
 export function initRoomChange() {
   const roomId = getRoomIdFromUrl();
@@ -162,7 +163,6 @@ async function saveRoomData(roomId) {
     const saveBtn = document.querySelector(".btn-success");
     if (saveBtn) {
       saveBtn.disabled = false;
-      saveBtn.textContent = "Salvesta andmed";
     }
   }
 }
@@ -187,7 +187,7 @@ async function deleteRoom(roomId) {
     const roomRef = doc(db, "rooms", roomId);
     await deleteDoc(roomRef);
 
-    window.location.href = "/";
+    window.location.href = "/booking/";
   } catch (error) {
     console.error("Error deleting room:", error);
     showError("Viga ruumi kustutamisel: " + error.message);

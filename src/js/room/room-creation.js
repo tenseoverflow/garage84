@@ -2,7 +2,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 import { uploadImageToR2 } from "../utils/r2-upload.js";
-import { validateRoomData } from "./room.js";
+import { validateRoomData } from "./room-validation.js";
 
 export function initRoomForm() {
   const form = document.querySelector(".new-room form");
