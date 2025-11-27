@@ -1,14 +1,4 @@
 .change-booking {
-  fieldset {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    align-items: flex-start;
-    align-self: stretch;
-    padding: 0;
-    border: 0;
-  }
-
   #summary {
     margin: 0;
   }
@@ -24,5 +14,27 @@ input {
   border: none;
   background: var(--secondary);
   height: 1.875rem;
-  padding-left: 1rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+textarea {
+  border-radius: 0.625rem;
+  border: none;
+  background: var(--secondary);
+  padding: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  resize: vertical;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  align-items: flex-start;
+  align-self: stretch;
+  padding: 0;
+  border: 0;
 }
