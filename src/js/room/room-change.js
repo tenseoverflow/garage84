@@ -155,7 +155,14 @@ async function saveRoomData(roomId) {
     const roomRef = doc(db, "rooms", roomId);
     await updateDoc(roomRef, updateData);
 
-    window.location.href = `/room/?id=${roomId}`;
+    if (
+      document.referrer &&
+      document.referrer.includes(window.location.hostname)
+    ) {
+      window.location.href = document.referrer;
+    } else {
+      window.location.href = `/room/?id=${roomId}`;
+    }
   } catch (error) {
     console.error("Error updating room:", error);
     showError("Viga ruumi uuendamisel: " + error.message);

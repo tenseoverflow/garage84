@@ -96,13 +96,8 @@ export function validateBookingDataWithDates({
     return "Palun vali algus- ja lõppkuupäev";
   }
 
-  if (startDate >= endDate) {
+  if (endDate <= startDate) {
     return "Lõppaeg peab olema pärast algusaega";
-  }
-
-  const now = new Date();
-  if (startDate < now) {
-    return "Algusaeg ei saa olla minevikus";
   }
 
   if (desc && desc.length > 500) {
