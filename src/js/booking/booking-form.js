@@ -1,6 +1,6 @@
 import { validateBookingData } from "./booking-validation.js";
 
-export function initBookingForm() {
+export function initBookingForm(isEditing = false) {
   const nameInput = document.getElementById("booking-name");
   const dateInput = document.getElementById("booking-date");
   const startInput = document.getElementById("booking-start-time");
@@ -18,26 +18,37 @@ export function initBookingForm() {
   const errorContainer = document.getElementById("validation-errors");
   const submitBtn = document.getElementById("submit-btn");
 
-  const today = new Date().toISOString().split("T")[0];
-  if (dateInput) {
-    dateInput.setAttribute("min", today);
-    dateInput.value = today;
-  }
+  if (!isEditing) {
+    const today = new Date().toISOString().split("T")[0];
+    if (dateInput) {
+      dateInput.setAttribute("min", today);
+      dateInput.value = today;
+    }
 
-  if (endDateInput) {
-    endDateInput.setAttribute("min", today);
-  }
+    if (endDateInput) {
+      endDateInput.setAttribute("min", today);
+    }
 
-  const now = new Date();
-  const currentHour = now.getHours();
-  const nextHour = (currentHour + 1) % 24;
+    const now = new Date();
+    const currentHour = now.getHours();
+    const nextHour = (currentHour + 1) % 24;
 
-  if (startInput) {
-    startInput.value = `${String(currentHour).padStart(2, "0")}:00`;
-  }
+    if (startInput) {
+      startInput.value = `${String(currentHour).padStart(2, "0")}:00`;
+    }
 
-  if (endInput) {
-    endInput.value = `${String(nextHour).padStart(2, "0")}:00`;
+    if (endInput) {
+      endInput.value = `${String(nextHour).padStart(2, "0")}:00`;
+    }
+  } else {
+    const today = new Date().toISOString().split("T")[0];
+    if (dateInput) {
+      dateInput.setAttribute("min", today);
+    }
+
+    if (endDateInput) {
+      endDateInput.setAttribute("min", today);
+    }
   }
 
   function formatDate(iso) {

@@ -62,8 +62,35 @@ export function initBookingChange() {
 
   const deleteBtn = document.getElementById("cancel-booking");
   const saveBtn = document.querySelector(".change-booking .btn-primary");
+  const toggleBtn = document.getElementById("toggle-edit-form");
+  const editForm = document.querySelector(".change-booking");
 
   loadBookingData(bookingId);
+
+  // Toggle edit form visibility
+  if (toggleBtn && editForm) {
+    toggleBtn.addEventListener("click", () => {
+      const isShown = editForm.classList.contains("show");
+      if (isShown) {
+        editForm.classList.remove("show");
+        toggleBtn.textContent = "Muuda broneeringut";
+        toggleBtn.classList.add("btn-secondary");
+        toggleBtn.classList.remove("btn-primary");
+        if (!editForm.classList.contains("show")) {
+          editForm.style.display = "none";
+        }
+      } else {
+        editForm.style.display = "block";
+        requestAnimationFrame(() => {
+          editForm.classList.add("show");
+        });
+        toggleBtn.textContent = "Peida muutmise vorm";
+        toggleBtn.classList.add("btn-primary");
+        toggleBtn.classList.remove("btn-secondary");
+        editForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
+  }
 
   if (saveBtn) {
     saveBtn.addEventListener("click", async (e) => {
@@ -89,7 +116,6 @@ async function loadBookingData(bookingId) {
     const endDateInput = document.getElementById("booking-end-date");
     const endTimeInput = document.getElementById("booking-end-time");
 
-    // Show loading state
     if (nameInput) nameInput.value = "Laadimine...";
     if (descInput) descInput.value = "";
 
@@ -105,28 +131,30 @@ async function loadBookingData(bookingId) {
       );
     }
 
-    // Populate form fields
     if (nameInput) nameInput.value = bookingData.name || "";
     if (descInput) descInput.value = bookingData.desc || "";
 
     if (dateInput) {
-      dateInput.value = timestampToDateInput(bookingData.startDate);
+      const dateValue = timestampToDateInput(bookingData.startDate);
+      dateInput.value = dateValue;
     }
 
     if (startTimeInput) {
-      startTimeInput.value = timestampToTimeInput(bookingData.startDate);
+      const timeValue = timestampToTimeInput(bookingData.startDate);
+      startTimeInput.value = timeValue;
     }
 
     if (endDateInput) {
-      endDateInput.value = timestampToDateInput(bookingData.endingDate);
+      const endDateValue = timestampToDateInput(bookingData.endingDate);
+      endDateInput.value = endDateValue;
     }
 
     if (endTimeInput) {
-      endTimeInput.value = timestampToTimeInput(bookingData.endingDate);
+      const endTimeValue = timestampToTimeInput(bookingData.endingDate);
+      endTimeInput.value = endTimeValue;
     }
 
-    // Initialize booking form for validation and UI updates
-    initBookingForm();
+    initBookingForm(true);
   } catch (error) {
     showError("Viga broneeringu laadimisel: " + error.message);
 
