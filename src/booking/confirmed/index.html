@@ -23,10 +23,34 @@
   </head>
   <body class="with-navbar">
     <app-navbar></app-navbar>
-    <canvas id="canvas"></canvas>
-    <status-message
-      type="booking-confirmed"
-      show-confetti="true"
-    ></status-message>
+    <canvas id="canvas" style="z-index: 100"></canvas>
+    <div class="split split-nav">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <div class="confirmation-message">
+          <h1>Teie broneering on kinnitatud!</h1>
+          <a
+            id="view-booking-link"
+            href="/booking/view/"
+            class="btn btn-primary"
+          >
+            Vaata broneeringut
+          </a>
+        </div>
+      </main>
+    </div>
+    <script type="module">
+      // Get booking ID from URL and update the view link
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookingId = urlParams.get("id");
+      if (bookingId) {
+        const viewLink = document.getElementById("view-booking-link");
+        if (viewLink) {
+          viewLink.href = `/booking/view/?id=${bookingId}`;
+        }
+      }
+    </script>
   </body>
 </html>
