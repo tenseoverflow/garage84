@@ -221,6 +221,11 @@ async function loadBookingData(bookingId) {
         }
       }
 
+      const changeRoomLink = document.getElementById("change-booking-link");
+      if (changeRoomLink && roomData.id) {
+        changeRoomLink.href = `/room/change/?id=${roomData.id}`;
+      }
+
       const navbar = document.querySelector("app-navbar");
       if (navbar) {
         navbar.setAttribute("title", `${bookingData.name || "Broneering"}`);

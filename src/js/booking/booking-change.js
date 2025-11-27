@@ -155,11 +155,9 @@ async function saveBookingData(bookingId) {
     const endDateStr = endDateInput?.value;
     const endTimeStr = endTimeInput?.value;
 
-    // Convert to timestamps
     const startDate = dateTimeToTimestamp(dateStr, startTimeStr);
     const endDate = dateTimeToTimestamp(endDateStr, endTimeStr);
 
-    // Validate booking data
     const validationError = validateBookingDataWithDates({
       name,
       startDate,
@@ -177,7 +175,6 @@ async function saveBookingData(bookingId) {
       saveBtn.textContent = "Salvestamine...";
     }
 
-    // Prepare update data (preserve bookerId and room)
     const updateData = {
       name: name,
       desc: desc,
@@ -189,7 +186,6 @@ async function saveBookingData(bookingId) {
     const bookingRef = doc(db, "bookings", bookingId);
     await updateDoc(bookingRef, updateData);
 
-    // Redirect back to booking view
     window.location.href = `/booking/view/?id=${bookingId}`;
   } catch (error) {
     console.error("Error updating booking:", error);
@@ -226,7 +222,6 @@ async function deleteBooking(bookingId) {
     const bookingRef = doc(db, "bookings", bookingId);
     await deleteDoc(bookingRef);
 
-    // Redirect to cancelled page
     window.location.href = "/booking/cancelled/";
   } catch (error) {
     console.error("Error deleting booking:", error);

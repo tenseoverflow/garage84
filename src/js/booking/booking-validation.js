@@ -21,17 +21,14 @@ export function validateBookingData({
 }) {
   const errors = [];
 
-  // Validate name (required)
   if (!name || !name.trim()) {
     errors.push("Palun sisesta nimi");
   }
 
-  // Validate room ID if provided
   if (roomId !== null && !roomId) {
     errors.push("Ruumi ID puudub");
   }
 
-  // Validate start date is not in the past
   if (startDate) {
     const selectedDate = new Date(startDate);
     const todayDate = new Date();
@@ -42,7 +39,6 @@ export function validateBookingData({
     }
   }
 
-  // Validate end date is not before start date
   if (startDate && endDate) {
     const startDateObj = new Date(startDate);
     const endDateObj = new Date(endDate);
@@ -52,7 +48,6 @@ export function validateBookingData({
     }
   }
 
-  // Validate times on same day (end time must be after start time)
   if (startTime && endTime && startDate && endDate && startDate === endDate) {
     const [startHour, startMin] = startTime.split(":").map(Number);
     const [endHour, endMin] = endTime.split(":").map(Number);
@@ -65,7 +60,6 @@ export function validateBookingData({
     }
   }
 
-  // Validate description length (optional, max 500 characters)
   if (desc && desc.length > 500) {
     errors.push("Kirjeldus ei tohi olla pikem kui 500 tähemärki");
   }
@@ -90,33 +84,27 @@ export function validateBookingDataWithDates({
   desc = "",
   roomId = null,
 }) {
-  // Validate name
   if (!name || !name.trim()) {
     return "Palun sisesta broneeringu nimi";
   }
 
-  // Validate room ID
   if (roomId !== null && !roomId) {
     return "Ruumi ID puudub";
   }
 
-  // Validate dates exist
   if (!startDate || !endDate) {
     return "Palun vali algus- ja lõppkuupäev";
   }
 
-  // Validate start is before end
   if (startDate >= endDate) {
     return "Lõppaeg peab olema pärast algusaega";
   }
 
-  // Validate start date is not in the past
   const now = new Date();
   if (startDate < now) {
     return "Algusaeg ei saa olla minevikus";
   }
 
-  // Validate description length
   if (desc && desc.length > 500) {
     return "Kirjeldus ei tohi olla pikem kui 500 tähemärki";
   }
