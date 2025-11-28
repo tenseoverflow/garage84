@@ -1,9 +1,12 @@
-export function initBookingForm() {
+import { validateBookingData } from "./booking-validation.js";
+
+export function initBookingForm(isEditing = false) {
   const nameInput = document.getElementById("booking-name");
   const dateInput = document.getElementById("booking-date");
   const startInput = document.getElementById("booking-start-time");
   const endDateInput = document.getElementById("booking-end-date");
   const endInput = document.getElementById("booking-end-time");
+  const descInput = document.getElementById("booking-description");
 
   const summaryDate = document.getElementById("summary-date");
   const summaryStart = document.getElementById("summary-start");
@@ -15,26 +18,37 @@ export function initBookingForm() {
   const errorContainer = document.getElementById("validation-errors");
   const submitBtn = document.getElementById("submit-btn");
 
-  const today = new Date().toISOString().split("T")[0];
-  if (dateInput) {
-    dateInput.setAttribute("min", today);
-    dateInput.value = today;
-  }
+  if (!isEditing) {
+    const today = new Date().toISOString().split("T")[0];
+    if (dateInput) {
+      dateInput.setAttribute("min", today);
+      dateInput.value = today;
+    }
 
-  if (endDateInput) {
-    endDateInput.setAttribute("min", today);
-  }
+    if (endDateInput) {
+      endDateInput.setAttribute("min", today);
+    }
 
-  const now = new Date();
-  const currentHour = now.getHours();
-  const nextHour = (currentHour + 1) % 24;
+    const now = new Date();
+    const currentHour = now.getHours();
+    const nextHour = (currentHour + 1) % 24;
 
-  if (startInput) {
-    startInput.value = `${String(currentHour).padStart(2, "0")}:00`;
-  }
+    if (startInput) {
+      startInput.value = `${String(currentHour).padStart(2, "0")}:00`;
+    }
 
-  if (endInput) {
-    endInput.value = `${String(nextHour).padStart(2, "0")}:00`;
+    if (endInput) {
+      endInput.value = `${String(nextHour).padStart(2, "0")}:00`;
+    }
+  } else {
+    const today = new Date().toISOString().split("T")[0];
+    if (dateInput) {
+      dateInput.setAttribute("min", today);
+    }
+
+    if (endDateInput) {
+      endDateInput.setAttribute("min", today);
+    }
   }
 
   function formatDate(iso) {
@@ -83,6 +97,8 @@ export function initBookingForm() {
     return formatted;
   }
 
+  let lastAutoSetEndDate = null;
+
   function autoSetEndDate() {
     const date = dateInput?.value;
     const startTime = startInput?.value;
@@ -90,75 +106,54 @@ export function initBookingForm() {
 
     if (!date || !startTime || !endTime) return;
 
+    const currentEndDate = endDateInput?.value;
+    if (
+      currentEndDate &&
+      currentEndDate !== lastAutoSetEndDate &&
+      currentEndDate !== date
+    ) {
+      return;
+    }
+
     const [startHour, startMin] = startTime.split(":").map(Number);
     const [endHour, endMin] = endTime.split(":").map(Number);
 
     const startMinutes = startHour * 60 + startMin;
     const endMinutes = endHour * 60 + endMin;
 
-    // If end time is before or equal to start time, set end date to next day
+    let newEndDate;
     if (endMinutes <= startMinutes) {
       const startDate = new Date(date);
       const nextDay = new Date(startDate);
       nextDay.setDate(nextDay.getDate() + 1);
-      const nextDayStr = nextDay.toISOString().split("T")[0];
-      if (endDateInput) {
-        endDateInput.value = nextDayStr;
-      }
+      newEndDate = nextDay.toISOString().split("T")[0];
     } else {
-      // Same day booking - set end date to same as start date
-      if (endDateInput) {
-        endDateInput.value = date;
-      }
+      newEndDate = date;
+    }
+
+    if (endDateInput && newEndDate) {
+      endDateInput.value = newEndDate;
+      lastAutoSetEndDate = newEndDate;
     }
   }
 
   function validateForm() {
     const name = nameInput?.value?.trim();
-    const date = dateInput?.value;
+    const startDate = dateInput?.value;
     const startTime = startInput?.value;
     const endDate = endDateInput?.value;
     const endTime = endInput?.value;
+    const desc = descInput?.value?.trim();
 
-    let errors = [];
-
-    // Check if name is provided
-    if (!name) {
-      errors.push("Palun sisesta nimi");
-    }
-
-    if (date) {
-      const selectedDate = new Date(date);
-      const todayDate = new Date();
-      todayDate.setHours(0, 0, 0, 0);
-
-      if (selectedDate < todayDate) {
-        errors.push("Alguskuupäev ei saa olla minevikus");
-      }
-    }
-
-    if (date && endDate) {
-      const startDate = new Date(date);
-      const selectedEndDate = new Date(endDate);
-
-      if (selectedEndDate < startDate) {
-        errors.push("Lõppkuupäev ei saa olla enne alguskuupäeva");
-      }
-    }
-
-    if (startTime && endTime && (!endDate || endDate === date)) {
-      const [startHour, startMin] = startTime.split(":").map(Number);
-      const [endHour, endMin] = endTime.split(":").map(Number);
-
-      const startMinutes = startHour * 60 + startMin;
-      const endMinutes = endHour * 60 + endMin;
-
-      if (endMinutes <= startMinutes) {
-        errors.push(
-          "Lõppaeg peab olema pärast algusaega või vali järgmine päev"
-        );
-      }
-    }
+    const errors =
+      validateBookingData({
+        name,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        desc,
+      }) || [];
 
     if (errorContainer) {
       if (errors.length > 0) {

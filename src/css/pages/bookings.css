@@ -115,6 +115,17 @@
   gap: 1rem;
 }
 
+.change-booking {
+  display: none;
+  opacity: 0;
+}
+
+.change-booking.show {
+  display: block;
+  opacity: 1;
+  margin-top: 2rem;
+}
+
 @media (max-width: 768px) {
   .my_bookings {
     padding: 1rem 1rem;

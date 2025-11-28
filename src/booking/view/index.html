@@ -13,13 +13,22 @@
     <app-navbar title="Broneeringu vaade"></app-navbar>
     <div class="split split-nav">
       <div class="pilt">
-        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img id="room-image" src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
       </div>
       <main>
         <header>
-          <h1>Room #23</h1>
-          <p>Korrus 3</p>
-          <a class="link-hollowed" href="/room/change/">Muuda ruumi</a>
+          <h1 id="booking-title">Laadimine...</h1>
+          <p id="booking-desc"></p>
+          <div>
+            <strong>Ruum:</strong> <span id="room-title"></span>
+            <span id="room-location"></span>
+          </div>
+          <div>
+            <strong>Kuupäev:</strong> <span id="booking-date-display"></span>
+          </div>
+          <div>
+            <strong>Aeg:</strong> <span id="booking-time-display"></span>
+          </div>
         </header>
         <!-- Kalendri komponent -->
         <div class="calendar">
@@ -81,50 +90,66 @@
             </ul>
           </div>
         </div>
+        <!-- Toggle button for edit form -->
+        <footer class="toggle-edit-form">
+          <button id="toggle-edit-form" type="button" class="btn btn-secondary">
+            Muuda broneeringut
+          </button>
+          <a
+            id="change-booking-link"
+            class="btn btn-secondary"
+            href="/room/change/"
+            type="button"
+          >
+            Muuda ruumi
+          </a>
+        </footer>
         <!-- change booking -->
-        <form class="change-booking" action="">
+        <form
+          class="change-booking"
+          action=""
+          style="display: none; margin-top: 0"
+        >
           <fieldset>
-            <label for="booking-title">Pealkiri</label>
-            <input
-              type="text"
-              id="booking-title"
-              name="booking-title"
-              value="Koosolek"
-              required
-            />
+            <label for="booking-name">Nimi</label>
+            <input id="booking-name" type="text" required />
 
-            <label for="booking-date">Kuupäev</label>
-            <input
-              type="date"
-              id="booking-date"
-              name="booking-date"
-              value="Juuni 2024"
-              required
-            />
+            <label for="booking-description">Kirjeldus (valikuline)</label>
+            <textarea id="booking-description" rows="3"></textarea>
 
-            <label for="booking-time">Kellaaeg</label>
-            <input
-              type="time"
-              id="booking-time"
-              name="booking-time"
-              value="9:50-11:00"
-              required
-            />
+            <label for="booking-date">Alguskuupäev</label>
+            <input id="booking-date" type="date" required />
+
+            <label for="booking-start-time">Algusaeg</label>
+            <input id="booking-start-time" type="time" required />
+
+            <label for="booking-end-date">Lõppkuupäev</label>
+            <input id="booking-end-date" type="date" required />
+
+            <label for="booking-end-time">Lõppaeg</label>
+            <input id="booking-end-time" type="time" required />
           </fieldset>
 
-          <p id="summary">
-            Kellast 14:00 kuni 15:00 teisipäeval 01. jaanuaril 1970.
+          <div
+            id="validation-errors"
+            style="color: red; margin-top: 1rem"
+          ></div>
+
+          <p>
+            <span id="summary-text">
+              Kellast <strong id="summary-start">-</strong> kuupäeval
+              <strong id="summary-date">-</strong> kuni
+              <strong id="summary-end">-</strong> kuupäeval
+              <strong id="summary-end-date-section">-</strong>.
+            </span>
           </p>
           <footer>
-            <!-- TODO: Should alert user after clicking -->
-            <button
-              id="cancel-booking"
-              class="btn btn-danger"
-              onclick="location.href='/booking/cancelled/'"
-            >
+            <button id="cancel-booking" type="button" class="btn btn-danger">
               Tühista broneering
             </button>
-            <button class="btn btn-primary">Muuda broneeringut</button>
+            <button type="button" class="btn btn-success">
+              Salvesta muudatused
+            </button>
           </footer>
         </form>
         <!-- <div class="change-booking-mobile">
@@ -135,6 +160,7 @@
         <!-- Decision -->
       </main>
     </div>
-    <script type="module" src="/js/change-booking.js"></script>
+    <script type="module" src="/js/booking/booking.js"></script>
+    <script type="module" src="/js/booking/booking-change.js"></script>
   </body>
 </html>

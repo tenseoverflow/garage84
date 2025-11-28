@@ -12,7 +12,7 @@ export function showError(message, container = "main") {
     background-color: #fee;
     color: #c33;
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     border-radius: 0.5rem;
     border: 1px solid #fcc;
   `;

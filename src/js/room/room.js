@@ -45,6 +45,11 @@ export function initRoomView() {
     changeLink.href = `/room/change/?id=${roomId}`;
   }
 
+  const bookingLink = document.querySelector('a[href="/booking/new/"]');
+  if (bookingLink) {
+    bookingLink.href = `/booking/new/?id=${roomId}`;
+  }
+
   const downloadQrBtn = document.getElementById("download-qr");
   if (downloadQrBtn) {
     downloadQrBtn.addEventListener("click", () => downloadRoomQR(roomId));
