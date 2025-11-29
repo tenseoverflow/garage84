@@ -4,6 +4,7 @@ import { showError } from "../utils/banners.js";
 import { initBookingForm } from "./booking-form.js";
 import { validateBookingDataWithDates } from "./booking-validation.js";
 import { fetchBooking, getBookingIdFromUrl } from "./booking.js";
+import { icalDownload } from "./ical-download.js";
 
 /**
  * Convert Firestore timestamp to date input string (YYYY-MM-DD)
@@ -64,6 +65,7 @@ export function initBookingChange() {
   const saveBtn = document.querySelector(".change-booking .btn-primary");
   const toggleBtn = document.getElementById("toggle-edit-form");
   const editForm = document.querySelector(".change-booking");
+  const icalBtn = document.getElementById("download-ical");
 
   loadBookingData(bookingId);
 
@@ -103,6 +105,13 @@ export function initBookingChange() {
     deleteBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       await deleteBooking(bookingId);
+    });
+  }
+
+  if (icalBtn) {
+    icalBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await icalDownload(bookingId);
     });
   }
 }
