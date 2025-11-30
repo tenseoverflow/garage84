@@ -138,6 +138,15 @@ class StatusMessage extends HTMLElement {
       if (imageUrl) {
         this.setAttribute("image", imageUrl);
         this.updateImage(config);
+      } else {
+        // If there's no image from Firestore (deleted doc), try a URL query param fallback
+        const imageFromUrlParam = new URLSearchParams(
+          window.location.search
+        ).get("image");
+        if (imageFromUrlParam) {
+          this.setAttribute("image", imageFromUrlParam);
+          this.updateImage(config);
+        }
       }
     } catch (err) {
       console.error("Error loading related image for status message:", err);
@@ -170,7 +179,9 @@ class StatusMessage extends HTMLElement {
         buttonLink: "/room/",
         image: "/assets/MURG.jpg",
         imageAlt: "pilt MURGi hoonest.",
-        showViewLink: false,
+        showViewLink: true,
+        viewLinkText: "Vaata ruumi",
+        viewLinkPath: "/room/",
       },
       "room-deleted": {
         title: "Ruum on kustutatud!",
@@ -199,8 +210,14 @@ class StatusMessage extends HTMLElement {
     const imgSrc = this.getAttribute("image") || config.image;
     const imgAlt = this.getAttribute("image-alt") || config.imageAlt;
 
+    // Room name fallback: attribute 'name' or query param 'name'
+    const roomName =
+      this.getAttribute("name") ||
+      new URLSearchParams(window.location.search).get("name") ||
+      "";
+
     const viewLinkHtml = config.showViewLink
-      ? `<a id="view-booking-link" href="${config.viewLinkPath}" class="btn btn-primary">${config.viewLinkText}</a>`
+      ? `<a id="view-action-link" href="${config.viewLinkPath}" class="btn btn-primary">${config.viewLinkText}</a>`
       : "";
 
     const backButtonClass = config.showViewLink
@@ -214,6 +231,7 @@ class StatusMessage extends HTMLElement {
       <main>
         <div class="confirmation-message">
           <h1>${config.title}</h1>
+          ${roomName ? `<p class="status-room-name">${roomName}</p>` : ""}
           ${viewLinkHtml}
 
           <a href="${config.buttonLink}" class="${backButtonClass}">
@@ -247,15 +265,30 @@ class StatusMessage extends HTMLElement {
     if (!config || !config.showViewLink) return;
 
     const paramName = this.getAttribute("view-param") || "id";
-    const bookingIdAttr = this.getAttribute("booking-id");
-    const bookingId =
-      bookingIdAttr ||
-      new URLSearchParams(window.location.search).get(paramName);
+
+    const type = this.getAttribute("type");
+    let idValue = null;
+
+    if (type === "booking-confirmed") {
+      idValue =
+        this.getAttribute("booking-id") ||
+        new URLSearchParams(window.location.search).get(paramName);
+    } else if (type && type.startsWith("room")) {
+      idValue =
+        this.getAttribute("room-id") ||
+        new URLSearchParams(window.location.search).get(paramName) ||
+        new URLSearchParams(window.location.search).get("id") ||
+        new URLSearchParams(window.location.search).get("roomId");
+    } else {
+      idValue =
+        this.getAttribute("id") ||
+        new URLSearchParams(window.location.search).get(paramName);
+    }
 
     const viewPath =
       this.getAttribute("view-path") || config.viewLinkPath || "/booking/view/";
 
-    const anchor = this.querySelector("#view-booking-link");
+    const anchor = this.querySelector("#view-action-link");
     if (!anchor) return;
 
     const viewTextAttr = this.getAttribute("view-text");
@@ -263,8 +296,8 @@ class StatusMessage extends HTMLElement {
       anchor.textContent = viewTextAttr;
     }
 
-    if (bookingId) {
-      anchor.href = `${viewPath}?${paramName}=${encodeURIComponent(bookingId)}`;
+    if (idValue) {
+      anchor.href = `${viewPath}?${paramName}=${encodeURIComponent(idValue)}`;
     } else {
       anchor.href = viewPath;
     }
