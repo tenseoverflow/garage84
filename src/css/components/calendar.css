@@ -74,4 +74,9 @@
   .user-booking {
     color: var(--complimentary);
   }
+
+  .conflict-booking {
+    color: #dc2626;
+    font-weight: 600;
+  }
 }

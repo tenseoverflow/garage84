@@ -11,7 +11,10 @@ import {
 import { auth, db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 import { initBookingForm } from "./booking-form.js";
-import { validateBookingDataWithDates } from "./booking-validation.js";
+import {
+  hasBookingConflict,
+  validateBookingDataWithDates,
+} from "./booking-validation.js";
 
 /**
  * Get room ID from URL query parameters
@@ -176,6 +179,13 @@ export function initBookingCreation() {
         }
 
         const roomRef = doc(db, "rooms", roomId);
+
+        const existingBookings = await fetchRoomBookings(roomRef);
+        if (hasBookingConflict(existingBookings, startDate, endDate)) {
+          throw new Error(
+            "Sellel ajal on ruum juba broneeritud. Palun vali teine aeg."
+          );
+        }
 
         const bookingData = {
           name: name,

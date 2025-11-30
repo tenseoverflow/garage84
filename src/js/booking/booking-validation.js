@@ -106,3 +106,54 @@ export function validateBookingDataWithDates({
 
   return null;
 }
+
+/**
+ * Check if two time ranges overlap
+ * @param {Date} start1 - Start of first range
+ * @param {Date} end1 - End of first range
+ * @param {Date} start2 - Start of second range
+ * @param {Date} end2 - End of second range
+ * @returns {boolean} True if ranges overlap
+ */
+function doTimeRangesOverlap(start1, end1, start2, end2) {
+  return start1 < end2 && start2 < end1;
+}
+
+/**
+ * Check for booking conflicts with existing bookings
+ * @param {Array} existingBookings - Array of existing bookings with startDate and endingDate
+ * @param {Date} newStartDate - New booking start date
+ * @param {Date} newEndDate - New booking end date
+ * @param {string} [excludeBookingId] - Booking ID to exclude (for updates)
+ * @returns {boolean} True if there's a conflict
+ */
+export function hasBookingConflict(
+  existingBookings,
+  newStartDate,
+  newEndDate,
+  excludeBookingId = null
+) {
+  return existingBookings.some((booking) => {
+    if (excludeBookingId && booking.id === excludeBookingId) {
+      return false;
+    }
+
+    const existingStart = booking.startDate?.toDate
+      ? booking.startDate.toDate()
+      : booking.startDate;
+    const existingEnd = booking.endingDate?.toDate
+      ? booking.endingDate.toDate()
+      : booking.endingDate;
+
+    if (!existingStart || !existingEnd) {
+      return false;
+    }
+
+    return doTimeRangesOverlap(
+      newStartDate,
+      newEndDate,
+      existingStart,
+      existingEnd
+    );
+  });
+}

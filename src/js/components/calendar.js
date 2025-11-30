@@ -14,7 +14,7 @@ class AppCalendar extends HTMLElement {
     this.innerHTML = `
       <div class="calendar">
         <div class="calendar-header">
-          <button class="cal-button" id="prev-day">
+          <button type="button" class="cal-button" id="prev-day">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -32,7 +32,7 @@ class AppCalendar extends HTMLElement {
             </svg>
           </button>
           <h2 id="calendar-title">Täna</h2>
-          <button class="cal-button" id="next-day">
+          <button type="button" class="cal-button" id="next-day">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -294,6 +294,52 @@ class AppCalendar extends HTMLElement {
       bookingEndDate || bookingStartDate
     );
 
+    let hasConflict = false;
+    if (
+      shouldShowFormBooking &&
+      bookingStartDate &&
+      bookingEndDate &&
+      bookingStartTime &&
+      bookingEndTime
+    ) {
+      const [startYear, startMonth, startDay] = bookingStartDate
+        .split("-")
+        .map(Number);
+      const [startHour, startMin] = bookingStartTime.split(":").map(Number);
+      const [endYear, endMonth, endDay] = (bookingEndDate || bookingStartDate)
+        .split("-")
+        .map(Number);
+      const [endHour, endMin] = bookingEndTime.split(":").map(Number);
+
+      const userStart = new Date(
+        startYear,
+        startMonth - 1,
+        startDay,
+        startHour,
+        startMin
+      );
+      const userEnd = new Date(endYear, endMonth - 1, endDay, endHour, endMin);
+
+      hasConflict = this._bookings.some((booking) => {
+        if (this._currentBookingId && booking.id === this._currentBookingId) {
+          return false;
+        }
+
+        const existingStart = booking.startDate?.toDate
+          ? booking.startDate.toDate()
+          : booking.startDate;
+        const existingEnd = booking.endingDate?.toDate
+          ? booking.endingDate.toDate()
+          : booking.endingDate;
+
+        if (!existingStart || !existingEnd) {
+          return false;
+        }
+
+        return userStart < existingEnd && existingStart < userEnd;
+      });
+    }
+
     if (shouldShowFormBooking && isBookingOnThisDay) {
       const isStartDay = currentViewDateStr === bookingStartDate;
       const isEndDay =
@@ -306,6 +352,7 @@ class AppCalendar extends HTMLElement {
           description: bookingName,
           isUserBooking: true,
           isCurrentBooking: true,
+          hasConflict: hasConflict,
         });
       } else if (isStartDay) {
         bookingsToShow.push({
@@ -314,6 +361,7 @@ class AppCalendar extends HTMLElement {
           description: `${bookingName} (algus)`,
           isUserBooking: true,
           isCurrentBooking: true,
+          hasConflict: hasConflict,
         });
       } else if (isEndDay) {
         bookingsToShow.push({
@@ -322,6 +370,7 @@ class AppCalendar extends HTMLElement {
           description: `${bookingName} (lõpp)`,
           isUserBooking: true,
           isCurrentBooking: true,
+          hasConflict: hasConflict,
         });
       } else {
         bookingsToShow.push({
@@ -330,6 +379,7 @@ class AppCalendar extends HTMLElement {
           description: bookingName,
           isUserBooking: true,
           isCurrentBooking: true,
+          hasConflict: hasConflict,
         });
       }
     }
@@ -344,7 +394,11 @@ class AppCalendar extends HTMLElement {
       const timeLi = document.createElement("li");
       timeLi.textContent = `${booking.start}-${booking.end}`;
       if (booking.isUserBooking) {
-        timeLi.classList.add("user-booking");
+        if (booking.hasConflict) {
+          timeLi.classList.add("conflict-booking");
+        } else {
+          timeLi.classList.add("user-booking");
+        }
       } else if (booking.isCurrentBooking) {
         timeLi.classList.add("booked");
       }
@@ -353,7 +407,11 @@ class AppCalendar extends HTMLElement {
       const descLi = document.createElement("li");
       descLi.textContent = booking.description;
       if (booking.isUserBooking) {
-        descLi.classList.add("user-booking");
+        if (booking.hasConflict) {
+          descLi.classList.add("conflict-booking");
+        } else {
+          descLi.classList.add("user-booking");
+        }
       } else if (booking.isCurrentBooking) {
         descLi.classList.add("booked");
       }

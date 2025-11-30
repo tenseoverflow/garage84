@@ -2,8 +2,15 @@ import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 import { initBookingForm } from "./booking-form.js";
-import { validateBookingDataWithDates } from "./booking-validation.js";
-import { fetchBooking, getBookingIdFromUrl } from "./booking.js";
+import {
+  hasBookingConflict,
+  validateBookingDataWithDates,
+} from "./booking-validation.js";
+import {
+  fetchBooking,
+  fetchRoomBookings,
+  getBookingIdFromUrl,
+} from "./booking.js";
 
 /**
  * Convert Firestore timestamp to date input string (YYYY-MM-DD)
@@ -116,7 +123,6 @@ async function loadBookingData(bookingId) {
     const endDateInput = document.getElementById("booking-end-date");
     const endTimeInput = document.getElementById("booking-end-time");
 
-    if (nameInput) nameInput.value = "Laadimine...";
     if (descInput) descInput.value = "";
 
     const { data: bookingData } = await fetchBooking(bookingId);
@@ -200,7 +206,15 @@ async function saveBookingData(bookingId) {
 
     if (saveBtn) {
       saveBtn.disabled = true;
-      saveBtn.textContent = "Salvestamine...";
+    }
+
+    const { data: currentBooking } = await fetchBooking(bookingId);
+
+    const existingBookings = await fetchRoomBookings(currentBooking.room);
+    if (hasBookingConflict(existingBookings, startDate, endDate, bookingId)) {
+      throw new Error(
+        "Sellel ajal on ruum juba broneeritud. Palun vali teine aeg."
+      );
     }
 
     const updateData = {
@@ -222,7 +236,6 @@ async function saveBookingData(bookingId) {
     const saveBtn = document.querySelector(".change-booking .btn-primary");
     if (saveBtn) {
       saveBtn.disabled = false;
-      saveBtn.textContent = "Muuda broneeringut";
     }
   }
 }
@@ -244,7 +257,6 @@ async function deleteBooking(bookingId) {
 
     if (deleteBtn) {
       deleteBtn.disabled = true;
-      deleteBtn.textContent = "Tühistamine...";
     }
 
     const bookingRef = doc(db, "bookings", bookingId);
@@ -258,7 +270,6 @@ async function deleteBooking(bookingId) {
     const deleteBtn = document.getElementById("cancel-booking");
     if (deleteBtn) {
       deleteBtn.disabled = false;
-      deleteBtn.textContent = "Tühista broneering";
     }
   }
 }
