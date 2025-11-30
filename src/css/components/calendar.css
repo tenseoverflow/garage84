@@ -70,4 +70,8 @@
   .booked {
     text-decoration: underline;
   }
+
+  .user-booking {
+    color: var(--complimentary);
+  }
 }

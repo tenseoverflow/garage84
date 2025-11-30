@@ -3,7 +3,10 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
+  query,
   serverTimestamp,
+  where,
 } from "firebase/firestore";
 import { auth, db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
@@ -48,6 +51,13 @@ async function loadRoomInfo(roomId) {
       if (navbar) {
         navbar.setAttribute("title", `Broneeri: ${roomData.name || "Ruum"}`);
       }
+
+      const calendar = document.querySelector("app-calendar");
+      if (calendar) {
+        const roomRef = doc(db, "rooms", roomId);
+        const roomBookings = await fetchRoomBookings(roomRef);
+        calendar.bookings = roomBookings;
+      }
     } else {
       throw new Error("Ruumi ei leitud");
     }
@@ -59,6 +69,32 @@ async function loadRoomInfo(roomId) {
     if (roomTitleElem) {
       roomTitleElem.textContent = "Ruum ei leitud";
     }
+  }
+}
+
+/**
+ * Fetch all bookings for a room
+ * @param {object} roomRef - Firestore room reference
+ * @returns {Promise<Array>} Array of booking objects with id
+ */
+async function fetchRoomBookings(roomRef) {
+  try {
+    const bookingsQuery = query(
+      collection(db, "bookings"),
+      where("room", "==", roomRef)
+    );
+    const querySnapshot = await getDocs(bookingsQuery);
+    const bookings = [];
+    querySnapshot.forEach((doc) => {
+      bookings.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    return bookings;
+  } catch (error) {
+    console.error("Error fetching room bookings:", error);
+    return [];
   }
 }
 

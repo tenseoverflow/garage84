@@ -1,4 +1,11 @@
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 
@@ -135,6 +142,32 @@ function formatDateWithRelative(timestamp) {
   return formatted;
 }
 
+/**
+ * Fetch all bookings for a room
+ * @param {object} roomRef - Firestore room reference
+ * @returns {Promise<Array>} Array of booking objects with id
+ */
+export async function fetchRoomBookings(roomRef) {
+  try {
+    const bookingsQuery = query(
+      collection(db, "bookings"),
+      where("room", "==", roomRef)
+    );
+    const querySnapshot = await getDocs(bookingsQuery);
+    const bookings = [];
+    querySnapshot.forEach((doc) => {
+      bookings.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    return bookings;
+  } catch (error) {
+    console.error("Error fetching room bookings:", error);
+    return [];
+  }
+}
+
 export function initBookingView() {
   const bookingId = getBookingIdFromUrl();
 
@@ -229,6 +262,13 @@ async function loadBookingData(bookingId) {
       const navbar = document.querySelector("app-navbar");
       if (navbar) {
         navbar.setAttribute("title", `${bookingData.name || "Broneering"}`);
+      }
+
+      const calendar = document.getElementById("booking-calendar");
+      if (calendar && bookingData.room) {
+        const roomBookings = await fetchRoomBookings(bookingData.room);
+        calendar.bookings = roomBookings;
+        calendar.currentBookingId = bookingId;
       }
     }
   } catch (error) {

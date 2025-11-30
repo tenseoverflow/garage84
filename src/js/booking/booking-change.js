@@ -61,7 +61,7 @@ export function initBookingChange() {
   }
 
   const deleteBtn = document.getElementById("cancel-booking");
-  const saveBtn = document.querySelector(".change-booking .btn-primary");
+  const saveBtn = document.querySelector(".change-booking .btn-success");
   const toggleBtn = document.getElementById("toggle-edit-form");
   const editForm = document.querySelector(".change-booking");
 

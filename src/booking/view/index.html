@@ -30,67 +30,7 @@
             <strong>Aeg:</strong> <span id="booking-time-display"></span>
           </div>
         </header>
-        <!-- Kalendri komponent -->
-        <div class="calendar">
-          <div class="calendar-header">
-            <button class="cal-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M15 18L9 12L15 6"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-            <h2>Juuni 2024</h2>
-            <button class="cal-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-          <div class="cal-grid">
-            <ul class="cal-times">
-              <li>8:30-9:40</li>
-              <li class="booked">9:50-11:00</li>
-              <li>11:00-11:30</li>
-              <li>11:30-12:40</li>
-              <li>12:40-13:30</li>
-              <li>13:30-14:40</li>
-              <li>14:50-16:00</li>
-            </ul>
-            <ul class="cal-desc">
-              <li>Vaba</li>
-              <li class="booked">Koosolek</li>
-              <li>Lõuna</li>
-              <li>Ajalugu G3 Pallas</li>
-              <li>Matemaatika G2 Marss</li>
-              <li>Keemia G1 Ceres</li>
-              <li>Vaba</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Toggle button for edit form -->
+        <app-calendar id="booking-calendar"></app-calendar>
         <footer class="toggle-edit-form">
           <button id="toggle-edit-form" type="button" class="btn btn-secondary">
             Muuda broneeringut
@@ -104,7 +44,6 @@
             Muuda ruumi
           </a>
         </footer>
-        <!-- change booking -->
         <form
           class="change-booking"
           action=""
@@ -152,14 +91,9 @@
             </button>
           </footer>
         </form>
-        <!-- <div class="change-booking-mobile">
-          <a href="/change-booking/" class="btn btn-small btn-primary"
-            >Muuda broneeringut</a
-          >
-        </div> -->
-        <!-- Decision -->
       </main>
     </div>
+    <script type="module" src="/js/components/calendar.js"></script>
     <script type="module" src="/js/booking/booking.js"></script>
     <script type="module" src="/js/booking/booking-change.js"></script>
   </body>
