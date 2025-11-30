@@ -244,10 +244,11 @@ try {
 - Follow KISS (Keep It Simple, Stupid) - prefer simple, straightforward solutions
 - Skip README files unless explicitly requested
 - Use JSDoc comments for functions, classes, and complex types
+- The code uses Prettier and ESLint for formatting and linting. Do not fret if Prettier gives errors, the user will handle that.
 
 ## What NOT to Do
 
-- ❌ USELESS COMMENTS (add only JSDOC where needed)
+- ❌ COMMENTS (add only JSDOC where needed)
 - ❌ Use React/Vue/Svelte—this is vanilla JS
 - ❌ Client-side routing libraries
 - ❌ Shadow DOM in web components

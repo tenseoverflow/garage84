@@ -194,6 +194,8 @@ export function initBookingCreation() {
           endingDate: endDate,
           room: roomRef,
           bookerId: user.uid,
+          bookerName: user.displayName,
+          bookerEmail: user.email,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         };

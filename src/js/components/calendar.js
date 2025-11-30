@@ -32,6 +32,7 @@ class AppCalendar extends HTMLElement {
             </svg>
           </button>
           <h2 id="calendar-title">Täna</h2>
+          <input type="date" id="calendar-date-picker" />
           <button type="button" class="cal-button" id="next-day">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,6 +75,9 @@ class AppCalendar extends HTMLElement {
 
   set currentBookingId(value) {
     this._currentBookingId = value;
+    if (value) {
+      this._currentViewDate = null;
+    }
     if (this._initialized) {
       this.render();
     }
@@ -86,6 +90,8 @@ class AppCalendar extends HTMLElement {
   setupEventListeners() {
     const prevDayBtn = this.querySelector("#prev-day");
     const nextDayBtn = this.querySelector("#next-day");
+    const calendarTitle = this.querySelector("#calendar-title");
+    const calendarDatePicker = this.querySelector("#calendar-date-picker");
 
     if (prevDayBtn) {
       prevDayBtn.addEventListener("click", () => this.changeDay(-1));
@@ -95,7 +101,27 @@ class AppCalendar extends HTMLElement {
       nextDayBtn.addEventListener("click", () => this.changeDay(1));
     }
 
-    // Watch for form input changes in parent document
+    if (calendarTitle && calendarDatePicker) {
+      calendarTitle.style.cursor = "pointer";
+      calendarTitle.addEventListener("click", () => {
+        calendarDatePicker.showPicker?.();
+      });
+    }
+
+    if (calendarDatePicker) {
+      calendarDatePicker.addEventListener("change", (e) => {
+        const selectedDate = e.target.value;
+        if (selectedDate) {
+          const [year, month, day] = selectedDate.split("-").map(Number);
+          this._currentViewDate = new Date(year, month - 1, day);
+          this._currentViewDate.setHours(0, 0, 0, 0);
+          this.updateCalendarDatePicker();
+          this.updateCalendarTitle();
+          this.render();
+        }
+      });
+    }
+
     const dateInput = document.getElementById("booking-date");
     const startInput = document.getElementById("booking-start-time");
     const endDateInput = document.getElementById("booking-end-date");
@@ -138,6 +164,19 @@ class AppCalendar extends HTMLElement {
     const calendarTitle = this.querySelector("#calendar-title");
     if (calendarTitle && this._currentViewDate) {
       calendarTitle.textContent = this.getRelativeDay(this._currentViewDate);
+    }
+  }
+
+  updateCalendarDatePicker() {
+    const calendarDatePicker = this.querySelector("#calendar-date-picker");
+    if (calendarDatePicker && this._currentViewDate) {
+      const year = this._currentViewDate.getFullYear();
+      const month = String(this._currentViewDate.getMonth() + 1).padStart(
+        2,
+        "0"
+      );
+      const day = String(this._currentViewDate.getDate()).padStart(2, "0");
+      calendarDatePicker.value = `${year}-${month}-${day}`;
     }
   }
 
@@ -192,14 +231,30 @@ class AppCalendar extends HTMLElement {
     const bookingEndTime = endInput?.value;
     const bookingName = nameInput?.value || "Nimetu broneering";
 
-    if (!this._currentViewDate && bookingStartDate) {
-      const [year, month, day] = bookingStartDate.split("-").map(Number);
-      this._currentViewDate = new Date(year, month - 1, day);
+    if (!this._currentViewDate) {
+      if (this._currentBookingId && this._bookings.length > 0) {
+        const currentBooking = this._bookings.find(
+          (b) => b.id === this._currentBookingId
+        );
+        if (currentBooking && currentBooking.startDate) {
+          const bookingStartDate = currentBooking.startDate.toDate();
+          this._currentViewDate = new Date(bookingStartDate);
+          this._currentViewDate.setHours(0, 0, 0, 0);
+        }
+      }
+
+      if (!this._currentViewDate && bookingStartDate) {
+        const [year, month, day] = bookingStartDate.split("-").map(Number);
+        this._currentViewDate = new Date(year, month - 1, day);
+      }
+
+      if (!this._currentViewDate) {
+        this._currentViewDate = new Date();
+        this._currentViewDate.setHours(0, 0, 0, 0);
+      }
+
       this.updateCalendarTitle();
-    } else if (!this._currentViewDate) {
-      this._currentViewDate = new Date();
-      this._currentViewDate.setHours(0, 0, 0, 0);
-      this.updateCalendarTitle();
+      this.updateCalendarDatePicker();
     }
 
     const year = this._currentViewDate.getFullYear();
@@ -208,6 +263,8 @@ class AppCalendar extends HTMLElement {
     const currentViewDateStr = `${year}-${month}-${day}`;
 
     let bookingsToShow = [];
+
+    const now = new Date();
 
     this._bookings.forEach((booking) => {
       const bookingStartDateStr = this.timestampToDateString(booking.startDate);
@@ -218,6 +275,11 @@ class AppCalendar extends HTMLElement {
       if (!bookingStartDateStr || !bookingStartTimeStr || !bookingEndTimeStr) {
         return;
       }
+
+      const bookingEndDate = booking.endingDate?.toDate
+        ? booking.endingDate.toDate()
+        : booking.endingDate;
+      const isPast = bookingEndDate && bookingEndDate < now;
 
       const isOnThisDay = this.isDateInBookingRange(
         currentViewDateStr,
@@ -243,6 +305,7 @@ class AppCalendar extends HTMLElement {
             isUserBooking: false,
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
+            isPast: isPast,
           });
         } else if (isStartDay) {
           bookingsToShow.push({
@@ -252,6 +315,7 @@ class AppCalendar extends HTMLElement {
             isUserBooking: false,
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
+            isPast: isPast,
           });
         } else if (isEndDay) {
           bookingsToShow.push({
@@ -261,6 +325,7 @@ class AppCalendar extends HTMLElement {
             isUserBooking: false,
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
+            isPast: isPast,
           });
         } else {
           bookingsToShow.push({
@@ -270,6 +335,7 @@ class AppCalendar extends HTMLElement {
             isUserBooking: false,
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
+            isPast: isPast,
           });
         }
       }
@@ -390,31 +456,144 @@ class AppCalendar extends HTMLElement {
       return aTime - bTime;
     });
 
+    const [viewYear, viewMonth, viewDay] = currentViewDateStr
+      .split("-")
+      .map(Number);
+    const viewDate = new Date(viewYear, viewMonth - 1, viewDay);
+    viewDate.setHours(0, 0, 0, 0);
+    const todayDate = new Date(now);
+    todayDate.setHours(0, 0, 0, 0);
+
+    const isToday = viewDate.getTime() === todayDate.getTime();
+    const isPastDay = viewDate < todayDate;
+
+    if (!isPastDay) {
+      for (let hour = 8; hour < 18; hour++) {
+        let slotStartHour = hour;
+        let slotStartMinute = 0;
+
+        if (isToday && hour <= now.getHours()) {
+          if (hour === now.getHours()) {
+            slotStartMinute = Math.ceil(now.getMinutes() / 5) * 5;
+            if (slotStartMinute >= 60) {
+              slotStartHour++;
+              slotStartMinute = 0;
+            }
+          } else {
+            continue;
+          }
+        }
+
+        const slotStartTime = `${String(slotStartHour).padStart(2, "0")}:${String(slotStartMinute).padStart(2, "0")}`;
+        const slotEndTime = `${String(hour + 1).padStart(2, "0")}:00`;
+
+        if (slotStartHour >= hour + 1) {
+          continue;
+        }
+
+        const overlappingBookings = bookingsToShow.filter((booking) => {
+          if (booking.isTimeSlot) return false;
+
+          const bookingStart = booking.start;
+          const bookingEnd = booking.end;
+          const slotStart = slotStartTime;
+          const slotEnd = slotEndTime;
+
+          const bookingStartMinutes = parseInt(bookingStart.replace(":", ""));
+          const bookingEndMinutes = parseInt(bookingEnd.replace(":", ""));
+          const slotStartMinutes = parseInt(slotStart.replace(":", ""));
+          const slotEndMinutes = parseInt(slotEnd.replace(":", ""));
+
+          return (
+            bookingStartMinutes < slotEndMinutes &&
+            slotStartMinutes < bookingEndMinutes
+          );
+        });
+
+        if (overlappingBookings.length === 0) {
+          bookingsToShow.push({
+            start: slotStartTime,
+            end: slotEndTime,
+            description: "Vaba",
+            isTimeSlot: true,
+          });
+        } else {
+          const sortedBookings = overlappingBookings.sort((a, b) => {
+            const aMin = parseInt(a.start.replace(":", ""));
+            const bMin = parseInt(b.start.replace(":", ""));
+            return aMin - bMin;
+          });
+
+          let currentTime = slotStartTime;
+          const currentMinutes = parseInt(currentTime.replace(":", ""));
+          const slotEndMinutes = parseInt(slotEndTime.replace(":", ""));
+
+          for (const booking of sortedBookings) {
+            const bookingStartMinutes = parseInt(
+              booking.start.replace(":", "")
+            );
+
+            if (currentMinutes < bookingStartMinutes) {
+              const gapStart = currentTime;
+              const gapEnd = booking.start;
+
+              bookingsToShow.push({
+                start: gapStart,
+                end: gapEnd,
+                description: "Vaba",
+                isTimeSlot: true,
+              });
+            }
+
+            currentTime = booking.end;
+          }
+
+          const lastBookingEndMinutes = parseInt(
+            sortedBookings[sortedBookings.length - 1].end.replace(":", "")
+          );
+          if (lastBookingEndMinutes < slotEndMinutes) {
+            bookingsToShow.push({
+              start: sortedBookings[sortedBookings.length - 1].end,
+              end: slotEndTime,
+              description: "Vaba",
+              isTimeSlot: true,
+            });
+          }
+        }
+      }
+    }
+
+    bookingsToShow.sort((a, b) => {
+      const aTime = a.start.replace(":", "");
+      const bTime = b.start.replace(":", "");
+      return aTime - bTime;
+    });
+
+    const addBookingClasses = (element, booking) => {
+      if (booking.isTimeSlot) {
+        element.classList.add("time-slot");
+      } else if (booking.isPast && booking.isCurrentBooking) {
+        element.classList.add("past-booking", "booked");
+      } else if (booking.isPast) {
+        element.classList.add("past-booking");
+      } else if (booking.isUserBooking) {
+        element.classList.add(
+          booking.hasConflict ? "conflict-booking" : "user-booking"
+        );
+      } else if (booking.isCurrentBooking) {
+        element.classList.add("booked");
+      }
+    };
+
     bookingsToShow.forEach((booking) => {
       const timeLi = document.createElement("li");
       timeLi.textContent = `${booking.start}-${booking.end}`;
-      if (booking.isUserBooking) {
-        if (booking.hasConflict) {
-          timeLi.classList.add("conflict-booking");
-        } else {
-          timeLi.classList.add("user-booking");
-        }
-      } else if (booking.isCurrentBooking) {
-        timeLi.classList.add("booked");
-      }
+      addBookingClasses(timeLi, booking);
       calTimes.appendChild(timeLi);
 
       const descLi = document.createElement("li");
       descLi.textContent = booking.description;
-      if (booking.isUserBooking) {
-        if (booking.hasConflict) {
-          descLi.classList.add("conflict-booking");
-        } else {
-          descLi.classList.add("user-booking");
-        }
-      } else if (booking.isCurrentBooking) {
-        descLi.classList.add("booked");
-      }
+      addBookingClasses(descLi, booking);
 
       if (booking.bookingId && !booking.isUserBooking) {
         descLi.style.cursor = "pointer";
@@ -433,6 +612,7 @@ class AppCalendar extends HTMLElement {
         this._currentViewDate.getDate() + direction
       );
       this.updateCalendarTitle();
+      this.updateCalendarDatePicker();
       this.render();
     }
   }

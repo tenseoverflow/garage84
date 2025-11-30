@@ -6,7 +6,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "../firebase.js";
+import { auth, db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 
 /**
@@ -192,18 +192,27 @@ async function loadBookingData(bookingId) {
     const bookingTimeElem = document.getElementById("booking-time-display");
     const roomTitleElem = document.getElementById("room-title");
     const roomLocationElem = document.getElementById("room-location");
+    const bookerNameElem = document.getElementById("booker-name");
 
     if (bookingTitleElem) bookingTitleElem.textContent = "Laadimine...";
     if (bookingDescElem) bookingDescElem.textContent = "";
     if (bookingDateElem) bookingDateElem.textContent = "";
     if (bookingTimeElem) bookingTimeElem.textContent = "";
+    if (bookerNameElem) bookerNameElem.textContent = "";
 
     const { data: bookingData } = await fetchBooking(bookingId);
 
-    document.title = bookingData.name || "Broneering";
+    const now = new Date();
+    const endDate = bookingData.endingDate?.toDate();
+    const isPast = endDate && endDate < now;
+
+    const bookingName = bookingData.name || "Nimetu broneering";
+    const titleWithTag = isPast ? `${bookingName} (Möödunud)` : bookingName;
+
+    document.title = titleWithTag;
 
     if (bookingTitleElem) {
-      bookingTitleElem.textContent = bookingData.name || "Nimetu broneering";
+      bookingTitleElem.textContent = titleWithTag;
     }
 
     if (bookingDescElem) {
@@ -233,6 +242,21 @@ async function loadBookingData(bookingId) {
       const startTime = formatTime(bookingData.startDate);
       const endTime = formatTime(bookingData.endingDate);
       bookingTimeElem.textContent = `${startTime} - ${endTime}`;
+    }
+
+    if (bookerNameElem) {
+      if (bookingData.bookerName || bookingData.bookerEmail) {
+        bookerNameElem.textContent =
+          bookingData.bookerName || bookingData.bookerEmail;
+      } else {
+        const currentUser = auth.currentUser;
+        if (currentUser && bookingData.bookerId === currentUser.uid) {
+          bookerNameElem.textContent =
+            currentUser.displayName || currentUser.email || "Sina";
+        } else {
+          bookerNameElem.textContent = "Kasutaja";
+        }
+      }
     }
 
     const roomData = await expandRoomReference(bookingData);
@@ -270,6 +294,19 @@ async function loadBookingData(bookingId) {
         calendar.bookings = roomBookings;
         calendar.currentBookingId = bookingId;
       }
+    }
+
+    const currentUser = auth.currentUser;
+    const isOwner = currentUser && bookingData.bookerId === currentUser.uid;
+
+    const toggleEditBtn = document.getElementById("toggle-edit-form");
+    const changeRoomBtn = document.getElementById("change-booking-link");
+    const editFormFooter = document.querySelector(".toggle-edit-form");
+
+    if (!isOwner) {
+      if (toggleEditBtn) toggleEditBtn.style.display = "none";
+      if (changeRoomBtn) changeRoomBtn.style.display = "none";
+      if (editFormFooter) editFormFooter.style.display = "none";
     }
   } catch (error) {
     console.error("Error loading booking:", error);

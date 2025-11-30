@@ -1,5 +1,5 @@
 import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { db } from "../firebase.js";
+import { auth, db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 import { initBookingForm } from "./booking-form.js";
 import {
@@ -127,6 +127,15 @@ async function loadBookingData(bookingId) {
 
     const { data: bookingData } = await fetchBooking(bookingId);
 
+    const currentUser = auth.currentUser;
+    if (!currentUser || bookingData.bookerId !== currentUser.uid) {
+      showError("Sul pole õigust seda broneeringut muuta");
+      setTimeout(() => {
+        window.location.href = `/booking/view/?id=${bookingId}`;
+      }, 2000);
+      return;
+    }
+
     document.title = `Muuda ${bookingData.name || "broneeringut"}`;
 
     const navbar = document.querySelector("app-navbar");
@@ -210,6 +219,11 @@ async function saveBookingData(bookingId) {
 
     const { data: currentBooking } = await fetchBooking(bookingId);
 
+    const currentUser = auth.currentUser;
+    if (!currentUser || currentBooking.bookerId !== currentUser.uid) {
+      throw new Error("Sul pole õigust seda broneeringut muuta");
+    }
+
     const existingBookings = await fetchRoomBookings(currentBooking.room);
     if (hasBookingConflict(existingBookings, startDate, endDate, bookingId)) {
       throw new Error(
@@ -257,6 +271,13 @@ async function deleteBooking(bookingId) {
 
     if (deleteBtn) {
       deleteBtn.disabled = true;
+    }
+
+    const { data: currentBooking } = await fetchBooking(bookingId);
+
+    const currentUser = auth.currentUser;
+    if (!currentUser || currentBooking.bookerId !== currentUser.uid) {
+      throw new Error("Sul pole õigust seda broneeringut tühistada");
     }
 
     const bookingRef = doc(db, "bookings", bookingId);
