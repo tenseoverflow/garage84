@@ -9,7 +9,9 @@
   max-width: 25rem;
 
   /* Lisame transition efekti transformile ja shadow'le */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   cursor: pointer; /* Hoveril näitab, et saab klikata */
 }
 

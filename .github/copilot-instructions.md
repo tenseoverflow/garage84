@@ -1,187 +1,266 @@
 # Copilot Instructions for garage84
 
-## Project Overview
+Room booking system for educational institutions. Vanilla JS Multi-Page Application with Firebase backend and Cloudflare R2 storage.
 
-**garage84** is a room booking system for educational institutions built with:
+## Development Commands
 
-- **Frontend:** Vanilla JavaScript, HTML, CSS (no frameworks)
-- **Build Tool:** Vite (Multi-Page Application setup) with Bun runtime
-- **Backend:** Firebase (Authentication, Firestore database)
-- **Storage:** Cloudflare R2 for image uploads
-- **Deployment:** GitLab Pages with CI/CD
-
-## Project Structure
-
-```
-src/
-├── index.html                 # Landing page
-├── booking/                   # Booking management pages
-│   ├── index.html            # User's bookings list
-│   ├── new/                  # Create new booking
-│   ├── view/                 # View booking details
-│   ├── confirmed/            # Booking success page
-│   └── cancelled/            # Booking cancellation page
-├── room/                      # Room management pages
-│   ├── index.html            # View room with calendar
-│   ├── new/                  # Create new room
-│   └── change/               # Edit existing room
-├── login/, signup/, verify/  # Authentication pages
-├── settings/                  # User settings
-├── privacy/                   # Privacy policy page
-├── qr/                       # QR code scanner
-├── js/
-│   ├── auth-*.js             # Authentication logic
-│   ├── firebase.js           # Firebase initialization
-│   ├── auth-guard.js         # Route protection
-│   ├── booking/              # Booking business logic
-│   │   ├── booking.js        # Core booking functions
-│   │   ├── booking-form.js   # Form initialization
-│   │   ├── booking-creation.js
-│   │   ├── booking-change.js
-│   │   └── booking-validation.js
-│   ├── room/                 # Room business logic
-│   │   ├── room.js           # Core room functions
-│   │   ├── room-creation.js
-│   │   ├── room-change.js
-│   │   └── room-validation.js
-│   ├── components/           # Reusable web components
-│   │   ├── navbar.js         # <app-navbar> custom element
-│   │   ├── room-card.js      # <room-card> custom element
-│   │   ├── calendar.js       # <app-calendar> custom element
-│   │   └── confetti.js       # Confetti animation
-│   └── utils/                # Utility functions
-│       ├── banners.js        # Error/success messages
-│       └── r2-upload.js      # Cloudflare R2 integration
-├── css/
-│   ├── style.css             # Main CSS (imports all others)
-│   ├── base.css              # Base styles & CSS variables
-│   ├── layout.css            # Layout utilities
-│   ├── components/           # Component-specific styles
-│   └── pages/                # Page-specific styles
-└── public/
-    └── assets/               # Static images
-
-functions/                     # Cloudflare Workers
-└── get-upload-url.js         # R2 presigned URL generator
+```bash
+bun i -D              # Install dependencies
+bun dev               # Start dev server (localhost:3000)
+bun build             # Build for production (outputs to dist/)
+bun lint              # Run ESLint
+bun format            # Format with Prettier
 ```
 
-## Architecture Patterns
+**Note:** Uses Bun runtime, not npm/pnpm. Vite config auto-discovers all `index.html` files as entry points.
 
-### Multi-Page Application (MPA)
+## Architecture Overview
 
-- Each HTML page is a separate entry point
-- Vite builds multiple bundles automatically
-- No client-side routing - traditional navigation
+### Multi-Page Application Structure
 
-### Web Components
+- **No client-side routing**: Each HTML page is a separate Vite entry point
+- **Traditional navigation**: Use `window.location.href` for page transitions, never SPAs
+- **Vite MPA setup**: `vite.config.js` recursively scans `src/` for all `index.html` files
 
-- Custom elements used for reusable UI: `<app-navbar>`, `<app-calendar>`, `<room-card>`
-- Lifecycle methods: `connectedCallback()`, `attributeChangedCallback()`
-- No shadow DOM - styles are global
+### Data Flow: Firebase References Pattern
 
-### Firebase Integration
+**Critical**: Firestore stores document references, not IDs. Always use `doc()` references:
 
-- **Authentication:** Email/password with email verification required
-- **Firestore Collections:**
-  - `rooms` - Room data with references to images in R2
-  - `bookings` - Booking data with references to rooms and users
-- **Security:** `auth-guard.js` protects authenticated routes
+```javascript
+// CORRECT: Store reference
+const roomRef = doc(db, "rooms", roomId);
+const bookingData = { room: roomRef /* ... */ };
 
-### Modular JavaScript
+// Query by reference
+const bookingsQuery = query(
+  collection(db, "bookings"),
+  where("room", "==", roomRef)
+);
 
-- ES modules with explicit imports/exports
-- Separation by feature: booking/, room/, components/, utils/
-- Shared utilities for common operations (validation, formatting, error handling)
+// Expand references when needed
+const roomSnap = await getDoc(booking.room); // booking.room is a DocumentReference
+```
 
-### Form Handling Pattern
+### Timestamp Handling (Critical Pattern)
 
-All forms follow this structure:
+Firestore Timestamps must be converted before use. Two-way conversions are common:
 
-1. **Validation module** - Pure functions that validate data
-2. **Form initialization** - Set up event listeners and UI
-3. **Creation/Change module** - Handle submit, call Firebase, redirect
+```javascript
+// Storage: JS Date → Firestore
+import { serverTimestamp } from "firebase/firestore";
+const data = {
+  startDate: new Date(2025, 0, 1, 9, 0), // Store as Date object
+  createdAt: serverTimestamp(), // Server-generated timestamp
+};
 
-### State Management
+// Retrieval: Firestore → JS Date
+const startDate = booking.startDate.toDate(); // Firestore Timestamp → Date
+const formatted = startDate.toLocaleDateString("et-EE");
 
-- No global state management library
-- Firebase `onAuthStateChanged` for auth state
-- URL query parameters for page context (e.g., `?id=roomId`)
-- Direct DOM manipulation for UI updates
+// Form binding: Date ↔ Input string
+function dateTimeToTimestamp(dateStr, timeStr) {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  return new Date(year, month - 1, day, hours, minutes);
+}
+
+function timestampToDateInput(timestamp) {
+  const date = timestamp.toDate();
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+```
+
+**See**: `booking-creation.js`, `booking-change.js` for complete examples.
+
+## Firestore Data Model
+
+### Collections
+
+```javascript
+// rooms collection
+{
+  name: string,
+  location: string,
+  capacity: number,
+  imageUrl: string,  // Cloudflare R2 public URL
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+
+// bookings collection
+{
+  name: string,
+  desc: string,
+  startDate: Date,      // JavaScript Date object (not Timestamp!)
+  endingDate: Date,     // Note: "endingDate" not "endDate"
+  room: DocumentReference,  // Reference to rooms/{roomId}
+  bookerId: string,     // User UID
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+```
+
+**Critical**: Always check for booking conflicts before creating/updating. See `hasBookingConflict()` in `booking-validation.js`.
+
+## Authentication Flow
+
+### Route Protection Pattern
+
+```javascript
+// auth-guard.js - Include at top of protected pages
+import "./js/auth-guard.js"; // Redirects if not authenticated
+
+// Flow: unauthenticated → /login/
+//       unverified email → /verify/
+//       verified → page loads
+```
+
+### Auth State
+
+```javascript
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase.js";
+
+onAuthStateChanged(auth, (user) => {
+  if (user?.emailVerified) {
+    // Authenticated logic
+  }
+});
+```
+
+**All user-facing text must be in Estonian (et-EE)**.
+
+## Feature-Specific Patterns
+
+### Form Handling (3-File Pattern)
+
+Every form follows this structure:
+
+1. **`*-validation.js`**: Pure validation functions
+   - Export functions that return error strings or null
+   - Example: `validateBookingData({ name, startDate, ... })`
+
+2. **`*-form.js`**: UI logic and event listeners
+   - Initialize form inputs with defaults
+   - Real-time validation feedback
+   - Summary/preview updates
+
+3. **`*-creation.js` or `*-change.js`**: Submit handlers
+   - Call validation
+   - **Check for conflicts** (bookings only)
+   - Firebase operations
+   - Redirect on success
+
+**Example**: `booking-validation.js` → `booking-form.js` → `booking-creation.js`
+
+### Web Components (No Shadow DOM)
+
+```javascript
+class AppCalendar extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `<div>...</div>`; // Direct DOM, no shadow
+  }
+
+  set bookings(value) {
+    this._bookings = value;
+    this.render(); // Manual re-render
+  }
+}
+customElements.define("app-calendar", AppCalendar);
+```
+
+**Components**: `<app-navbar>`, `<app-calendar>`, `<room-card>`. Global styles in `css/components/`.
+
+### Cloudflare R2 Image Upload
+
+```javascript
+// 1. Upload via Worker
+import { uploadImageToR2 } from "./utils/r2-upload.js";
+const imageUrl = await uploadImageToR2(file); // Returns public URL
+
+// 2. Store URL in Firestore
+const roomData = { imageUrl /* ... */ };
+await addDoc(collection(db, "rooms"), roomData);
+```
+
+**Worker**: `functions/get-upload-url.js` handles CORS and uploads. No presigned URLs—direct POST to Worker.
+
+## Booking Conflict Detection
+
+**Must call before creating/updating bookings**:
+
+```javascript
+import { hasBookingConflict } from "./booking-validation.js";
+import { fetchRoomBookings } from "./booking.js";
+
+const roomRef = doc(db, "rooms", roomId);
+const existingBookings = await fetchRoomBookings(roomRef);
+
+if (hasBookingConflict(existingBookings, newStartDate, newEndDate)) {
+  throw new Error(
+    "Sellel ajal on ruum juba broneeritud. Palun vali teine aeg."
+  );
+}
+
+// For updates, exclude current booking:
+if (
+  hasBookingConflict(
+    existingBookings,
+    newStartDate,
+    newEndDate,
+    currentBookingId
+  )
+) {
+  // conflict
+}
+```
+
+Algorithm checks time range overlaps: `start1 < end2 && start2 < end1`.
+
+## Error Handling
+
+```javascript
+import { showError } from "./utils/banners.js";
+
+try {
+  await createBooking();
+} catch (error) {
+  console.error("Technical details:", error); // Debug info
+  showError("Viga broneeringu loomisel: " + error.message); // User-friendly Estonian
+}
+```
+
+## Estonian Localization
+
+- **All UI text in Estonian**: Buttons, labels, errors, validation messages
+- **Date formatting**: `toLocaleDateString("et-EE")`, `toLocaleTimeString("et-EE")`
+- **Relative dates**: "täna", "homme", "eile", "ülehomme"
+- **Code/variables in English**: Internal logic uses English naming
 
 ## Code Style & Principles
 
+- No comments! Code should be self-explanatory through clear naming
 - Follow DRY (Don't Repeat Yourself) - extract reusable logic into functions/modules
 - Follow KISS (Keep It Simple, Stupid) - prefer simple, straightforward solutions
-- Avoid redundant comments - code should be self-explanatory through clear naming
 - Skip README files unless explicitly requested
 - Use JSDoc comments for functions, classes, and complex types
-- Prefer descriptive variable and function names over explanatory comments
 
-## JSDoc Guidelines
+## What NOT to Do
 
-- Document function parameters, return types, and purpose
-- Include `@param`, `@returns`, and `@throws` tags where applicable
-- Add brief descriptions for non-obvious logic
-- Example:
-  ```javascript
-  /**
-   * Calculates user engagement score
-   * @param {Object} user - User object with activity data
-   * @param {number} timeframeMs - Timeframe in milliseconds
-   * @returns {number} Engagement score between 0-100
-   */
-  ```
+- ❌ USELESS COMMENTS (add only JSDOC where needed)
+- ❌ Use React/Vue/Svelte—this is vanilla JS
+- ❌ Client-side routing libraries
+- ❌ Shadow DOM in web components
+- ❌ Store Firestore document IDs instead of references
+- ❌ Skip booking conflict checks
+- ❌ Obvious comments (`// increment counter`)
+- ❌ Forget `timestamp.toDate()` conversions
 
-## Language & Localization
+## Key Files Reference
 
-- **UI Language:** Estonian (et-EE)
-- All user-facing text, error messages, and labels are in Estonian
-- Date/time formatting uses Estonian locale
-- Variable names and code comments can be in English
-
-## Common Patterns
-
-### Fetching Data from Firestore
-
-```javascript
-const docRef = doc(db, "collection", "docId");
-const docSnap = await getDoc(docRef);
-if (!docSnap.exists()) throw new Error("Not found");
-return { id: docSnap.id, data: docSnap.data() };
-```
-
-### Timestamp Handling
-
-- Firebase uses Firestore Timestamps
-- Convert with `timestamp.toDate()` before formatting
-- Use `serverTimestamp()` when creating/updating documents
-
-### Error Handling
-
-- Use `showError(message)` from `utils/banners.js` to display errors
-- Catch Firebase errors and show user-friendly Estonian messages
-- Log technical errors to console for debugging
-
-### Image Uploads
-
-- Get presigned URL from Cloudflare Worker
-- Upload directly to R2 from browser
-- Store only the public URL in Firestore
-
-## What to Avoid
-
-- Obvious comments like `// increment counter`
-- Redundant documentation files
-- Over-engineering simple solutions
-- Repeating similar code blocks - refactor instead
-- Using frontend frameworks (React, Vue, etc.) - this is vanilla JS
-- Client-side routing libraries - use native navigation
-
-## When to Add Context
-
-- Complex algorithms or business logic
-- Public APIs and exported functions
-- Non-obvious performance optimizations
-- Security-sensitive code sections
-- Firebase Firestore queries with complex logic
-- Date/time manipulation functions
+- **`firebase.js`**: Firebase initialization, exports `auth`, `db`
+- **`auth-guard.js`**: Include in protected pages for auth check
+- **`booking-validation.js`**: Validation + conflict detection
+- **`booking-creation.js`**: Booking create flow with conflict check
+- **`utils/banners.js`**: `showError()` for user notifications
+- **`vite.config.js`**: MPA entry point discovery logic

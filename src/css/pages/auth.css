@@ -175,12 +175,12 @@ form button.btn-primary {
 /* ERROR MESSAGE HANDLING */
 .error {
   color: #7b0a0a;
-  display: none;       /* peidetud kui viga pole */
+  display: none; /* peidetud kui viga pole */
   margin: -0.6rem 0 0.6rem 0; /* eemaldab tühja ruumi */
   font-size: 0.9rem;
   text-align: left;
 }
 
 .error.visible {
-  display: block;      /* näidatakse ainult kui viga on */
+  display: block; /* näidatakse ainult kui viga on */
 }
