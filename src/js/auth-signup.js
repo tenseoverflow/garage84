@@ -16,6 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordError = document.getElementById("passwordError");
   const passwordAgainError = document.getElementById("passwordAgainError");
 
+  document.querySelectorAll(".togglePassword").forEach((icon) => {
+    icon.addEventListener("click", () => {
+      const input = icon.previousElementSibling;
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    });
+  });
+
   function validateForm() {
     let valid = true;
 

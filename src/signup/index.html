@@ -6,6 +6,7 @@
     <title>Konto tegemine</title>
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/pages/auth.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/auth-signup.js"></script>
   </head>
@@ -27,20 +28,16 @@
             <input id="email" required type="email" placeholder="meil@hot.ee" />
             <p id="emailError" class="error"></p>
             <label for="password">Parool</label>
-            <input
-              id="password"
-              required
-              type="password"
-              placeholder="Sinu parool"
-            />
+            <div class="password-wrapper">
+              <input id="password" required type="password" placeholder="Sinu parool" />
+              <i class="fa-solid fa-eye togglePassword"></i>
+            </div>
             <p id="passwordError" class="error"></p>
             <label for="password-again">Parool uuesti</label>
-            <input
-              id="password-again"
-              required
-              type="password"
-              placeholder="Sinu parool uuesti"
-            />
+            <div class="password-wrapper">
+              <input id="password-again" required type="password" placeholder="Sinu parool uuesti" />
+              <i class="fa-solid fa-eye togglePassword"></i>
+            </div>
             <p id="passwordAgainError" class="error"></p>
             <br />
             <button

@@ -5,6 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.querySelector("form");
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
+  const togglePassword = document.getElementById("togglePassword");
+
+  togglePassword.addEventListener("click", () => {
+    const type = passwordInput.type === "password" ? "text" : "password";
+    passwordInput.type = type;
+
+    // vaheta ikoon
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+  });
 
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
