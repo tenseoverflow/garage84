@@ -67,6 +67,28 @@
   gap: 2rem;
 }
 
+/* Loading spinner used during async room fetch */
+.rooms-grid .spinner {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0;
+}
+.spinner .loader {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 4px solid rgba(0, 0, 0, 0.08);
+  border-top-color: var(--primary);
+  animation: spin 900ms linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Confirmation Message */
 .confirmation-message {
   margin-top: 5rem;
