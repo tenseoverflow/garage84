@@ -216,6 +216,7 @@ class StatusMessage extends HTMLElement {
       new URLSearchParams(window.location.search).get("name") ||
       "";
 
+    // Build view link HTML conditionally
     const viewLinkHtml = config.showViewLink
       ? `<a id="view-action-link" href="${config.viewLinkPath}" class="btn btn-primary">${config.viewLinkText}</a>`
       : "";
@@ -232,11 +233,13 @@ class StatusMessage extends HTMLElement {
         <div class="confirmation-message">
           <h1>${config.title}</h1>
           ${roomName ? `<p class="status-room-name">${roomName}</p>` : ""}
-          ${viewLinkHtml}
 
-          <a href="${config.buttonLink}" class="${backButtonClass}">
-            ${config.buttonText}
-          </a>
+          <div class="confirmation-actions">
+            ${viewLinkHtml}
+            <a href="${config.buttonLink}" class="${backButtonClass}">
+              ${config.buttonText}
+            </a>
+          </div>
         </div>
       </main>
     `;
