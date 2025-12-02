@@ -139,7 +139,6 @@ class StatusMessage extends HTMLElement {
         this.setAttribute("image", imageUrl);
         this.updateImage(config);
       } else {
-        // If there's no image from Firestore (deleted doc), try a URL query param fallback
         const imageFromUrlParam = new URLSearchParams(
           window.location.search
         ).get("image");
@@ -210,13 +209,6 @@ class StatusMessage extends HTMLElement {
     const imgSrc = this.getAttribute("image") || config.image;
     const imgAlt = this.getAttribute("image-alt") || config.imageAlt;
 
-    // Room name fallback: attribute 'name' or query param 'name'
-    const roomName =
-      this.getAttribute("name") ||
-      new URLSearchParams(window.location.search).get("name") ||
-      "";
-
-    // Build view link HTML conditionally
     const viewLinkHtml = config.showViewLink
       ? `<a id="view-action-link" href="${config.viewLinkPath}" class="btn btn-primary">${config.viewLinkText}</a>`
       : "";
@@ -232,7 +224,6 @@ class StatusMessage extends HTMLElement {
       <main>
         <div class="confirmation-message">
           <h1>${config.title}</h1>
-          ${roomName ? `<p class="status-room-name">${roomName}</p>` : ""}
 
           <div class="confirmation-actions">
             ${viewLinkHtml}
