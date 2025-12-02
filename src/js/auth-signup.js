@@ -16,18 +16,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordError = document.getElementById("passwordError");
   const passwordAgainError = document.getElementById("passwordAgainError");
 
-  document.querySelectorAll(".togglePassword").forEach((icon) => {
-    icon.addEventListener("click", () => {
-      const input = icon.previousElementSibling;
+  document.querySelectorAll(".togglePassword").forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const wrapper = toggle.closest(".password-wrapper");
+      const input = wrapper.querySelector("input");
 
-      if (input.type === "password") {
-        input.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+      const eyeOpen = toggle.querySelector(".eye-open");
+      const eyeClosed = toggle.querySelector(".eye-closed");
+
+      const type = input.type === "password" ? "text" : "password";
+      input.type = type;
+
+      if (type === "text") {
+        eyeOpen.style.display = "none";
+        eyeClosed.style.display = "block";
       } else {
-        input.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
+        eyeOpen.style.display = "block";
+        eyeClosed.style.display = "none";
       }
     });
   });

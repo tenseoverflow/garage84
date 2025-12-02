@@ -187,20 +187,46 @@ form button.btn-primary {
 
 .password-wrapper {
   position: relative;
-  width: 100%;
 }
 
 .password-wrapper input {
   width: 100%;
-  padding-right: 40px;
-  box-sizing: border-box;
+  padding-right: 40px; /* ruum ikoonile */
 }
 
-.password-wrapper i {
+.togglePassword {
   position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  font-size: 18px;
+}
+
+/* nupp, mis hoiab SVG-d */
+.icon-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.icon-btn svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: currentColor; /* icon saab värvi tekstivärvist */
+  color: #444;
+}
+
+.icon-btn:focus {
+  outline: 2px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
 }
