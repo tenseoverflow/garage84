@@ -13,6 +13,8 @@
     box-shadow 0.25s ease;
   cursor: pointer;
   position: relative;
+  transform: scale(1);
+  min-height: 10.5rem;
 }
 
 .room-card:hover {
@@ -48,7 +50,7 @@
 .room-card .details {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* keep title and desc stacked tightly */
   flex: 1;
   gap: 0.5rem;
   padding: 1.25rem 1.25rem 1.25rem 0;
@@ -119,7 +121,8 @@
   padding: 0.15rem 0.5rem;
   border-radius: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  background: rgba(235, 255, 228, 0.9);
+  background: rgba(235, 255, 228);
+  position: relative;
 }
 .status-pill .dot {
   width: 0.7rem;
@@ -135,15 +138,50 @@
   background: rgba(0, 0, 0, 0.12);
 }
 
-/* `.meta.floor` removed — no My Bookings-specific rules needed */
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
 
-/* Anchor action button inside cards */
-.room-card .action.btn {
-  display: inline-block;
-  padding: 0.4rem 0.5rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  font-size: 0.9rem;
+.room-card.available .status-pill::after,
+.room-card.available .status-pill::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(
+    from var(--angle),
+    #98ff8a,
+    transparent 70%,
+    #98ff8a
+  );
+  border-radius: 1.1rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  padding: 2px;
+  animation: pulse-border 2s linear infinite;
+}
+
+@keyframes pulse-border {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+
+.room-card.available .status-pill::before {
+  filter: blur(1rem);
+  opacity: 0.5;
+}
+
+/* keep action pinned to the bottom of the details column when card is taller */
+.room-card .details .action {
+  margin-top: auto;
 }
 
 /* Primary style for anchors in cards */

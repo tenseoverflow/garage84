@@ -150,7 +150,7 @@ function renderMyBookings(container, bookings, roomsById) {
 
     const action = document.createElement("a");
     action.className = "action btn btn-success";
-    action.textContent = "Ava broneering";
+    action.textContent = "Ava";
     action.href = `/booking/view/?id=${b.id}`;
 
     details.appendChild(titleRow);
@@ -171,6 +171,7 @@ async function load() {
     const myBookingsGrid = document.querySelectorAll(
       ".my_bookings .rooms-grid"
     )[0];
+    const myBookingsSection = document.querySelectorAll(".my_bookings")[0];
     if (!roomsGrid) return;
 
     // Create spinner elements and helper functions
@@ -221,15 +222,33 @@ async function load() {
 
     // now render user's bookings
     const user = auth.currentUser;
-    if (myBookingsGrid && user) {
+    if (myBookingsGrid && myBookingsSection && user) {
       // query bookings where bookerId == user.uid
       const q = query(
         collection(db, "bookings"),
         where("bookerId", "==", user.uid)
       );
       const bookingSnap = await getDocs(q);
-      const bookings = bookingSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
-      renderMyBookings(myBookingsGrid, bookings, roomsById);
+      const now = new Date();
+      // map bookings and filter out those that have already ended
+      const bookings = bookingSnap.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        .filter((b) => {
+          try {
+            const end = b.endingDate ? b.endingDate.toDate() : null;
+            // keep booking if it has no end time or its end is in the future
+            return !end || end > now;
+          } catch {
+            return true;
+          }
+        });
+      if (!bookings || bookings.length === 0) {
+        // hide the whole My Bookings section when there are no active bookings
+        myBookingsSection.style.display = "none";
+      } else {
+        myBookingsSection.style.display = "block";
+        renderMyBookings(myBookingsGrid, bookings, roomsById);
+      }
       try {
         if (myBookingsGrid && bookingsSpinner.parentNode)
           myBookingsGrid.removeChild(bookingsSpinner);
@@ -237,8 +256,8 @@ async function load() {
         /* ignore */
       }
     } else if (myBookingsGrid && !user) {
-      // no user: leave empty
-      myBookingsGrid.innerHTML = "";
+      // no user: hide the whole My Bookings section
+      if (myBookingsSection) myBookingsSection.style.display = "none";
       try {
         if (bookingsSpinner.parentNode)
           myBookingsGrid.removeChild(bookingsSpinner);
