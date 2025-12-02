@@ -6,6 +6,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
 
+  document.querySelectorAll(".togglePassword").forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const wrapper = toggle.closest(".password-wrapper");
+      const input = wrapper.querySelector("input");
+
+      const eyeOpen = toggle.querySelector(".eye-open");
+      const eyeClosed = toggle.querySelector(".eye-closed");
+
+      const type = input.type === "password" ? "text" : "password";
+      input.type = type;
+
+      if (type === "text") {
+        eyeOpen.style.display = "none";
+        eyeClosed.style.display = "block";
+      } else {
+        eyeOpen.style.display = "block";
+        eyeClosed.style.display = "none";
+      }
+    });
+  });
+
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
