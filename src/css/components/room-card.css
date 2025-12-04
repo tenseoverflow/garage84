@@ -1,4 +1,4 @@
-/* Final cleaned room-card stylesheet */
+/* Room-card stylesheet */
 .room-card {
   display: flex;
   align-items: stretch;
@@ -50,7 +50,7 @@
 .room-card .details {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* keep title and desc stacked tightly */
+  justify-content: flex-start;
   flex: 1;
   gap: 0.5rem;
   padding: 1.25rem 1.25rem 1.25rem 0;
@@ -102,7 +102,6 @@
   font-size: 1rem;
 }
 
-/* make the location/description smaller and less bold (asukoht) */
 .room-card .details p.desc {
   margin-top: -0.25rem;
   font-size: 0.7rem;
@@ -110,7 +109,6 @@
   color: var(--primary);
 }
 
-/* Status pill styles: boxed label around "Praegu saadaval" */
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -179,12 +177,10 @@
   opacity: 0.5;
 }
 
-/* keep action pinned to the bottom of the details column when card is taller */
 .room-card .details .action {
   margin-top: auto;
 }
 
-/* Primary style for anchors in cards */
 .room-card .action.btn.btn-primary {
   background: var(--primary);
   color: var(--background);
