@@ -2,8 +2,8 @@
 
 let W = window.innerWidth;
 let H = window.innerHeight;
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
+let canvas = document.getElementById("canvas");
+let context = canvas && canvas.getContext ? canvas.getContext("2d") : null;
 const maxConfettis = 100;
 const particles = [];
 
@@ -27,6 +27,61 @@ const possibleColors = [
   "Chocolate",
   "Crimson",
 ];
+
+function ensureCanvas() {
+  if (!canvas) {
+    canvas = document.getElementById("canvas");
+    if (!canvas) {
+      canvas = document.createElement("canvas");
+      canvas.id = "canvas";
+      document.body.appendChild(canvas);
+    }
+  }
+
+  Object.assign(canvas.style, {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100vw",
+    height: "100vh",
+    margin: "0",
+    pointerEvents: "none",
+    zIndex: "1000",
+  });
+
+  if (!context) {
+    context = canvas.getContext("2d");
+  }
+
+  resizeCanvas();
+}
+
+function resizeCanvas() {
+  if (!canvas || !context) return;
+  const dpr = Math.max(window.devicePixelRatio || 1, 1);
+  const cssW = Math.floor(window.innerWidth);
+  const cssH = Math.floor(window.innerHeight);
+  const actualW = Math.floor(cssW * dpr);
+  const actualH = Math.floor(cssH * dpr);
+
+  if (canvas.width !== actualW || canvas.height !== actualH) {
+    canvas.width = actualW;
+    canvas.height = actualH;
+    canvas.style.width = `${cssW}px`;
+    canvas.style.height = `${cssH}px`;
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+}
+
+window.addEventListener(
+  "resize",
+  function () {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    resizeCanvas();
+  },
+  false
+);
 
 function randomFromTo(from, to) {
   return Math.floor(Math.random() * (to - from + 1) + from);
@@ -64,7 +119,7 @@ function Draw() {
   animationId = requestAnimationFrame(Draw);
 
   if (!context) return results;
-  context.clearRect(0, 0, W, window.innerHeight);
+  context.clearRect(0, 0, W, H);
 
   for (let i = particles.length - 1; i >= 0; i--) {
     const particle = particles[i];
@@ -105,21 +160,10 @@ function Draw() {
   return results;
 }
 
-window.addEventListener(
-  "resize",
-  function () {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-  },
-  false
-);
-
 // Control functions: start and stop the confetti animation
 export function startConfetti(duration = 5000, confettiCount = maxConfettis) {
+  ensureCanvas();
+
   if (!canvas || !context) return;
   if (isRunning) return; // already running
 
@@ -127,8 +171,7 @@ export function startConfetti(duration = 5000, confettiCount = maxConfettis) {
 
   W = window.innerWidth;
   H = window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
+  resizeCanvas();
 
   particles.length = 0;
   for (let i = 0; i < confettiCount; i++) {
@@ -147,17 +190,12 @@ export function startConfetti(duration = 5000, confettiCount = maxConfettis) {
 
 export function stopConfetti() {
   shouldSpawn = false;
-
-  if (particles.length === 0) {
-    isRunning = false;
-    if (animationId) {
-      cancelAnimationFrame(animationId);
-      animationId = null;
-    }
-    if (context && canvas) {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  }
 }
 
-startConfetti(5000);
+export function _getParticles() {
+  return particles;
+}
+
+export function _getCanvas() {
+  return canvas;
+}
