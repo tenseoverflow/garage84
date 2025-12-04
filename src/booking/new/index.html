@@ -55,52 +55,8 @@
             </span>
           </p>
 
-          <!-- Calendar Component -->
-          <div class="calendar">
-            <div class="calendar-header">
-              <button class="cal-button" id="prev-day">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M15 18L9 12L15 6"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-              <h2 id="calendar-title">Täna</h2>
-              <button class="cal-button" id="next-day">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M9 18L15 12L9 6"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div class="cal-grid">
-              <ul class="cal-times" id="cal-times"></ul>
-              <ul class="cal-desc" id="cal-desc"></ul>
-            </div>
-          </div>
+          <app-calendar></app-calendar>
 
-          <!-- Decision -->
           <footer style="justify-content: center">
             <button type="submit" id="submit-btn" class="btn btn-success">
               Broneeri
@@ -110,10 +66,7 @@
       </main>
     </div>
 
+    <script type="module" src="/js/components/calendar.js"></script>
     <script type="module" src="/js/booking/booking-creation.js"></script>
-    <script type="module">
-      import { initCalendar } from "/js/components/calendar.js";
-      initCalendar();
-    </script>
   </body>
 </html>

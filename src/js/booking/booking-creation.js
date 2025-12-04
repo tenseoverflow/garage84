@@ -3,12 +3,18 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
+  query,
   serverTimestamp,
+  where,
 } from "firebase/firestore";
 import { auth, db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
 import { initBookingForm } from "./booking-form.js";
-import { validateBookingDataWithDates } from "./booking-validation.js";
+import {
+  hasBookingConflict,
+  validateBookingDataWithDates,
+} from "./booking-validation.js";
 
 /**
  * Get room ID from URL query parameters
@@ -48,6 +54,13 @@ async function loadRoomInfo(roomId) {
       if (navbar) {
         navbar.setAttribute("title", `Broneeri: ${roomData.name || "Ruum"}`);
       }
+
+      const calendar = document.querySelector("app-calendar");
+      if (calendar) {
+        const roomRef = doc(db, "rooms", roomId);
+        const roomBookings = await fetchRoomBookings(roomRef);
+        calendar.bookings = roomBookings;
+      }
     } else {
       throw new Error("Ruumi ei leitud");
     }
@@ -59,6 +72,32 @@ async function loadRoomInfo(roomId) {
     if (roomTitleElem) {
       roomTitleElem.textContent = "Ruum ei leitud";
     }
+  }
+}
+
+/**
+ * Fetch all bookings for a room
+ * @param {object} roomRef - Firestore room reference
+ * @returns {Promise<Array>} Array of booking objects with id
+ */
+async function fetchRoomBookings(roomRef) {
+  try {
+    const bookingsQuery = query(
+      collection(db, "bookings"),
+      where("room", "==", roomRef)
+    );
+    const querySnapshot = await getDocs(bookingsQuery);
+    const bookings = [];
+    querySnapshot.forEach((doc) => {
+      bookings.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    return bookings;
+  } catch (error) {
+    console.error("Error fetching room bookings:", error);
+    return [];
   }
 }
 
@@ -141,6 +180,13 @@ export function initBookingCreation() {
 
         const roomRef = doc(db, "rooms", roomId);
 
+        const existingBookings = await fetchRoomBookings(roomRef);
+        if (hasBookingConflict(existingBookings, startDate, endDate)) {
+          throw new Error(
+            "Sellel ajal on ruum juba broneeritud. Palun vali teine aeg."
+          );
+        }
+
         const bookingData = {
           name: name,
           desc: desc,
@@ -148,6 +194,8 @@ export function initBookingCreation() {
           endingDate: endDate,
           room: roomRef,
           bookerId: user.uid,
+          bookerName: user.displayName,
+          bookerEmail: user.email,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         };

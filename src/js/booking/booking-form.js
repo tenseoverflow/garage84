@@ -99,6 +99,19 @@ export function initBookingForm(isEditing = false) {
 
   let lastAutoSetEndDate = null;
 
+  function autoSetEndTime() {
+    const startTime = startInput?.value;
+    if (!startTime) return;
+
+    const [startHour, startMin] = startTime.split(":").map(Number);
+    const endHour = (startHour + 1) % 24;
+    const newEndTime = `${String(endHour).padStart(2, "0")}:${String(startMin).padStart(2, "0")}`;
+
+    if (endInput) {
+      endInput.value = newEndTime;
+    }
+  }
+
   function autoSetEndDate() {
     const date = dateInput?.value;
     const startTime = startInput?.value;
@@ -221,7 +234,18 @@ export function initBookingForm(isEditing = false) {
     validateForm();
   }
 
-  [nameInput, dateInput, startInput, endDateInput, endInput].forEach((el) => {
+  if (startInput) {
+    startInput.addEventListener("input", () => {
+      autoSetEndTime();
+      updateSummary();
+    });
+    startInput.addEventListener("change", () => {
+      autoSetEndTime();
+      updateSummary();
+    });
+  }
+
+  [nameInput, dateInput, endDateInput, endInput].forEach((el) => {
     if (!el) return;
     el.addEventListener("input", updateSummary);
     el.addEventListener("change", updateSummary);

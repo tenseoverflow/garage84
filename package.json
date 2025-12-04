@@ -40,6 +40,9 @@
     "qrcode": "^1.5.4"
   },
   "lint-staged": {
-    "*.{js,css,html}": ["prettier --write", "eslint --fix"]
+    "*.{js,css,html}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }

@@ -1,4 +1,11 @@
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import QRCode from "qrcode";
 import { db } from "../firebase.js";
 import { showError } from "../utils/banners.js";
@@ -119,7 +126,6 @@ async function loadRoomData(roomId) {
         roomImageElem.src = roomData.imageUrl;
         roomImageElem.alt = `Pilt ruumist ${roomData.name}`;
       } else {
-        // Keep default image if no custom image is set
         roomImageElem.alt = `Vaikepilt ruumist ${roomData.name}`;
       }
     }
@@ -128,9 +134,42 @@ async function loadRoomData(roomId) {
     if (navbar) {
       navbar.setAttribute("title", `${roomData.name || ""}`);
     }
+
+    const calendar = document.getElementById("room-calendar");
+    if (calendar) {
+      const roomRef = doc(db, "rooms", roomId);
+      const roomBookings = await fetchRoomBookings(roomRef);
+      calendar.bookings = roomBookings;
+    }
   } catch (error) {
     console.error("Error loading room:", error);
     showError("Viga ruumi laadimisel: " + error.message);
+  }
+}
+
+/**
+ * Fetch all bookings for a room
+ * @param {object} roomRef - Firestore room reference
+ * @returns {Promise<Array>} Array of booking objects with id
+ */
+async function fetchRoomBookings(roomRef) {
+  try {
+    const bookingsQuery = query(
+      collection(db, "bookings"),
+      where("room", "==", roomRef)
+    );
+    const querySnapshot = await getDocs(bookingsQuery);
+    const bookings = [];
+    querySnapshot.forEach((doc) => {
+      bookings.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    return bookings;
+  } catch (error) {
+    console.error("Error fetching room bookings:", error);
+    return [];
   }
 }
 
