@@ -116,10 +116,62 @@
 
 .booking-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  justify-items: center;
+  gap: 5rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.booking-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.search-input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid var(--primary);
+  font-size: 0.95rem;
+  color: var(--primary);
+  background: var(--background);
+  min-width: 14rem;
+}
+
+.available-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.available-checkbox {
+  width: 1rem;
+  height: 1rem;
+}
+
+.available-label input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  box-sizing: content-box;
+  background: transparent;
+}
+
+.available-label {
+  white-space: nowrap;
+}
+
+@media (max-width: 1012px) {
+  .booking-header {
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .mobile-qr-button {
@@ -160,5 +212,24 @@
   .rooms-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  .booking-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .booking-controls {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-input {
+    flex: 1 1 100%;
+    min-width: 0;
   }
 }

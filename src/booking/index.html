@@ -31,11 +31,24 @@
     <div class="new_booking">
       <div class="booking-header">
         <h1>Ruumid broneerimiseks</h1>
-        <select class="floor-select">
-          <option value="1_floor">1. korrus</option>
-          <option value="2_floor">2. korrus</option>
-          <option value="3_floor">3. korrus</option>
-        </select>
+        <div class="booking-controls">
+          <input
+            class="search-input"
+            type="search"
+            placeholder="Otsi ruumi..."
+            aria-label="Otsi ruumi"
+          />
+          <select class="floor-select">
+            <option value="any" selected>Iga korrus</option>
+            <option value="1_floor">1. korrus</option>
+            <option value="2_floor">2. korrus</option>
+            <option value="3_floor">3. korrus</option>
+          </select>
+          <label class="available-label">
+            <input type="checkbox" class="available-checkbox" />
+            <span>Praegu saadaval</span>
+          </label>
+        </div>
       </div>
       <div class="rooms-grid">
         <!-- Rooms will be rendered here -->
