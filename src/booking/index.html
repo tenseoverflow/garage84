@@ -14,54 +14,47 @@
     <!-- Navbar -->
     <app-navbar></app-navbar>
     <!-- My bookings -->
+    <a
+      class="mobile-qr-button btn btn-small btn-primary"
+      href="/qr/"
+      style="margin-top: 20px"
+    >
+      Skaneeri QR kood</a
+    >
     <div class="my_bookings">
-      <a class="mobile-qr-button btn btn-small btn-primary" href="/qr/"
-        >Skaneeri QR kood</a
-      >
       <h1>Minu broneeringud</h1>
-      <div class="rooms-grid">
-        <room-card
-          title="Room #23"
-          description="A luxurious meeting space for all meeting needs."
-          img="/assets/MURG.jpg"
-          status="booked"
-          button-url="/booking/view/"
-        ></room-card>
-      </div>
+      <div class="rooms-grid"></div>
     </div>
     <!-- New booking -->
     <div class="new_booking">
       <div class="booking-header">
         <h1>Ruumid broneerimiseks</h1>
-        <select class="floor-select">
-          <option value="1_floor">1. korrus</option>
-          <option value="2_floor">2. korrus</option>
-          <option value="3_floor">3. korrus</option>
-        </select>
+        <div class="booking-controls">
+          <input
+            class="search-input"
+            type="search"
+            placeholder="Otsi ruumi..."
+            aria-label="Otsi ruumi"
+          />
+          <select class="floor-select">
+            <option value="any" selected>Iga korrus</option>
+            <option value="1_floor">1. korrus</option>
+            <option value="2_floor">2. korrus</option>
+            <option value="3_floor">3. korrus</option>
+          </select>
+          <label class="available-label">
+            <input type="checkbox" class="available-checkbox" />
+            <span>Praegu saadaval</span>
+          </label>
+        </div>
       </div>
-      <div class="rooms-grid">
-        <!-- Example available card -->
-        <room-card
-          title="Room #23"
-          description="A luxurious meeting space for all meeting needs."
-          img="/assets/MURG.jpg"
-          status="available"
-          button-url="/room/?id=Gd6hmtSuojQTGsU17LIu"
-        ></room-card>
-        <!-- Example not available card -->
-        <room-card
-          title="Room #23"
-          description="A luxurious meeting space for all meeting needs."
-          img="/assets/image-2.png"
-          status="not-available"
-          button-url="/room/"
-        ></room-card>
-      </div>
+      <div class="rooms-grid"></div>
     </div>
     <script>
       if (!/Android|iPhone|iPad|iPod/.test(navigator.userAgent)) {
         document.querySelector(".mobile-qr-button").style.display = "none";
       }
     </script>
+    <script type="module" src="/js/booking/load-rooms.js"></script>
   </body>
 </html>
