@@ -192,9 +192,19 @@ async function deleteRoom(roomId) {
     }
 
     const roomRef = doc(db, "rooms", roomId);
+    const { data: oldRoomData } = await fetchRoom(roomId);
     await deleteDoc(roomRef);
 
-    window.location.href = "/booking/";
+    const params = new URLSearchParams();
+    params.set("id", roomId);
+    if (oldRoomData && oldRoomData.name) {
+      params.set("name", oldRoomData.name);
+    }
+    if (oldRoomData && oldRoomData.imageUrl) {
+      params.set("image", oldRoomData.imageUrl);
+    }
+
+    window.location.href = `/room/deleted/?${params.toString()}`;
   } catch (error) {
     console.error("Error deleting room:", error);
     showError("Viga ruumi kustutamisel: " + error.message);

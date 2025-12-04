@@ -56,7 +56,7 @@ export function initRoomForm() {
 
       const docRef = await addDoc(collection(db, "rooms"), roomData);
 
-      window.location.href = `/room/?id=${docRef.id}`;
+      window.location.href = `/room/created/?id=${docRef.id}`;
     } catch (error) {
       showError("Viga ruumi loomisel: " + error.message);
 

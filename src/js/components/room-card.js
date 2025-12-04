@@ -1,10 +1,17 @@
 const template = document.createElement("template");
 template.innerHTML = `
   <div class="room-card info_my_bookings">
-    <img part="image"/>
+    <div class="media">
+      <img part="image"/>
+      <div class="capacity-badge" part="capacity"></div>
+    </div>
     <div class="details text_content">
-      <p class="title"></p>
+      <div class="title-row">
+        <p class="title"></p>
+        <div class="capacity-topright"></div>
+      </div>
       <p class="desc"></p>
+      <p class="meta floor"></p>
       <a class="action btn" part="button" href="#" role="button"></a>
     </div>
   </div>
@@ -12,7 +19,15 @@ template.innerHTML = `
 
 class RoomCard extends HTMLElement {
   static get observedAttributes() {
-    return ["title", "description", "img", "status", "button-url"];
+    return [
+      "title",
+      "description",
+      "img",
+      "status",
+      "button-url",
+      "capacity",
+      "floor",
+    ];
   }
 
   constructor() {
@@ -24,6 +39,9 @@ class RoomCard extends HTMLElement {
     this._descEl = this.querySelector(".desc");
     this._button = this.querySelector("a.action");
     this._root = this.querySelector(".room-card");
+    this._capacityBadge = this.querySelector(".capacity-badge");
+    this._capacityTopRight = this.querySelector(".capacity-topright");
+    this._floorEl = this.querySelector(".meta.floor");
 
     this._onClick = this._onClick.bind(this);
   }
@@ -45,7 +63,15 @@ class RoomCard extends HTMLElement {
 
   // support setting properties directly on the element instance
   _upgradeProperties() {
-    ["title", "description", "img", "status", "buttonUrl"].forEach((prop) => {
+    [
+      "title",
+      "description",
+      "img",
+      "status",
+      "buttonUrl",
+      "capacity",
+      "floor",
+    ].forEach((prop) => {
       if (Object.prototype.hasOwnProperty.call(this, prop)) {
         const val = this[prop];
         delete this[prop];
@@ -89,12 +115,39 @@ class RoomCard extends HTMLElement {
     this.setAttribute("button-url", v);
   }
 
+  get capacity() {
+    return this.getAttribute("capacity") || "";
+  }
+  set capacity(v) {
+    this.setAttribute("capacity", v);
+  }
+
+  get floor() {
+    return this.getAttribute("floor") || "";
+  }
+  set floor(v) {
+    this.setAttribute("floor", v);
+  }
+
   _render() {
     if (!this.isConnected) return;
     this._imgEl.src = this.img || "/assets/MURG.jpg";
     this._imgEl.alt = this.title || "Room image";
     this._titleEl.textContent = this.title || "";
     this._descEl.textContent = this.description || "";
+    if (this.capacity && this._capacityBadge) {
+      this._capacityBadge.textContent = this.capacity;
+      this._capacityTopRight.textContent = this.capacity;
+    } else {
+      if (this._capacityBadge) this._capacityBadge.textContent = "";
+      if (this._capacityTopRight) this._capacityTopRight.textContent = "";
+    }
+
+    if (this.floor && this._floorEl) {
+      this._floorEl.textContent = this.floor;
+    } else if (this._floorEl) {
+      this._floorEl.textContent = "";
+    }
 
     const status = (this.status || "").toLowerCase();
     let text = this.buttonText || "";

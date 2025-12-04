@@ -18,14 +18,22 @@
             <h1>Ruumibroneerimine</h1>
             <p>Saadame meili parooli lähtestamiseks</p>
           </header>
-          <form action="GET">
+          <form id="resetForm">
             <label for="email">Meil</label>
-            <input id="email" required type="email" placeholder="meil@hot.ee" />
-            <a class="reset-pass" href="/login/"
-              >Parool tuli meelde? Logi sisse</a
-            >
+            <input id="email" name="email" required type="email" placeholder="meil@hot.ee" />
+
+            <a class="reset-pass" href="/login/">
+              Parool tuli meelde? Logi sisse
+            </a>
+
             <br />
-            <button class="btn btn-primary">Saada paroolivahetuse meil</button>
+            <button class="btn btn-primary" type="submit">
+              Saada paroolivahetuse meil
+            </button>
+
+            <!-- Teated -->
+            <p id="message" style="color: rgb(3, 96, 3); margin-top: 10px;"></p>
+            <p id="error" style="color: rgb(129, 0, 0);"></p>
           </form>
         </div>
         <div class="registreeru">
@@ -34,5 +42,7 @@
         </div>
       </main>
     </div>
+    <script type="module" src="/js/firebase.js"></script>
+    <script type="module" src="/js/reset-password.js"></script>
   </body>
 </html>

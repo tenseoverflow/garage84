@@ -1,6 +1,7 @@
 body {
   background-color: var(--background);
 
+  background: #f6f6f6 url(/assets/background-m3.png) repeat;
   margin: 0;
   font-family: "Inter", system-ui, Helvetica, Arial, sans-serif;
   font-optical-sizing: auto;
@@ -9,15 +10,16 @@ body {
   line-height: normal;
   font-size: 16px;
   color: var(--primary);
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow: auto; /* allow page to scroll */
 }
 
 .with-navbar {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  /* let content determine scroll; keep layout's internal scrolling where defined */
+  overflow: visible;
 }
 
 /* Typography */
