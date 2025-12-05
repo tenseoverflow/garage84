@@ -3,9 +3,9 @@
   align-items: center;
   position: relative;
   width: 100%;
-  height: 6rem;
+  height: 5rem;
   background-color: var(--secondary);
-  border-bottom: 0.125rem solid var(--primary);
+  border-bottom: 0.09rem solid var(--primary);
   flex-shrink: 0;
 }
 
@@ -16,6 +16,7 @@
   padding: 0.3rem 1.5rem;
   width: 100%;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .nav-left,
@@ -23,6 +24,8 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .navbar p {
@@ -31,19 +34,47 @@
 }
 
 .nav-link {
-  background-color: var(--background);
-  color: var(--primary);
-  border: 0.0625rem solid var(--primary);
+  position: relative;
   padding: 0.5rem 1rem;
-  border-radius: 1.25rem;
   font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
   text-decoration: none;
+  cursor: pointer;
+  border-radius: 1.25rem;
+  transition: all 0.3s ease;
+  background-color: var(--primary);
+  color: var(--background);
+  border: 2px solid var(--primary);
+}
 
-  &:hover {
-    background-color: var(--primary);
-    color: var(--background);
+.nav-link:hover {
+  color: var(--primary);
+  background-color: var(--background);
+
+  border: 2px solid transparent;
+  background-image:
+    linear-gradient(var(--background), var(--background)),
+    linear-gradient(90deg,
+      var(--primary) 0%,
+      var(--secondary) 50%,
+      var(--primary) 100%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+
+  /* Start animation */
+  animation: borderFlow 5s linear infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes borderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -195,5 +226,47 @@
   .nav-link-mobile {
     display: block;
     cursor: pointer;
+  }
+}
+
+/* TAGASI NUPP MOBIILIS */
+.back-btn {
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 100%;
+  width: 40px;    /* mugavam mobiilipuudutus */
+  height: 40px;
+  font-size: 1.5rem;
+  display: none;  /* vaikimisi peidus */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* Näita ainult mobiilis (samamoodi nagu nav-link-mobile) */
+@media (max-width: 788px) {
+  .back-btn {
+    display: flex;
+  }
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+#navbar-title {
+  min-width: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 430px) {
+  #navbar-title {
+    font-size: 1.2rem; /* ↓ väike, kuid loetav */
   }
 }

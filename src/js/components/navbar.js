@@ -23,6 +23,10 @@ class AppNavbar extends HTMLElement {
 
           <!-- LEFT SIDE -->
           <div class="nav-left">
+            <!-- BACK BUTTON (shown only on mobile) -->
+            <button class="back-btn nav-link-mobile" onclick="history.back()">
+              &lt;
+            </button>
             <a class="nav-link" href="/booking/">Kodu</a>
             <p id="navbar-title">${title}</p>
           </div>
