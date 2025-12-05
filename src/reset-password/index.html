@@ -4,23 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parooli lähtestamine</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/pages/auth.css" />
   </head>
   <body>
     <div class="split">
       <div class="pilt">
-        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img
+          src="/assets/MURG.avif"
+          alt="MURG hoone vaade"
+          fetchpriority="high"
+        />
       </div>
-      <main>
+      <main role="main" aria-labelledby="reset-title">
         <div class="vorm">
           <header>
-            <h1>Ruumibroneerimine</h1>
+            <h1 id="reset-title">Ruumibroneerimine</h1>
             <p>Saadame meili parooli lähtestamiseks</p>
           </header>
-          <form id="resetForm">
+          <form id="resetForm" aria-label="Parooli lähtestamise vorm">
             <label for="email">Meil</label>
-            <input id="email" name="email" required type="email" placeholder="meil@hot.ee" />
+            <input
+              id="email"
+              name="email"
+              required
+              type="email"
+              placeholder="meil@hot.ee"
+              autocomplete="email"
+              aria-required="true"
+            />
 
             <a class="reset-pass" href="/login/">
               Parool tuli meelde? Logi sisse
@@ -31,9 +46,8 @@
               Saada paroolivahetuse meil
             </button>
 
-            <!-- Teated -->
-            <p id="message" style="color: rgb(3, 96, 3); margin-top: 10px;"></p>
-            <p id="error" style="color: rgb(129, 0, 0);"></p>
+            <p id="message" role="status" aria-live="polite"></p>
+            <p id="error" role="alert" aria-live="assertive"></p>
           </form>
         </div>
         <div class="registreeru">

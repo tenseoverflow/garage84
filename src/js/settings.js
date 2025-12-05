@@ -1,6 +1,8 @@
 import {
   deleteUser,
+  EmailAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   updatePassword,
   updateProfile,
 } from "firebase/auth";
@@ -106,11 +108,23 @@ document
   .addEventListener("click", async () => {
     if (!confirm("Oled sa kindel? Seda ei saa tagasi võtta.")) return;
 
+    const password = prompt("Sisesta oma parool kinnitamiseks:");
+    if (!password) return;
+
     try {
-      await deleteUser(auth.currentUser);
+      const user = auth.currentUser;
+      const credential = EmailAuthProvider.credential(user.email, password);
+      await reauthenticateWithCredential(user, credential);
+      await deleteUser(user);
       alert("Konto kustutatud.");
       window.location.href = "/signup/";
     } catch (err) {
-      alert("Tekkis viga: " + err.message);
+      if (err.code === "auth/wrong-password") {
+        alert("Vale parool. Proovi uuesti.");
+      } else if (err.code === "auth/invalid-credential") {
+        alert("Vale parool. Proovi uuesti.");
+      } else {
+        alert("Tekkis viga: " + err.message);
+      }
     }
   });

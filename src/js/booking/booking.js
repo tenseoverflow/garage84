@@ -301,12 +301,10 @@ async function loadBookingData(bookingId) {
 
     const toggleEditBtn = document.getElementById("toggle-edit-form");
     const changeRoomBtn = document.getElementById("change-booking-link");
-    const editFormFooter = document.querySelector(".toggle-edit-form");
 
     if (!isOwner) {
       if (toggleEditBtn) toggleEditBtn.style.display = "none";
       if (changeRoomBtn) changeRoomBtn.style.display = "none";
-      if (editFormFooter) editFormFooter.style.display = "none";
     }
   } catch (error) {
     console.error("Error loading booking:", error);

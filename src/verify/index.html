@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kinnita meiliaadress</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/pages/auth.css" />
     <script type="module" src="/js/firebase.js"></script>
@@ -12,18 +15,26 @@
   <body>
     <div class="split">
       <div class="pilt">
-        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img
+          src="/assets/MURG.avif"
+          alt="MURG hoone vaade"
+          fetchpriority="high"
+        />
       </div>
-      <main>
+      <main role="main" aria-labelledby="verify-title">
         <div class="vorm">
           <header>
-            <h1>Kinnita meiliaadress</h1>
+            <h1 id="verify-title">Kinnita meiliaadress</h1>
             <p>
               Ava oma e-post, et kinnitada oma meiliaadress. Kui sa ei saanud
               kirja, vajuta all "Saada uuesti".
             </p>
           </header>
-          <div class="verify-actions">
+          <div
+            class="verify-actions"
+            role="group"
+            aria-label="Kinnitamise toimingud"
+          >
             <button id="refresh-status" class="btn btn-primary">
               Kontrolli staatust
             </button>
@@ -31,7 +42,7 @@
               Saada uuesti
             </button>
           </div>
-          <p id="verify-status"></p>
+          <p id="verify-status" role="status" aria-live="polite"></p>
           <a href="/login/" class="btn btn-secondary">Tagasi sisselogimisele</a>
         </div>
       </main>

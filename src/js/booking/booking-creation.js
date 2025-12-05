@@ -48,6 +48,12 @@ async function loadRoomInfo(roomId) {
         roomLocationElem.textContent = roomData.location || "";
       }
 
+      const roomImageElem = document.getElementById("room-image");
+      if (roomImageElem && roomData.imageUrl) {
+        roomImageElem.src = roomData.imageUrl;
+        roomImageElem.alt = `Pilt ruumist ${roomData.name}`;
+      }
+
       document.title = `Broneeri: ${roomData.name || "Ruum"}`;
 
       const navbar = document.querySelector("app-navbar");

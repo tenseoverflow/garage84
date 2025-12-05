@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /booking
+Disallow: /booking/
+Disallow: /room
+Disallow: /room/
+Disallow: /qr/

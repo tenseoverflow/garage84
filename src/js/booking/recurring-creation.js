@@ -41,6 +41,12 @@ async function loadRoomInfo(roomId) {
         roomLocationElem.textContent = roomData.location || "";
       }
 
+      const roomImageElem = document.getElementById("room-image");
+      if (roomImageElem && roomData.imageUrl) {
+        roomImageElem.src = roomData.imageUrl;
+        roomImageElem.alt = `Pilt ruumist ${roomData.name}`;
+      }
+
       document.title = `Korduv broneering: ${roomData.name || "Ruum"}`;
 
       const navbar = document.querySelector("app-navbar");
@@ -208,7 +214,7 @@ export function initRecurringCreation() {
   if (!roomId) {
     showError("Ruumi ID puudub URL-is");
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = "/booking/";
     }, 2000);
     return;
   }

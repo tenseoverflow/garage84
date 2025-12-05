@@ -1,55 +1,83 @@
 <!doctype html>
 <html lang="et">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-    <title>Tööruumide reserveerimine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tööruumide reserveerimine | MURG Ruumibroneerimine</title>
     <meta
       name="description"
-      content="Sinu lihtne ruumibroneerimise tarkvara lahendus"
+      content="MURG ruumibroneerimise süsteem - lihtne ja mugav viis klassiruumide ja tööruumide reserveerimiseks. Skaneeri QR-kood, vali aeg ja kinnita broneeringa."
     />
+    <meta
+      name="keywords"
+      content="ruumibroneerimine, klassiruum, broneerimine, MURG, Mustamäe Riigigümnaasium, tööruumid, reserveerimine"
+    />
+    <meta name="author" content="Mustamäe Riigigümnaasium" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://iti0105-2025-henria-8677f9d4cfe568a44fbafb8744c2c2c9ff17e1c509f.pages.taltech.ee/"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://iti0105-2025-henria-8677f9d4cfe568a44fbafb8744c2c2c9ff17e1c509f.pages.taltech.ee/"
+    />
+    <meta
+      property="og:title"
+      content="Tööruumide reserveerimine | MURG Ruumibroneerimine"
+    />
+    <meta
+      property="og:description"
+      content="MURG ruumibroneerimise süsteem - lihtne ja mugav viis klassiruumide ja tööruumide reserveerimiseks."
+    />
+    <meta property="og:image" content="/assets/Ruumibroneerimine.avif" />
+    <meta property="og:locale" content="et_EE" />
+    <meta property="og:site_name" content="MURG Ruumibroneerimine" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Tööruumide reserveerimine | MURG Ruumibroneerimine"
+    />
+    <meta
+      name="twitter:description"
+      content="MURG ruumibroneerimise süsteem - lihtne ja mugav viis klassiruumide ja tööruumide reserveerimiseks."
+    />
+    <meta name="twitter:image" content="/assets/Ruumibroneerimine.avif" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="/css/style.css" as="style" />
     <link rel="stylesheet" href="/css/style.css" />
-    <script type="module" src="/js/firebase.js"></script>
   </head>
   <body>
-    <!-- Võib-olla pole isegi seda vaja kodulehele -->
-    <!-- <nav class="navbar">
-      <div class="navitems">
-        <div class="nav-left">
-          <div class="button-navbar">
-            <button>Kodu</button>
-          </div>
-          <p>Ruumibroneerimine</p>
-        </div>
-        <div class="nav-right">
-          <div class="button-navbar">
-            <button>Logi sisse</button>
-          </div>
-        </div>
-      </div>
-    </nav> -->
     <div class="split">
       <div class="pilt">
         <img
           class="image"
-          src="/assets/MURG.jpg"
+          src="/assets/MURG.avif"
           alt="MURG maja vaade"
-          loading="lazy"
+          fetchpriority="high"
         />
       </div>
       <main class="homepage">
         <header>
           <h1>Tööruumide reserveerimine</h1>
           <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
-          <img src="/assets/murg.png" alt="MURG logo" />
+          <img src="/assets/murg-logo.avif" alt="MURG logo" />
         </header>
-        <!-- TODO lingid siia -->
         <div class="features">
           <img
-            src="/assets/Ruumibroneerimine.png"
+            src="/assets/Ruumibroneerimine.avif"
             alt="Ruumibroneerimise kuvatõmmis"
             width="100%"
             height="auto"
+            loading="lazy"
           />
           <section class="feature-pane" aria-labelledby="feature-title-1">
             <div class="feature-pane__bg" aria-hidden="true"></div>
@@ -69,7 +97,6 @@
           </section>
         </div>
         <footer>
-          <!-- TODO kontakt leht jm info siia -->
           <a class="btn btn-primary" href="/login/"> Logi sisse </a>
           <a class="btn btn-secondary" href="/privacy/">Privaatsuspoliitika</a>
         </footer>

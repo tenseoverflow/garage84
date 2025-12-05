@@ -68,12 +68,9 @@ Meie projekt erineb teistest veebilehtedest, sest broneering on mõeldud spetsii
 - Autentimine (Firebase)
 - Responsiivne rakendus
 - QR koodide genereerimine ning skaneerimine
-
-## Tulevikuplaanid
-
-- Broneerimissüsteem back-end
-- Stiili täiustamine ja UX parandamine
-- Võib-olla SSO sisselogimine vastavalt koolisüsteemidele
+- Broneerimissüsteem
+- Saab ka lisada korduvaid broneeringuid
+- SEO kodulehel
 
 ## Autorid
 
