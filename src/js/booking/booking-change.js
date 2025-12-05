@@ -76,7 +76,6 @@ export function initBookingChange() {
 
   loadBookingData(bookingId);
 
-  // Toggle edit form visibility
   if (toggleBtn && editForm) {
     toggleBtn.addEventListener("click", () => {
       const isShown = editForm.classList.contains("show");
