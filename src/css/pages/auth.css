@@ -174,15 +174,30 @@ form button.btn-primary {
 
 /* ERROR MESSAGE HANDLING */
 .error {
-  color: #7b0a0a;
+  color: var(--danger);
   display: none; /* peidetud kui viga pole */
   margin: -0.6rem 0 0.6rem 0; /* eemaldab tühja ruumi */
   font-size: 0.9rem;
   text-align: left;
 }
 
+.error:not(:empty) {
+  display: block;
+}
+
 .error.visible {
-  display: block;      /* näidatakse ainult kui viga on */
+  display: block; /* näidatakse ainult kui viga on */
+}
+
+/* SUCCESS MESSAGE */
+#message {
+  color: var(--success);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+#message:empty {
+  display: none;
 }
 
 .password-wrapper {
@@ -200,6 +215,24 @@ form button.btn-primary {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  color: var(--primary);
+}
+
+.togglePassword:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.togglePassword:hover {
+  opacity: 0.7;
 }
 
 /* nupp, mis hoiab SVG-d */
@@ -227,6 +260,6 @@ form button.btn-primary {
 }
 
 .icon-btn:focus {
-  outline: 2px solid rgba(0,0,0,0.12);
+  outline: 2px solid rgba(0, 0, 0, 0.12);
   border-radius: 6px;
 }

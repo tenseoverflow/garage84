@@ -41,9 +41,18 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     outDir: resolve(__dirname, "./dist"),
-    sourcemap: true,
+    sourcemap: false,
+    minify: true,
+    cssMinify: true,
     rollupOptions: {
       input: getHtmlEntries(),
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/firebase")) {
+            return "firebase";
+          }
+        },
+      },
     },
   },
   resolve: {

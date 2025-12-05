@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Konto tegemine</title>
+    <meta
+      name="description"
+      content="Loo uus konto ruumibroneerimise süsteemi"
+    />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/pages/auth.css" />
     <script type="module" src="/js/firebase.js"></script>
@@ -12,70 +19,176 @@
   <body>
     <div class="split">
       <div class="pilt">
-        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img
+          src="/assets/MURG.jpg"
+          alt="MURG hoone vaade"
+          fetchpriority="high"
+        />
       </div>
-      <main>
+      <main role="main" aria-labelledby="signup-title">
         <div class="vorm">
           <header>
-            <h1>Ruumibroneerimine</h1>
+            <h1 id="signup-title">Ruumibroneerimine</h1>
             <p>Sinu lihtne ruumibroneerimise tarkvara lahendus</p>
           </header>
-          <form>
+          <form aria-label="Registreerimise vorm">
             <label for="name">Nimi</label>
-            <input id="name" required type="text" placeholder="Sinu nimi" />
+            <input
+              id="name"
+              required
+              type="text"
+              placeholder="Sinu nimi"
+              autocomplete="name"
+              aria-required="true"
+            />
             <label for="email">Meil</label>
-            <input id="email" required type="email" placeholder="meil@hot.ee" />
-            <p id="emailError" class="error"></p>
+            <input
+              id="email"
+              required
+              type="email"
+              placeholder="meil@hot.ee"
+              autocomplete="email"
+              aria-required="true"
+              aria-describedby="emailError"
+            />
+            <p
+              id="emailError"
+              class="error"
+              role="alert"
+              aria-live="polite"
+            ></p>
             <label for="password">Parool</label>
             <div class="password-wrapper">
-              <input id="password" required type="password" placeholder="Sinu parool" />
-              <div class="togglePassword">
-                <!-- Silm lahti -->
-                <svg class="eye eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              <input
+                id="password"
+                required
+                type="password"
+                placeholder="Sinu parool"
+                autocomplete="new-password"
+                aria-required="true"
+                aria-describedby="passwordError"
+              />
+              <button
+                type="button"
+                class="togglePassword"
+                aria-label="Näita parooli"
+                aria-pressed="false"
+              >
+                <svg
+                  class="eye eye-open"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 
-                      4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
                   <circle cx="12" cy="12" r="3" stroke-width="2" />
                 </svg>
 
-                <!-- Silm kinni -->
-                <svg class="eye eye-closed" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                <svg
+                  class="eye eye-closed"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  style="display: none"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
                     d="M3 3l18 18M10.584 10.587A3 3 0 0113.413 13.41M9.88 4.238A9.953 
                       9.953 0 0112 4c4.477 0 8.268 2.943 9.542 7-.52 1.654-1.458 
                       3.13-2.688 4.27M6.12 6.12A9.953 9.953 0 002 12c.832 2.65 
-                      2.704 4.89 5.12 6.12"/>
+                      2.704 4.89 5.12 6.12"
+                  />
                 </svg>
-              </div>
+              </button>
             </div>
-            <p id="passwordError" class="error"></p>
+            <p
+              id="passwordError"
+              class="error"
+              role="alert"
+              aria-live="polite"
+            ></p>
             <label for="password-again">Parool uuesti</label>
             <div class="password-wrapper">
-              <input id="password-again" required type="password" placeholder="Sinu parool uuesti" />
-              <div class="togglePassword">
-                <!-- Silm lahti -->
-                <svg class="eye eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              <input
+                id="password-again"
+                required
+                type="password"
+                placeholder="Sinu parool uuesti"
+                autocomplete="new-password"
+                aria-required="true"
+                aria-describedby="passwordAgainError"
+              />
+              <button
+                type="button"
+                class="togglePassword"
+                aria-label="Näita parooli"
+                aria-pressed="false"
+              >
+                <svg
+                  class="eye eye-open"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 
-                      9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
                   <circle cx="12" cy="12" r="3" stroke-width="2" />
                 </svg>
 
-                <!-- Silm kinni -->
-                <svg class="eye eye-closed" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                <svg
+                  class="eye eye-closed"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  style="display: none"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
                     d="M3 3l18 18M10.584 10.587A3 3 0 0113.413 13.41M9.88 4.238A9.953 
                       9.953 0 0112 4c4.477 0 8.268 2.943 9.542 7-.52 1.654-1.458 
                       3.13-2.688 4.27M6.12 6.12A9.953 9.953 0 002 12c.832 2.65 
-                      2.704 4.89 5.12 6.12"/>
+                      2.704 4.89 5.12 6.12"
+                  />
                 </svg>
-              </div>
+              </button>
             </div>
-            <p id="passwordAgainError" class="error"></p>
+            <p
+              id="passwordAgainError"
+              class="error"
+              role="alert"
+              aria-live="polite"
+            ></p>
             <br />
             <button
               type="submit"

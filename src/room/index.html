@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Broneeringu vaade</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/css/style.css" />
     <script type="module" src="/js/components/navbar.js"></script>
     <script type="module" src="/js/components/calendar.js"></script>
@@ -15,7 +18,12 @@
     <app-navbar title="Ruum"></app-navbar>
     <div class="split split-nav">
       <div class="pilt">
-        <img id="room-image" src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+        <img
+          id="room-image"
+          src="/assets/MURG.jpg"
+          alt="Ruumi pilt"
+          fetchpriority="high"
+        />
       </div>
       <main>
         <header>

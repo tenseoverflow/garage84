@@ -14,10 +14,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const eyeOpen = toggle.querySelector(".eye-open");
       const eyeClosed = toggle.querySelector(".eye-closed");
 
-      const type = input.type === "password" ? "text" : "password";
-      input.type = type;
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
 
-      if (type === "text") {
+      toggle.setAttribute("aria-pressed", isPassword ? "true" : "false");
+      toggle.setAttribute(
+        "aria-label",
+        isPassword ? "Peida parool" : "Näita parooli"
+      );
+
+      if (isPassword) {
         eyeOpen.style.display = "none";
         eyeClosed.style.display = "block";
       } else {

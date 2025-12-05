@@ -136,11 +136,16 @@ async function loadBookingData(bookingId) {
     const { data: bookingData } = await fetchBooking(bookingId);
 
     const currentUser = auth.currentUser;
-    if (!currentUser || bookingData.bookerId !== currentUser.uid) {
-      showError("Sul pole õigust seda broneeringut muuta");
-      setTimeout(() => {
-        window.location.href = `/booking/view/?id=${bookingId}`;
-      }, 2000);
+    const isOwner = currentUser && bookingData.bookerId === currentUser.uid;
+
+    if (!isOwner) {
+      const editForm = document.querySelector(".change-booking");
+      const toggleBtn = document.getElementById("toggle-edit-form");
+      const changeRoomBtn = document.getElementById("change-booking-link");
+
+      if (editForm) editForm.style.display = "none";
+      if (toggleBtn) toggleBtn.style.display = "none";
+      if (changeRoomBtn) changeRoomBtn.style.display = "none";
       return;
     }
 
