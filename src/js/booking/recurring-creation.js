@@ -202,7 +202,7 @@ async function createRecurringBooking(formValidator, roomId) {
 }
 
 export function initRecurringCreation() {
-  const form = document.querySelector(".recurring-booking");
+  const form = document.querySelector(".new-booking");
   const roomId = getRoomIdFromUrl();
 
   if (!roomId) {

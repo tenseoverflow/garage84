@@ -31,7 +31,6 @@ main {
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 0;
-  max-height: 100vh;
 }
 
 /* FOOTER */
@@ -87,7 +86,17 @@ input:-webkit-autofill:focus {
     height: auto;
   }
 
+  body:has(.split) {
+    overflow: auto;
+    height: auto;
+  }
+
   .with-navbar {
+    overflow: auto;
+    height: auto;
+  }
+
+  .with-navbar:has(.split) {
     overflow: auto;
     height: auto;
   }

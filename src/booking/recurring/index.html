@@ -20,7 +20,7 @@
           <h1 id="room-title">Laadimine...</h1>
           <p id="room-location">-</p>
         </header>
-        <form action="" class="recurring-booking">
+        <form class="new-booking">
           <fieldset>
             <label for="booking-name">Nimi</label>
             <input id="booking-name" type="text" required />
@@ -53,18 +53,12 @@
             style="color: red; margin-top: 1rem"
           ></div>
 
-          <div id="conflict-warnings" style="margin-top: 1rem"></div>
+          <div id="conflict-warnings"></div>
 
-          <div id="summary-section" style="margin-top: 1rem">
-            <p>
-              <strong>Kokkuvõte:</strong>
-              <span id="summary-text">-</span>
-            </p>
-            <p>
-              <strong>Broneeringute arv:</strong>
-              <span id="occurrence-count">0</span>
-            </p>
-          </div>
+          <p>
+            <span id="summary-text">-</span>
+            (<strong id="occurrence-count">0</strong> broneeringut)
+          </p>
 
           <app-calendar></app-calendar>
 
