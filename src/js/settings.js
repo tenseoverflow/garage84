@@ -1,7 +1,6 @@
 import {
   deleteUser,
   onAuthStateChanged,
-  updateEmail,
   updatePassword,
   updateProfile,
 } from "firebase/auth";
@@ -19,18 +18,6 @@ const fields = {
     save: async (val) => {
       await updateProfile(auth.currentUser, { displayName: val });
       document.getElementById("profile-name").textContent = val;
-    },
-  },
-
-  email: {
-    display: document.getElementById("email-display"),
-    edit: document.getElementById("email-edit"),
-    input: document.getElementById("email-input"),
-    saveBtn: document.getElementById("save-email"),
-    valueSpan: document.getElementById("email-value"),
-    save: async (val) => {
-      await updateEmail(auth.currentUser, val);
-      document.getElementById("profile-email").textContent = val;
     },
   },
 

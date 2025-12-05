@@ -18,8 +18,16 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* let content determine scroll; keep layout's internal scrolling where defined */
-  overflow: visible;
+}
+
+.with-navbar:has(.split) {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body:not(.with-navbar):has(.split) {
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Typography */

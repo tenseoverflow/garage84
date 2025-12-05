@@ -57,6 +57,11 @@ export function initRoomView() {
     bookingLink.href = `/booking/new/?id=${roomId}`;
   }
 
+  const recurringLink = document.querySelector('a[href="/booking/recurring/"]');
+  if (recurringLink) {
+    recurringLink.href = `/booking/recurring/?id=${roomId}`;
+  }
+
   const downloadQrBtn = document.getElementById("download-qr");
   if (downloadQrBtn) {
     downloadQrBtn.addEventListener("click", () => downloadRoomQR(roomId));

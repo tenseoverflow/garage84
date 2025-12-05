@@ -292,6 +292,7 @@ class AppCalendar extends HTMLElement {
         const isEndDay =
           currentViewDateStr === (bookingEndDateStr || bookingStartDateStr);
         const isCurrent = booking.id === this._currentBookingId;
+        const isRecurring = !!booking.recurringBookingRef;
 
         if (
           isStartDay &&
@@ -306,6 +307,7 @@ class AppCalendar extends HTMLElement {
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
             isPast: isPast,
+            isRecurring: isRecurring,
           });
         } else if (isStartDay) {
           bookingsToShow.push({
@@ -316,6 +318,7 @@ class AppCalendar extends HTMLElement {
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
             isPast: isPast,
+            isRecurring: isRecurring,
           });
         } else if (isEndDay) {
           bookingsToShow.push({
@@ -326,6 +329,7 @@ class AppCalendar extends HTMLElement {
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
             isPast: isPast,
+            isRecurring: isRecurring,
           });
         } else {
           bookingsToShow.push({
@@ -336,6 +340,7 @@ class AppCalendar extends HTMLElement {
             isCurrentBooking: isCurrent,
             bookingId: booking.id,
             isPast: isPast,
+            isRecurring: isRecurring,
           });
         }
       }
@@ -595,7 +600,12 @@ class AppCalendar extends HTMLElement {
       descLi.textContent = booking.description;
       addBookingClasses(descLi, booking);
 
-      if (booking.bookingId && !booking.isUserBooking) {
+      if (
+        booking.bookingId &&
+        !booking.isUserBooking &&
+        !booking.isPast &&
+        !booking.isRecurring
+      ) {
         descLi.style.cursor = "pointer";
         descLi.addEventListener("click", () => {
           window.location.href = `/booking/view/?id=${booking.bookingId}`;

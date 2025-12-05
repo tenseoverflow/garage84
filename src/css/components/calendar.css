@@ -6,6 +6,7 @@
   border-radius: 6px;
   border: 1px solid var(--primary);
   height: 100%;
+  background: #fff;
 }
 
 .calendar-header {
@@ -119,11 +120,11 @@
   }
 
   .past-booking {
-    color: var(--disabled-text);
+    text-decoration: line-through;
     opacity: 0.6;
   }
 
   .time-slot {
-    color: color-mix(in srgb, var(--disabled-text) 35%, transparent);
+    color: color-mix(in srgb, var(--disabled-text) 75%, transparent);
   }
 }

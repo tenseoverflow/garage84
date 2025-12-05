@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loo korduv broneering</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script type="module" src="/js/components/navbar.js"></script>
+    <script type="module" src="/js/firebase.js"></script>
+    <script type="module" src="/js/auth-guard.js"></script>
+  </head>
+  <body class="with-navbar">
+    <app-navbar title="Loo korduv broneering"></app-navbar>
+    <div class="split split-nav">
+      <div class="pilt">
+        <img src="/assets/MURG.jpg" alt="pilt MURGi hoonest." />
+      </div>
+      <main>
+        <header>
+          <h1 id="room-title">Laadimine...</h1>
+          <p id="room-location">-</p>
+        </header>
+        <form class="new-booking">
+          <fieldset>
+            <label for="booking-name">Nimi</label>
+            <input id="booking-name" type="text" required />
+
+            <label for="booking-description">Kirjeldus (valikuline)</label>
+            <textarea id="booking-description" rows="3"></textarea>
+
+            <label for="recurrence-type">Kordumise tüüp</label>
+            <select id="recurrence-type" required>
+              <option value="daily">Iga päev</option>
+              <option value="weekly" selected>Iga nädal</option>
+              <option value="monthly">Iga kuu</option>
+            </select>
+
+            <label for="booking-start-date">Esimene kuupäev</label>
+            <input id="booking-start-date" type="date" required />
+
+            <label for="booking-start-time">Algusaeg</label>
+            <input id="booking-start-time" type="time" required />
+
+            <label for="booking-end-time">Lõppaeg</label>
+            <input id="booking-end-time" type="time" required />
+
+            <label for="booking-series-end-date">Kordub kuni</label>
+            <input id="booking-series-end-date" type="date" required />
+          </fieldset>
+
+          <div
+            id="validation-errors"
+            style="color: red; margin-top: 1rem"
+          ></div>
+
+          <div id="conflict-warnings"></div>
+
+          <p>
+            <span id="summary-text">-</span>
+            (<strong id="occurrence-count">0</strong> broneeringut)
+          </p>
+
+          <app-calendar></app-calendar>
+
+          <footer style="justify-content: center">
+            <button type="submit" id="submit-btn" class="btn btn-success">
+              Loo korduvad broneeringud
+            </button>
+          </footer>
+        </form>
+      </main>
+    </div>
+
+    <script type="module" src="/js/components/calendar.js"></script>
+    <script type="module" src="/js/booking/recurring-creation.js"></script>
+  </body>
+</html>

@@ -234,6 +234,7 @@ async function load() {
       const bookings = bookingSnap.docs
         .map((d) => ({ id: d.id, ...d.data() }))
         .filter((b) => {
+          if (b.recurringBookingRef) return false;
           try {
             const end = b.endingDate ? b.endingDate.toDate() : null;
             // keep booking if it has no end time or its end is in the future
