@@ -11,6 +11,11 @@ export function validateRoomData({ name, location, capacity }) {
     return "Palun täida kõik nõutud väljad";
   }
 
+  const allowedLocations = ["1. korrus", "2. korrus", "3. korrus"];
+  if (!allowedLocations.includes(location)) {
+    return "Palun vali asukoht: 1. korrus, 2. korrus või 3. korrus";
+  }
+
   if (capacity <= 0) {
     return "Mahutavus peab olema positiivne number";
   }

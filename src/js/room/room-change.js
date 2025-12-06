@@ -67,13 +67,46 @@ async function loadRoomData(roomId) {
 
     document.title = `Muuda ${roomData.name || "tuba"}`;
 
-    const navbar = document.querySelector("app-navbar");
-    if (navbar) {
-      navbar.setAttribute("title", `Muuda ${roomData.name || "tuba"}`);
-    }
-
     if (nameInput) nameInput.value = roomData.name || "";
-    if (locationInput) locationInput.value = roomData.location || "";
+
+    if (locationInput) {
+      const allowed = ["1. korrus", "2. korrus", "3. korrus"];
+      let loc = roomData.location || "";
+      if (loc && !allowed.includes(loc)) {
+        const m = String(loc).match(/\b([1-3])\b/);
+        if (m) loc = `${m[1]}. korrus`;
+      }
+
+      // Rebuild the select options from scratch to avoid any malformed DOM
+      while (locationInput.firstChild) {
+        locationInput.removeChild(locationInput.firstChild);
+      }
+
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Vali korrus";
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      locationInput.appendChild(placeholder);
+
+      allowed.forEach((val) => {
+        const opt = document.createElement("option");
+        opt.value = val;
+        opt.textContent = val;
+        locationInput.appendChild(opt);
+      });
+
+      // Select matching option if possible
+      const match = Array.from(locationInput.options).find(
+        (o) => o.value.trim() === String(loc).trim()
+      );
+      if (match) {
+        match.selected = true;
+      } else {
+        // leave placeholder selected
+        locationInput.selectedIndex = 0;
+      }
+    }
     if (capacityInput) capacityInput.value = roomData.capacity || "";
     if (descriptionInput) descriptionInput.value = roomData.description || "";
 
