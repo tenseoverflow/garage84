@@ -19,6 +19,32 @@ input {
   width: 100%;
 }
 
+/* Make selects match the styled inputs */
+select {
+  border-radius: 0.625rem;
+  border: none;
+  background: var(--secondary);
+  height: 1.875rem;
+  padding: 0 1rem;
+  padding-right: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill='%23595861' d='M0 0l5 6 5-6z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 0.6rem;
+}
+
+/* Fallback for Edge/IE native dropdown arrow */
+select::-ms-expand {
+  display: none;
+}
+
 textarea {
   border-radius: 0.625rem;
   border: none;
