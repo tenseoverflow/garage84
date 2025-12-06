@@ -211,69 +211,13 @@ async function load() {
     });
     await Promise.all(checks);
 
-    // Keep a master copy of rooms for filtering
-    const allRooms = rooms.slice();
-
     // Render rooms (only rooms that exist)
-    renderRooms(roomsGrid, allRooms);
+    renderRooms(roomsGrid, rooms);
     // remove spinner after render
     try {
       roomsGrid.removeChild(roomsSpinner);
     } catch {
       /* ignore */
-    }
-
-    // Attach filter UI listeners (name search, floor select, available now)
-    try {
-      const searchInput = document.querySelector(".new_booking .search-input");
-      const floorSelect = document.querySelector(".new_booking .floor-select");
-      const availableCheckbox = document.querySelector(
-        ".new_booking .available-checkbox"
-      );
-
-      function mapFloorValue(val) {
-        if (!val || val === "any") return null;
-        if (val === "1_floor") return "1. korrus";
-        if (val === "2_floor") return "2. korrus";
-        if (val === "3_floor") return "3. korrus";
-        return null;
-      }
-
-      function applyFilters() {
-        const q = ((searchInput && searchInput.value) || "")
-          .trim()
-          .toLowerCase();
-        const floorVal = floorSelect ? mapFloorValue(floorSelect.value) : null;
-        const availOnly = availableCheckbox ? availableCheckbox.checked : false;
-
-        const filtered = allRooms.filter((r) => {
-          // name search
-          if (q) {
-            const name = (r.name || "").toLowerCase();
-            if (!name.includes(q)) return false;
-          }
-          // floor filter (room.location contains floor string)
-          if (floorVal) {
-            const loc = (r.location || "").toLowerCase();
-            if (!loc.includes(floorVal.toLowerCase())) return false;
-          }
-          // available now
-          if (availOnly) {
-            if (!r.availableNow) return false;
-          }
-          return true;
-        });
-
-        renderRooms(roomsGrid, filtered);
-      }
-
-      if (searchInput) searchInput.addEventListener("input", applyFilters);
-      if (floorSelect) floorSelect.addEventListener("change", applyFilters);
-      if (availableCheckbox)
-        availableCheckbox.addEventListener("change", applyFilters);
-    } catch (e) {
-      // non-fatal: if filter wiring fails, just continue
-      console.warn("Could not attach filters:", e);
     }
 
     // now render user's bookings
