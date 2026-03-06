@@ -1,4 +1,10 @@
-# garage84
+# MURG Room Booking App
+
+Room booking software for a high school faculty. Designed in Figma ([link to the design](https://www.figma.com/design/aAVyMZYHyM9ScZdMxQPfii/Broneerimiss%C3%BCsteemi-mobiilivaade?node-id=0-1&t=SRMAvbKaQSJqa7YJ-1)) and developed with vanilla stack by a 3 member team under TalTech's course.
+
+[Watch the video of a showcase of the website on YouTube](https://www.youtube.com/watch?v=_4zYqQAn2Fs)
+
+**Project's details in Estonian:**
 
 Broneerimissüsteem koolile, kus saab klassiruume (jm ruume) broneerida ning vaadata nende ajagraafikut. Kavandatud algselt MURG-ile, mis kasutas enne Exceli rägastikku ruumide haldamiseks.
 
